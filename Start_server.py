@@ -16,3 +16,5 @@ match platform.system():
 
 #This script should actually be implemented in something that doesn't require python, it should then:
   #install python if not installed, start the server, start appache, report port number and url for ui.
+
+# The current startup process is to install apache & python if needed, place this folder in htdocs, run this script, go to UI URL

@@ -16,6 +16,7 @@ Remaining:
 	populate and use the thumbnail cache
 	go through the js and add cammel case
 	set constant vars(not just const) where appropriate, apply screaming snake case
+	move management php/js to other files, make the folder and book select js names more sensible
 	
 	
 
