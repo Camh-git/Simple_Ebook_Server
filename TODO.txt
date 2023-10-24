@@ -1,0 +1,26 @@
+This should really be a trello/zenhub board
+
+Remaining:
+
+  Major:
+    Populate management with basic crud commands
+    Implement management scripts
+	Modify CSS to allow decent mobile use
+	setup api
+	setup calls
+
+  Minor:
+	Implement Epub reader
+	Implement a reader for simple txt files
+	Add a start guide to the readme
+	populate and use the thumbnail cache
+	go through the js and add cammel case
+	set constant vars(not just const) where appropriate, apply screaming snake case
+	
+	
+
+Completed:
+	Convert the library to 4 collumns instead of 3
+	populate the management page's select elements using the library's contents
+	add kebab case for CSS
+	

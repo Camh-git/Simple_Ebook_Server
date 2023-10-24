@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "epub.js": "^0.2.15",
+    "fs": "^0.0.1-security"
+  }
+}

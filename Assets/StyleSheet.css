@@ -1,0 +1,239 @@
+/*Text styles*/
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+label {
+  color: white;
+}
+.Bold,
+label {
+  font-weight: bold;
+}
+
+/*Misc sitewide styles*/
+html {
+  background-color: #282c34;
+  text-align: center;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+a:link,
+a:visited {
+  text-decoration: none;
+  color: white;
+}
+.warning {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+form {
+  border: 5px solid aliceblue;
+  border-radius: 1rem;
+  background-color: #737373;
+}
+.flex-container {
+  display: flex;
+}
+::marker {
+  color: aliceblue;
+}
+
+/*Header styles*/
+#Header-bar {
+  position: absolute;
+  width: 100%;
+  min-height: 50px;
+  max-height: 10%;
+  justify-content: space-between;
+  background-color: rgba(49, 49, 49, 0.349);
+}
+.Header-item {
+  float: right;
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+  min-width: 2rem;
+  padding-left: 1rem;
+  min-height: 50px;
+  max-height: 10%;
+  padding-right: 1rem;
+}
+
+/*Footer styles*/
+#Footer-content {
+  text-align: center;
+}
+#footer-container {
+  margin-bottom: 0px;
+  padding-top: 2%;
+  min-height: 100px;
+  width: 100%;
+  clear: both;
+}
+
+/*Homepage styles*/
+#Homepage-container {
+  display: block;
+  width: 100vw;
+  text-align: center;
+  overflow: hidden;
+}
+#Homepage-container h2 {
+  margin-top: 10vh;
+}
+#Carousel-container {
+  width: 90vw;
+  margin-left: 5vw;
+}
+#Carousel-container img {
+  border: 2px solid aliceblue;
+  border-radius: 25%;
+  overflow: hidden;
+  width: 20vw;
+  height: 25vh;
+  margin: 1vh 1vw 1vh 1vw;
+  animation: 5s Fade infinite ease-out;
+}
+@keyframes Fade {
+  0% {
+    opacity: 0.5;
+  }
+  20% {
+    opacity: 1;
+  }
+  89% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+#Instruction-segment {
+  width: 100vw;
+  margin-left: 0vw;
+  text-align: center;
+}
+.Instruction-entry {
+  display: inline-block;
+  margin-top: -5vh;
+  width: 25%;
+  padding: 2.5vw;
+}
+.Instruction-entry img {
+  background-color: aliceblue;
+  border-radius: 50%;
+  width: 5vw;
+  padding: 1vw;
+  overflow: visible;
+}
+#Carousel-container img {
+  max-width: 33vw;
+  max-height: 33vh;
+}
+#Format-support-table {
+  border-collapse: collapse;
+  width: 50vw;
+  margin-left: 25vw;
+  color: white;
+}
+#Format-support-table td,
+#Format-support-table th {
+  border: 2px solid;
+  border-color: aliceblue;
+  padding: 0.5vh;
+}
+#Format-support-table th {
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  text-align: left;
+  background-color: #737373;
+  color: white;
+}
+/*Library styles*/
+.collumn {
+  float: left;
+  width: 24vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  margin-bottom: 5vh;
+}
+.collumn li {
+  height: 7.5vh;
+  margin: 1.5vh 0 1.5vh 0;
+  display: inline-block;
+}
+.collumn li .Thumb {
+  border: 5px solid aliceblue;
+  background-color: #737373;
+  border-radius: 15% 0% 0% 15%;
+  height: 7vh;
+  width: 3.3vw;
+  float: left;
+  overflow: hidden;
+}
+.collumn li .Thumb img {
+  z-index: 0;
+  width: 90%;
+  padding: 5%;
+}
+.collumn li .Details {
+  border: 5px solid aliceblue;
+  border-top-right-radius: 5%15%;
+  border-bottom-right-radius: 5%15%;
+  background-color: #737373;
+  text-align: left;
+  overflow: hidden;
+  height: 5vh;
+  width: 16.6vw;
+  padding: 1vh;
+  float: left;
+  margin-left: -5px;
+}
+.collumn li p,
+.collumn li a {
+  color: white;
+  font-weight: bolder;
+}
+.Missing-space-warning {
+  color: #ff0000;
+  font-weight: bold;
+}
+.LS-Type-ind {
+  font-weight: bold;
+}
+
+.List-title {
+  font-weight: bolder;
+  color: black;
+} /*padding-left:30px;border-left:6px solid crimson;*/
+
+/*Management styles*/
+.Management-row {
+  width: 100vw;
+  justify-content: center;
+  margin-top: 1%;
+}
+.Management-row form {
+  min-width: 15vw;
+  max-width: 22.5vw;
+  margin: 0 1.25vw 0 1.25vw;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+}
+input,
+select {
+  /*fix the ofset this causes*/
+  background-color: #282c34;
+  border: none;
+  color: white;
+  padding: 0.5vw 1.5vh;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 1vh;
+  max-width: 20vw;
+}
