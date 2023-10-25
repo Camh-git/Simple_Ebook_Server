@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from os import listdir
 
 app = Flask(__name__)
 
@@ -7,6 +8,15 @@ def welcome():
     return "Hello from basic ebook server"
 
 #Book methods
+@app.route("/list-books")
+def list_books():
+    response = ""
+    for folder in listdir("./Books"):
+        response +="->" + folder
+        for book in listdir("./Books/"+folder):
+            response += ">>" + book
+    return response
+
 @app.route("/post-book/<book_name>", methods = ["POST"])
 def Upload_book(book_name):
     return 501
@@ -22,6 +32,20 @@ def Rename_book(book_name, new_name):
     return 501
 
 #Folder methods
+@app.route("/list-folders",methods =["GET"])
+def list_folders():
+    response = ""
+    for folder in listdir("./Books"):
+        response += "->" + folder
+    return response
+
+@app.route("/list-folder-content/<folder_name>")
+def list_folder_content(folder_name):
+    response = ""
+    for book in listdir("./Books/"+folder_name):
+        response += ">>" + book
+    return response
+
 @app.route("/post-folder/<folder_name>&&<content>", methods = ["POST"])
 def Upload_folder(folder_name, contents):
     return 501

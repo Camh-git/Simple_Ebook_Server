@@ -7,7 +7,7 @@ match platform.system():
         os.system("python main.py")
     case "Linux":
       print ("Running on linux")
-      os.system(" cd ..; cd ..; cd ..")
+      os.system(" cd ..; cd ..; cd ..; cd ..") #this is enough to get us to the TLD from either the normal entry point or this dir 
       os.system("cd var; cd www; cd html; cd Simple_Ebook_Server")
       os.system("export FLASK_APP='BookAPI.py'")
       os.system("flask run --host=0.0.0.0")
