@@ -7,7 +7,10 @@ match platform.system():
         os.system("python main.py")
     case "Linux":
       print ("Running on linux")
-      os.system("python main.py")
+      os.system(" cd ..; cd ..; cd ..")
+      os.system("cd var; cd www; cd html; cd Simple_Ebook_Server")
+      os.system("export FLASK_APP='BookAPI.py'")
+      os.system("flask run --host=0.0.0.0")
     case "Darwin":
       print ("Running on mac OS")
       os.system("python main.py")

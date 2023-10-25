@@ -105,3 +105,5 @@ def Catch_all(path):
 
 if __name__ == "__main__":
     app.run(debug = True)
+
+#To launch on raspberry pi os: cd into this dir, export FLASK_APP="BookAPI.py" , flask run --host=0.0.0.0 
