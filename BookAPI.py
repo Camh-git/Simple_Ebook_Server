@@ -65,14 +65,27 @@ def Create_folder(folder_name):
         try:
             os.makedirs("./Books/"+folder_name)
         except:
-            return"500"
+            return "500"
     else:
         return "409"
     return "200"
 
-@app.route("/move-book-to-folder/<old_folder_name>&&<new_folder_name>&&<book_name>", methods = ["PUT"])
-def Move_book_to_folder(old_folder_name, new_folder_name, book_name):
-    return 501
+@app.route("/move-book-to-folder/<book_name>&&<ext>&&<old_folder_name>&&<new_folder_name>", methods = ["GET"])
+#example: http://192.168.1.110:5000/move-book-to-folder/MoveTest&&pdf&&TestFolder&&Misc
+def Move_book_to_folder(book_name,ext,old_folder_name, new_folder_name, ):
+    oldPath = "./Books/"+old_folder_name+"/"+book_name+"."+ext
+    newPath = "./Books/"+new_folder_name+"/"+book_name+"."+ext
+    if os.path.exists(oldPath):
+        if not os.path.exists(newPath):
+            try:
+                os.rename(oldPath,newPath)
+            except:
+                return "500"
+        else:
+            return "409"
+    else:
+        return "404"
+    return "200"
 
 #Thumbnail management functions
 @app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>", methods = ["PUT"])
