@@ -1,0 +1,8 @@
+{
+  "AllowDownloads": "False",
+  "EnalbeReaders": "True",
+  "EnableWhiteList": "True",
+  "EnableBlackList": "False",
+  "WhiteList": [],
+  "BlackList": []
+}

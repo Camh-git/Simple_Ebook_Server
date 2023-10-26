@@ -309,6 +309,22 @@
       <input type = "submit" value = "Change">            
     </form>
 
+    <form method = "POST" enctype="multipart/form-data" id = "IPR_form">
+      <h3>IP restrictions</h3>
+      <p>Activate the whitelist, blacklist or neither</p>
+      <label for = "IPR_Whitelist">Whitelist</label>
+      <input type = "Radio" name = "IPR_list_choice" id = "IPR_Whitelist"/>
+      <br>
+      <label for = "IPR_Blacklist">Blacklist</label>
+      <input type = "Radio" name = "IPR_list_choice" id = "IPR_Blacklist"/>
+      <br>
+      <label for = "IPR_None">None</label>
+      <input type = "Radio" name = "IPR_list_choice" id = "IPR_None"/>
+      <br>
+      
+      <input type = "submit" value = "Change"> 
+      
+  </form>
   </section>
 </div>
 
