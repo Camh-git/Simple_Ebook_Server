@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from os import listdir
+import os
 
 app = Flask(__name__)
 
@@ -11,9 +11,9 @@ def welcome():
 @app.route("/list-books")
 def list_books():
     response = ""
-    for folder in listdir("./Books"):
+    for folder in os.listdir("./Books"):
         response +="->" + folder
-        for book in listdir("./Books/"+folder):
+        for book in os.listdir("./Books/"+folder):
             response += ">>" + book
     return response
 
@@ -35,14 +35,14 @@ def Rename_book(book_name, new_name):
 @app.route("/list-folders",methods =["GET"])
 def list_folders():
     response = ""
-    for folder in listdir("./Books"):
+    for folder in os.listdir("./Books"):
         response += "->" + folder
     return response
 
 @app.route("/list-folder-content/<folder_name>")
 def list_folder_content(folder_name):
     response = ""
-    for book in listdir("./Books/"+folder_name):
+    for book in os.listdir("./Books/"+folder_name):
         response += ">>" + book
     return response
 
@@ -59,9 +59,16 @@ def Rename_folder(folder_name, new_name):
     return 501
 
 #Library management functions
-@app.route("/create-folder/<folder_name>", methods = ["POST"])
+@app.route("/create-folder/<folder_name>", methods = ["GET"])
 def Create_folder(folder_name):
-    return 501
+    if not os.path.exists("./Books/"+folder_name):
+        try:
+            os.makedirs("./Books/"+folder_name)
+        except:
+            return"500"
+    else:
+        return "409"
+    return "200"
 
 @app.route("/move-book-to-folder/<old_folder_name>&&<new_folder_name>&&<book_name>", methods = ["PUT"])
 def Move_book_to_folder(old_folder_name, new_folder_name, book_name):
