@@ -34,11 +34,17 @@ def Remove_book(book_name,ext,folder):
         return "404"
     return "200"
 
-@app.route("/rename-book/<book_name>&&<folder>&&<new_name>", methods = ["PUT"])
-def Rename_book(book_name,folder, new_name):
-    if request.method == "POST":
-        return 405
-    return 501
+@app.route("/rename-book/<book_name>&&<ext>&&<folder>&&<new_name>")
+def Rename_book(book_name,ext,folder, new_name):
+    target = "{0}/{1}/{2}.{3}".format(mainDir,folder,book_name,ext)
+    if os.path.exists(target):
+        try:
+            os.rename(target,"{0}/{1}/{2}.{3}".format(mainDir,folder,new_name,ext))
+        except:
+            return "500"
+    else:
+        return "404"
+    return "200"
 
 #Folder methods
 @app.route("/list-folders",methods =["GET"])
