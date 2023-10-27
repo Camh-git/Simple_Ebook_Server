@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import os
 
 app = Flask(__name__)
+mainDir = "./Books"
 
 @app.route("/")
 def welcome():
@@ -21,12 +22,20 @@ def list_books():
 def Upload_book(book_name):
     return 501
 
-@app.route("/delete-book/<book_name>", methods = ["DELETE"])
-def Remove_book(book_name):
-    return 501
+@app.route("/delete-book/<book_name>&&<ext>&&<folder>", methods = ["GET"])
+def Remove_book(book_name,ext,folder):
+    target = "{0}/{1}/{2}.{3}".format(mainDir,folder,book_name,ext)
+    if os.path.exists(target):
+        try:
+            os.remove(target)
+        except:
+            return"500"
+    else:
+        return "404"
+    return "200"
 
-@app.route("/rename-book/<book_name>&&<new_name>", methods = ["PUT"])
-def Rename_book(book_name, new_name):
+@app.route("/rename-book/<book_name>&&<folder>&&<new_name>", methods = ["PUT"])
+def Rename_book(book_name,folder, new_name):
     if request.method == "POST":
         return 405
     return 501
