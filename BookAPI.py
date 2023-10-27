@@ -69,9 +69,17 @@ def Upload_folder(folder_name, contents):
 def Delete_folder():
     return 501
 
-@app.route("/rename-folder/<folder_name>&&<new_name>", methods = ["PUT"])
+@app.route("/rename-folder/<folder_name>&&<new_name>", methods = ["GET"])
 def Rename_folder(folder_name, new_name):
-    return 501
+    target = "{0}/{1}".format(mainDir,folder_name)
+    if os.path.exists(target):
+        try:
+            os.rename(target,"{0}/{1}".format(mainDir,new_name))
+        except:
+            return "500"
+    else:
+        return "404"
+    return "200"
 
 #Library management functions
 @app.route("/create-folder/<folder_name>", methods = ["GET"])
