@@ -12,9 +12,9 @@ def welcome():
 @app.route("/list-books")
 def list_books():
     response = ""
-    for folder in os.listdir("./Books"):
+    for folder in os.listdir(mainDir):
         response +="->" + folder
-        for book in os.listdir("./Books/"+folder):
+        for book in os.listdir("{0}/{1}".format(mainDir,folder)):
             response += ">>" + book
     return response
 
@@ -44,14 +44,14 @@ def Rename_book(book_name,folder, new_name):
 @app.route("/list-folders",methods =["GET"])
 def list_folders():
     response = ""
-    for folder in os.listdir("./Books"):
+    for folder in os.listdir(mainDir):
         response += "->" + folder
     return response
 
 @app.route("/list-folder-content/<folder_name>")
 def list_folder_content(folder_name):
     response = ""
-    for book in os.listdir("./Books/"+folder_name):
+    for book in os.listdir("{0}/{1}".format(mainDir,folder_name)):
         response += ">>" + book
     return response
 
@@ -70,9 +70,10 @@ def Rename_folder(folder_name, new_name):
 #Library management functions
 @app.route("/create-folder/<folder_name>", methods = ["GET"])
 def Create_folder(folder_name):
-    if not os.path.exists("./Books/"+folder_name):
+    target = "{0}/{1}".format(mainDir,folder_name)
+    if not os.path.exists(target):
         try:
-            os.makedirs("./Books/"+folder_name)
+            os.makedirs(target)
         except:
             return "500"
     else:
@@ -82,8 +83,8 @@ def Create_folder(folder_name):
 @app.route("/move-book-to-folder/<book_name>&&<ext>&&<old_folder_name>&&<new_folder_name>", methods = ["GET"])
 #example: http://192.168.1.110:5000/move-book-to-folder/MoveTest&&pdf&&TestFolder&&Misc
 def Move_book_to_folder(book_name,ext,old_folder_name, new_folder_name, ):
-    oldPath = "./Books/"+old_folder_name+"/"+book_name+"."+ext
-    newPath = "./Books/"+new_folder_name+"/"+book_name+"."+ext
+    oldPath = "{0}/{1}/{2}.{3}".format(mainDir,old_folder_name,book_name,ext)
+    newPath = "{0}/{1}/{2}.{3}".format(mainDir,new_folder_name,book_name,ext)
     if os.path.exists(oldPath):
         if not os.path.exists(newPath):
             try:
