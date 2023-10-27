@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import os
+import shutil
 
 app = Flask(__name__)
 mainDir = "./Books"
@@ -65,9 +66,29 @@ def list_folder_content(folder_name):
 def Upload_folder(folder_name, contents):
     return 501
 
-@app.route("/delete-folder/<folder_name>&&<delete_content>", methods = ["DELETE"])
-def Delete_folder():
-    return 501
+@app.route("/delete-folder/<folder_name>&&<delete_content>")
+def Delete_folder(folder_name,delete_content):
+    target = "{0}/{1}".format(mainDir,folder_name)
+    if os.path.exists(target):
+        try:
+            if(delete_content.upper() != "TRUE"):
+                #If we are saving the books go through each and move them to misc folder, 
+                # add a "MOVED:" prefix if misc already contains a book of the same name
+                for book in os.listdir(target):
+                    start = "{0}/{1}".format(target,book)
+                    destination = "{0}/Misc/{1}".format(mainDir,book)
+
+                    if os.path.exists(destination):
+                        os.rename(start,"{0}/Misc/MOVED:{1}".format(mainDir,book))
+                    else:
+                        os.rename(start,destination)
+                        
+            shutil.rmtree(target)
+        except:
+            return "500"
+    else:
+        return "404"
+    return "200"
 
 @app.route("/rename-folder/<folder_name>&&<new_name>", methods = ["GET"])
 def Rename_folder(folder_name, new_name):
