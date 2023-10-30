@@ -40,8 +40,8 @@ def Remove_book(book_name, ext, folder):
     if os.path.exists(target):
         try:
             os.remove(target)
-        except:
-            return "500"
+        except Exception as e:
+            return "500: " + str(e)
     else:
         return "404"
     return "200"
@@ -54,8 +54,8 @@ def Rename_book(book_name, ext, folder, new_name):
         try:
             os.rename(
                 target, "{0}/{1}/{2}.{3}".format(mainDir, folder, new_name, ext))
-        except:
-            return "500"
+        except Exception as e:
+            return "500: " + str(e)
     else:
         return "404"
     return "200"
@@ -116,8 +116,8 @@ def Rename_folder(folder_name, new_name):
     if os.path.exists(target):
         try:
             os.rename(target, "{0}/{1}".format(mainDir, new_name))
-        except:
-            return "500"
+        except Exception as e:
+            return "500: " + str(e)
     else:
         return "404"
     return "200"
@@ -131,8 +131,8 @@ def Create_folder(folder_name):
     if not os.path.exists(target):
         try:
             os.makedirs(target)
-        except:
-            return "500"
+        except Exception as e:
+            return "500: " + str(e)
     else:
         return "409"
     return "200"
@@ -149,8 +149,8 @@ def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, ):
         if not os.path.exists(newPath):
             try:
                 os.rename(oldPath, newPath)
-            except:
-                return "500"
+            except Exception as e:
+                return "500: " + str(e)
         else:
             return "409"
     else:
