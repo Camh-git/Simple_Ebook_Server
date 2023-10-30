@@ -5,107 +5,129 @@ import shutil
 app = Flask(__name__)
 mainDir = "./Books"
 
+
 @app.route("/")
 def welcome():
     return "Hello from basic ebook server"
 
-#Book methods
+# Book methods
+
+
 @app.route("/list-books")
 def list_books():
     response = ""
     for folder in os.listdir(mainDir):
-        response +="->" + folder
-        for book in os.listdir("{0}/{1}".format(mainDir,folder)):
+        response += "->" + folder
+        for book in os.listdir("{0}/{1}".format(mainDir, folder)):
             response += ">>" + book
     return response
 
-@app.route("/post-book/<book_name>", methods = ["POST"])
+
+@app.route("/post-book/<book_name>", methods=["POST"])
 def Upload_book(book_name):
     return 501
 
-@app.route("/delete-book/<book_name>&&<ext>&&<folder>", methods = ["GET"])
-def Remove_book(book_name,ext,folder):
-    target = "{0}/{1}/{2}.{3}".format(mainDir,folder,book_name,ext)
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in {
+            'pdf', 'txt', 'epub', 'mobi', 'azw3'}
+
+
+@app.route("/delete-book/<book_name>&&<ext>&&<folder>", methods=["GET"])
+def Remove_book(book_name, ext, folder):
+    target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
     if os.path.exists(target):
         try:
             os.remove(target)
-        except:
-            return"500"
-    else:
-        return "404"
-    return "200"
-
-@app.route("/rename-book/<book_name>&&<ext>&&<folder>&&<new_name>")
-def Rename_book(book_name,ext,folder, new_name):
-    target = "{0}/{1}/{2}.{3}".format(mainDir,folder,book_name,ext)
-    if os.path.exists(target):
-        try:
-            os.rename(target,"{0}/{1}/{2}.{3}".format(mainDir,folder,new_name,ext))
         except:
             return "500"
     else:
         return "404"
     return "200"
 
-#Folder methods
-@app.route("/list-folders",methods =["GET"])
+
+@app.route("/rename-book/<book_name>&&<ext>&&<folder>&&<new_name>")
+def Rename_book(book_name, ext, folder, new_name):
+    target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
+    if os.path.exists(target):
+        try:
+            os.rename(
+                target, "{0}/{1}/{2}.{3}".format(mainDir, folder, new_name, ext))
+        except:
+            return "500"
+    else:
+        return "404"
+    return "200"
+
+# Folder methods
+
+
+@app.route("/list-folders", methods=["GET"])
 def list_folders():
     response = ""
     for folder in os.listdir(mainDir):
         response += "->" + folder
     return response
 
+
 @app.route("/list-folder-content/<folder_name>")
 def list_folder_content(folder_name):
     response = ""
-    for book in os.listdir("{0}/{1}".format(mainDir,folder_name)):
+    for book in os.listdir("{0}/{1}".format(mainDir, folder_name)):
         response += ">>" + book
     return response
 
-@app.route("/post-folder/<folder_name>&&<content>", methods = ["POST"])
+
+@app.route("/post-folder/<folder_name>&&<content>", methods=["POST"])
 def Upload_folder(folder_name, contents):
     return 501
 
+
 @app.route("/delete-folder/<folder_name>&&<delete_content>")
-def Delete_folder(folder_name,delete_content):
-    target = "{0}/{1}".format(mainDir,folder_name)
+def Delete_folder(folder_name, delete_content):
+    target = "{0}/{1}".format(mainDir, folder_name)
     if os.path.exists(target):
         try:
-            if(delete_content.upper() != "TRUE"):
-                #If we are saving the books go through each and move them to misc folder, 
+            if (delete_content.upper() != "TRUE"):
+                # If we are saving the books go through each and move them to misc folder,
                 # add a "MOVED:" prefix if misc already contains a book of the same name
                 for book in os.listdir(target):
-                    start = "{0}/{1}".format(target,book)
-                    destination = "{0}/Misc/{1}".format(mainDir,book)
+                    start = "{0}/{1}".format(target, book)
+                    destination = "{0}/Misc/{1}".format(mainDir, book)
 
                     if os.path.exists(destination):
-                        os.rename(start,"{0}/Misc/MOVED:{1}".format(mainDir,book))
+                        os.rename(
+                            start, "{0}/Misc/MOVED:{1}".format(mainDir, book))
                     else:
-                        os.rename(start,destination)
-                        
+                        os.rename(start, destination)
+
             shutil.rmtree(target)
-        except:
-            return "500"
+        except Exception as e:
+            return "500: " + str(e)
     else:
         return "404"
     return "200"
 
-@app.route("/rename-folder/<folder_name>&&<new_name>", methods = ["GET"])
+
+@app.route("/rename-folder/<folder_name>&&<new_name>", methods=["GET"])
 def Rename_folder(folder_name, new_name):
-    target = "{0}/{1}".format(mainDir,folder_name)
+    target = "{0}/{1}".format(mainDir, folder_name)
     if os.path.exists(target):
         try:
-            os.rename(target,"{0}/{1}".format(mainDir,new_name))
+            os.rename(target, "{0}/{1}".format(mainDir, new_name))
         except:
             return "500"
     else:
         return "404"
     return "200"
 
-#Library management functions
-@app.route("/create-folder/<folder_name>", methods = ["GET"])
+# Library management functions
+
+
+@app.route("/create-folder/<folder_name>", methods=["GET"])
 def Create_folder(folder_name):
-    target = "{0}/{1}".format(mainDir,folder_name)
+    target = "{0}/{1}".format(mainDir, folder_name)
     if not os.path.exists(target):
         try:
             os.makedirs(target)
@@ -115,15 +137,18 @@ def Create_folder(folder_name):
         return "409"
     return "200"
 
-@app.route("/move-book-to-folder/<book_name>&&<ext>&&<old_folder_name>&&<new_folder_name>", methods = ["GET"])
-#example: http://192.168.1.110:5000/move-book-to-folder/MoveTest&&pdf&&TestFolder&&Misc
-def Move_book_to_folder(book_name,ext,old_folder_name, new_folder_name, ):
-    oldPath = "{0}/{1}/{2}.{3}".format(mainDir,old_folder_name,book_name,ext)
-    newPath = "{0}/{1}/{2}.{3}".format(mainDir,new_folder_name,book_name,ext)
+
+@app.route("/move-book-to-folder/<book_name>&&<ext>&&<old_folder_name>&&<new_folder_name>", methods=["GET"])
+# example: http://192.168.1.110:5000/move-book-to-folder/MoveTest&&pdf&&TestFolder&&Misc
+def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, ):
+    oldPath = "{0}/{1}/{2}.{3}".format(mainDir,
+                                       old_folder_name, book_name, ext)
+    newPath = "{0}/{1}/{2}.{3}".format(mainDir,
+                                       new_folder_name, book_name, ext)
     if os.path.exists(oldPath):
         if not os.path.exists(newPath):
             try:
-                os.rename(oldPath,newPath)
+                os.rename(oldPath, newPath)
             except:
                 return "500"
         else:
@@ -132,67 +157,77 @@ def Move_book_to_folder(book_name,ext,old_folder_name, new_folder_name, ):
         return "404"
     return "200"
 
-#Thumbnail management functions
-@app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>", methods = ["PUT"])
+# Thumbnail management functions
+
+
+@app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>", methods=["PUT"])
 def Reasign_thumb(folder_name, book_name, thumb):
     return 501
 
-@app.route("/clear-thumbs/<option>", methods = ["PUT"])
+
+@app.route("/clear-thumbs/<option>", methods=["PUT"])
 def Clear_thumbs(option):
     return 501
 
-#Misc option functions
-@app.route("/toggle-dl/<option>&&<code>", methods = ["PUT"])
+# Misc option functions
+
+
+@app.route("/toggle-dl/<option>&&<code>", methods=["PUT"])
 def Toggle_dls(option, code):
     return 501
 
-@app.route("/toggle-readers/<option>&&<code>", methods = ["PUT"])
+
+@app.route("/toggle-readers/<option>&&<code>", methods=["PUT"])
 def Toggle_readers(option, code):
     return 501
 
-#http://127.0.0.1:5000/lists?address=1.1.1.1&list=whitelist&option=add
-@app.route("/lists/<address>&&<list>&&<option>", methods = ["PUT"])
+# http://127.0.0.1:5000/lists?address=1.1.1.1&list=whitelist&option=add
+
+
+@app.route("/lists/<address>&&<list>&&<option>", methods=["PUT"])
 def Manage_ip_list(address, list, option):
 
-    #Get data from the right list
+    # Get data from the right list
     data = ""
     if list.upper() == "WHITELIST":
-        with open("Assets/Whitelist.txt","r") as file:
+        with open("Assets/Whitelist.txt", "r") as file:
             data = file.read()
-    
+
     elif list.upper() == "BLACKLIST":
-        with open("Assets/Blacklist.txt","r") as file:
+        with open("Assets/Blacklist.txt", "r") as file:
             data = file.read()
     else:
-        return "Bad list option: " + list  
-     
-    #If adding and adress check it exists then add if not, or remove if selected
-    if(option.upper == "ADD"):
+        return "Bad list option: " + list
+
+    # If adding and adress check it exists then add if not, or remove if selected
+    if (option.upper == "ADD"):
         if address not in data:
             data += ("\n" + str(address))
-    elif(option.upper == "REMOVE"):
-        data = data.replace(address,"")
+    elif (option.upper == "REMOVE"):
+        data = data.replace(address, "")
     else:
         return "Bad whitelist action: " + option
-            
-    #Write the newly changed data to the correct file
+
+    # Write the newly changed data to the correct file
     if list.upper() == "WHITELIST":
-        with open("Assets/Whitelist.txt","w") as file:
+        with open("Assets/Whitelist.txt", "w") as file:
             file.write(data)
     elif list.upper() == "BLACKLIST":
-        with open("Assets/Blacklist.txt","w") as file:
+        with open("Assets/Blacklist.txt", "w") as file:
             file.write(data)
     else:
-        return "Bad list option: " + list  
+        return "Bad list option: " + list
 
     return 200
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def Catch_all(path):
     return "Invalid path: " + path, 400
 
-if __name__ == "__main__":
-    app.run(debug = True)
 
-#To launch on raspberry pi os: cd into this dir, export FLASK_APP="BookAPI.py" , flask run --host=0.0.0.0 
+if __name__ == "__main__":
+    app.run(debug=True)
+
+# To launch on raspberry pi os: cd into this dir, export FLASK_APP="BookAPI.py" , flask run --host=0.0.0.0
