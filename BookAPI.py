@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import os
 import shutil
+import json
 
 app = Flask(__name__)
 mainDir = "./Books"
@@ -9,6 +10,8 @@ mainDir = "./Books"
 @app.route("/")
 def welcome():
     return "Hello from basic ebook server"
+
+# TODO: modify methods to handle not having optional values
 
 # Book methods
 
@@ -170,22 +173,45 @@ def Clear_thumbs(option):
     return 501
 
 # Misc option functions
+# TODO: add password authentication to these endpoints
+
+
+def fetch_settings():
+    with open("settings.json", "r") as json_file:
+        return json_file.read()
 
 
 @app.route("/toggle-dl/<option>&&<code>", methods=["PUT"])
 def Toggle_dls(option, code):
-    return 501
+    if os.path.exists("./settings.json"):
+        settings = fetch_settings()
+        return "Settings:" + settings
+    return "404"
 
 
-@app.route("/toggle-readers/<option>&&<code>", methods=["PUT"])
+@app.route("/toggle-readers/<option>&&<code>")
 def Toggle_readers(option, code):
-    return 501
+    if os.path.exists("./settings.json"):
+        settings = fetch_settings()
+        return "Settings:" + settings
+    else:
+        return "404"
+
+
+@app.route("/toggle-lists/<option>")
+def Toggle_lists(option):
+    if os.path.exists("./settings.json"):
+        settings = fetch_settings()
+        return "Settings:" + settings
+    else:
+        return "404"
 
 # http://127.0.0.1:5000/lists?address=1.1.1.1&list=whitelist&option=add
 
 
 @app.route("/lists/<address>&&<list>&&<option>", methods=["PUT"])
 def Manage_ip_list(address, list, option):
+    # TODO: double check this since it was written a while ago and the design has changed since
 
     # Get data from the right list
     data = ""
