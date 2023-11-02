@@ -182,13 +182,22 @@ def fetch_settings():
         return data
 
 
-def check_password():
+def write_settings(data):
+    try:
+        with open("settings.json", "w") as json_file:
+            json.dump(data, json_file, indent=4)
+            return "200"
+    except Exception as e:
+        return "500: " + str(e)
+
+
+def check_password(password):
     return True
 
 
 @app.route("/toggle-dl/<option>&&<code>")
 def Toggle_dls(option, code):
-    if (check_password()):
+    if (check_password(code)):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
             json_data = json.loads(settings)
@@ -196,7 +205,7 @@ def Toggle_dls(option, code):
                 json_data["EnableDownloads"] = True
             else:
                 json_data["EnableDownloads"] = False
-            return "Settings:" + str(json_data)
+            return write_settings(json_data)
         return "404"
     else:
         return "401"
@@ -204,7 +213,7 @@ def Toggle_dls(option, code):
 
 @app.route("/toggle-readers/<option>&&<code>")
 def Toggle_readers(option, code):
-    if (check_password()):
+    if (check_password(code)):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
             json_data = json.loads(settings)
@@ -212,16 +221,16 @@ def Toggle_readers(option, code):
                 json_data["EnableReaders"] = True
             else:
                 json_data["EnableReaders"] = False
-            return "Settings:" + str(json_data)
+            return write_settings(json_data)
         else:
             return "404"
     else:
         return "401"
 
 
-@app.route("/toggle-lists/<option>")
-def Toggle_lists(option):
-    if (check_password()):
+@app.route("/toggle-lists/<option>&&<code>")
+def Toggle_lists(option, code):
+    if (check_password(code)):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
             json_data = json.loads(settings)
@@ -236,11 +245,12 @@ def Toggle_lists(option):
                 json_data["EnableBlackList"] = False
             else:
                 return "406"
-            return "Settings:" + str(json_data)
+            return write_settings(json_data)
         else:
             return "404"
     else:
         return "401"
+
 # http://127.0.0.1:5000/lists?address=1.1.1.1&list=whitelist&option=add
 
 
