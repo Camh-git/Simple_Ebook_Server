@@ -182,53 +182,65 @@ def fetch_settings():
         return data
 
 
+def check_password():
+    return True
+
+
 @app.route("/toggle-dl/<option>&&<code>")
 def Toggle_dls(option, code):
-    if os.path.exists("./settings.json"):
-        settings = fetch_settings()
-        json_data = json.loads(settings)
-        if (option.upper() == "TRUE"):
-            json_data["EnableDownloads"] = True
-        else:
-            json_data["EnableDownloads"] = False
-        return "Settings:" + str(json_data)
-    return "404"
+    if (check_password()):
+        if os.path.exists("./settings.json"):
+            settings = fetch_settings()
+            json_data = json.loads(settings)
+            if (option.upper() == "TRUE"):
+                json_data["EnableDownloads"] = True
+            else:
+                json_data["EnableDownloads"] = False
+            return "Settings:" + str(json_data)
+        return "404"
+    else:
+        return "401"
 
 
 @app.route("/toggle-readers/<option>&&<code>")
 def Toggle_readers(option, code):
-    if os.path.exists("./settings.json"):
-        settings = fetch_settings()
-        json_data = json.loads(settings)
-        if (option.upper() == "TRUE"):
-            json_data["EnableReaders"] = True
+    if (check_password()):
+        if os.path.exists("./settings.json"):
+            settings = fetch_settings()
+            json_data = json.loads(settings)
+            if (option.upper() == "TRUE"):
+                json_data["EnableReaders"] = True
+            else:
+                json_data["EnableReaders"] = False
+            return "Settings:" + str(json_data)
         else:
-            json_data["EnableReaders"] = False
-        return "Settings:" + str(json_data)
+            return "404"
     else:
-        return "404"
+        return "401"
 
 
 @app.route("/toggle-lists/<option>")
 def Toggle_lists(option):
-    if os.path.exists("./settings.json"):
-        settings = fetch_settings()
-        json_data = json.loads(settings)
-        if (option.upper() == "WHITELIST"):
-            json_data["EnableWhiteList"] = True
-            json_data["EnableBlackList"] = False
-        elif (option.upper() == "BLACKLIST"):
-            json_data["EnableWhiteList"] = False
-            json_data["EnableBlackList"] = True
-        elif (option.upper() == "NONE"):
-            json_data["EnableWhiteList"] = False
-            json_data["EnableBlackList"] = False
+    if (check_password()):
+        if os.path.exists("./settings.json"):
+            settings = fetch_settings()
+            json_data = json.loads(settings)
+            if (option.upper() == "WHITELIST"):
+                json_data["EnableWhiteList"] = True
+                json_data["EnableBlackList"] = False
+            elif (option.upper() == "BLACKLIST"):
+                json_data["EnableWhiteList"] = False
+                json_data["EnableBlackList"] = True
+            elif (option.upper() == "NONE"):
+                json_data["EnableWhiteList"] = False
+                json_data["EnableBlackList"] = False
+            else:
+                return "406"
+            return "Settings:" + str(json_data)
         else:
-            return "406"
-        return "Settings:" + str(json_data)
+            return "404"
     else:
-        return "404"
-
+        return "401"
 # http://127.0.0.1:5000/lists?address=1.1.1.1&list=whitelist&option=add
 
 
