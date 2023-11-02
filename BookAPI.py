@@ -178,14 +178,20 @@ def Clear_thumbs(option):
 
 def fetch_settings():
     with open("settings.json", "r") as json_file:
-        return json_file.read()
+        data = json_file.read()
+        return data
 
 
-@app.route("/toggle-dl/<option>&&<code>", methods=["PUT"])
+@app.route("/toggle-dl/<option>&&<code>")
 def Toggle_dls(option, code):
     if os.path.exists("./settings.json"):
         settings = fetch_settings()
-        return "Settings:" + settings
+        json_data = json.loads(settings)
+        if (option.upper() == "TRUE"):
+            json_data["EnableDownloads"] = True
+        else:
+            json_data["EnableDownloads"] = False
+        return "Settings:" + str(json_data)
     return "404"
 
 
@@ -193,7 +199,12 @@ def Toggle_dls(option, code):
 def Toggle_readers(option, code):
     if os.path.exists("./settings.json"):
         settings = fetch_settings()
-        return "Settings:" + settings
+        json_data = json.loads(settings)
+        if (option.upper() == "TRUE"):
+            json_data["EnableReaders"] = True
+        else:
+            json_data["EnableReaders"] = False
+        return "Settings:" + str(json_data)
     else:
         return "404"
 
@@ -202,7 +213,19 @@ def Toggle_readers(option, code):
 def Toggle_lists(option):
     if os.path.exists("./settings.json"):
         settings = fetch_settings()
-        return "Settings:" + settings
+        json_data = json.loads(settings)
+        if (option.upper() == "WHITELIST"):
+            json_data["EnableWhiteList"] = True
+            json_data["EnableBlackList"] = False
+        elif (option.upper() == "BLACKLIST"):
+            json_data["EnableWhiteList"] = False
+            json_data["EnableBlackList"] = True
+        elif (option.upper() == "NONE"):
+            json_data["EnableWhiteList"] = False
+            json_data["EnableBlackList"] = False
+        else:
+            return "406"
+        return "Settings:" + str(json_data)
     else:
         return "404"
 

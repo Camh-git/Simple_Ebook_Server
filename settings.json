@@ -1,5 +1,5 @@
 {
-  "AllowDownloads": "False",
+  "EnableDownloads": "False",
   "EnableReaders": "True",
   "EnableWhiteList": "True",
   "EnableBlackList": "False",
