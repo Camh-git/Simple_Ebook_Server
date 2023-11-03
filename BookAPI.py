@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 import os
 import shutil
 import json
@@ -12,10 +12,9 @@ def welcome():
     return "Hello from basic ebook server"
 
 # TODO: modify methods to handle not having optional values
-# TODO: remove the unneeded () from if statements
+
 
 # Book methods
-
 
 @app.route("/list-books")
 def list_books():
@@ -64,8 +63,8 @@ def Rename_book(book_name, ext, folder, new_name):
         return "404"
     return "200"
 
-# Folder methods
 
+# Folder methods
 
 @app.route("/list-folders", methods=["GET"])
 def list_folders():
@@ -93,7 +92,7 @@ def Delete_folder(folder_name, delete_content):
     target = "{0}/{1}".format(mainDir, folder_name)
     if os.path.exists(target):
         try:
-            if (delete_content.upper() != "TRUE"):
+            if delete_content.upper() != "TRUE":
                 # If we are saving the books go through each and move them to misc folder,
                 # add a "MOVED:" prefix if misc already contains a book of the same name
                 for book in os.listdir(target):
@@ -126,8 +125,8 @@ def Rename_folder(folder_name, new_name):
         return "404"
     return "200"
 
-# Library management functions
 
+# Library management functions
 
 @app.route("/create-folder/<folder_name>", methods=["GET"])
 def Create_folder(folder_name):
@@ -198,11 +197,11 @@ def check_password(password):
 
 @app.route("/toggle-dl/<option>&&<code>")
 def Toggle_dls(option, code):
-    if (check_password(code)):
+    if check_password(code):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
             json_data = json.loads(settings)
-            if (option.upper() == "TRUE"):
+            if option.upper() == "TRUE":
                 json_data["EnableDownloads"] = True
             else:
                 json_data["EnableDownloads"] = False
@@ -214,11 +213,11 @@ def Toggle_dls(option, code):
 
 @app.route("/toggle-readers/<option>&&<code>")
 def Toggle_readers(option, code):
-    if (check_password(code)):
+    if check_password(code):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
             json_data = json.loads(settings)
-            if (option.upper() == "TRUE"):
+            if option.upper() == "TRUE":
                 json_data["EnableReaders"] = True
             else:
                 json_data["EnableReaders"] = False
@@ -231,17 +230,17 @@ def Toggle_readers(option, code):
 
 @app.route("/toggle-lists/<option>&&<code>")
 def Toggle_lists(option, code):
-    if (check_password(code)):
+    if check_password(code):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
             json_data = json.loads(settings)
-            if (option.upper() == "WHITELIST"):
+            if option.upper() == "WHITELIST":
                 json_data["EnableWhiteList"] = True
                 json_data["EnableBlackList"] = False
-            elif (option.upper() == "BLACKLIST"):
+            elif option.upper() == "BLACKLIST":
                 json_data["EnableWhiteList"] = False
                 json_data["EnableBlackList"] = True
-            elif (option.upper() == "NONE"):
+            elif option.upper() == "NONE":
                 json_data["EnableWhiteList"] = False
                 json_data["EnableBlackList"] = False
             else:
@@ -258,7 +257,7 @@ def Toggle_lists(option, code):
 @app.route("/manage-acls/<address>&&<list>&&<option>&&<code>")
 def Manage_acls(address, list, option, code):
     status = "0"
-    if (check_password(code)):
+    if check_password(code):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
             json_data = json.loads(settings)
