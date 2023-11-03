@@ -12,6 +12,7 @@ def welcome():
     return "Hello from basic ebook server"
 
 # TODO: modify methods to handle not having optional values
+# TODO: remove the unneeded () from if statements
 
 # Book methods
 
@@ -254,42 +255,54 @@ def Toggle_lists(option, code):
 # http://127.0.0.1:5000/lists?address=1.1.1.1&list=whitelist&option=add
 
 
-@app.route("/lists/<address>&&<list>&&<option>", methods=["PUT"])
-def Manage_ip_list(address, list, option):
-    # TODO: double check this since it was written a while ago and the design has changed since
+@app.route("/manage-acls/<address>&&<list>&&<option>&&<code>")
+def Manage_acls(address, list, option, code):
+    status = "0"
+    if (check_password(code)):
+        if os.path.exists("./settings.json"):
+            settings = fetch_settings()
+            json_data = json.loads(settings)
 
-    # Get data from the right list
-    data = ""
-    if list.upper() == "WHITELIST":
-        with open("Assets/Whitelist.txt", "r") as file:
-            data = file.read()
+            # Manage whitelist
+            if list.upper() in ("WHITELIST", "WHITE"):
+                if option.upper() == "ADD":
+                    if address not in json_data["WhiteList"] and address not in json_data["BlackList"]:
+                        json_data["WhiteList"].append(address)
+                    else:
+                        status = "409"
+                elif option.upper() == "REMOVE":
+                    if address in json_data["WhiteList"]:
+                        json_data["WhiteList"].remove(address)
+                    else:
+                        status = "410"
+                else:
+                    status = "406"
 
-    elif list.upper() == "BLACKLIST":
-        with open("Assets/Blacklist.txt", "r") as file:
-            data = file.read()
+            # Manage blacklist
+            elif list.upper() in ("BLACKLIST", "BLACK"):
+                if option.upper() == "ADD":
+                    if address not in json_data["BlackList"] and address not in json_data["WhiteList"]:
+                        json_data["BlackList"].append(address)
+                    else:
+                        status = "409"
+                elif option.upper() == "REMOVE":
+                    if address in json_data["BlackList"]:
+                        json_data["BlackList"].remove(address)
+                    else:
+                        status = "410"
+                else:
+                    status = "406"
+            else:
+                status = "432"
+
+            # Write to settings
+            if status != "0":
+                return status
+            return write_settings(json_data)
+        else:
+            return "404"
     else:
-        return "Bad list option: " + list
-
-    # If adding and adress check it exists then add if not, or remove if selected
-    if (option.upper == "ADD"):
-        if address not in data:
-            data += ("\n" + str(address))
-    elif (option.upper == "REMOVE"):
-        data = data.replace(address, "")
-    else:
-        return "Bad whitelist action: " + option
-
-    # Write the newly changed data to the correct file
-    if list.upper() == "WHITELIST":
-        with open("Assets/Whitelist.txt", "w") as file:
-            file.write(data)
-    elif list.upper() == "BLACKLIST":
-        with open("Assets/Blacklist.txt", "w") as file:
-            file.write(data)
-    else:
-        return "Bad list option: " + list
-
-    return 200
+        return "401"
 
 
 @app.route('/', defaults={'path': ''})
