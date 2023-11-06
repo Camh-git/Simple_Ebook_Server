@@ -26,7 +26,7 @@
 		  foreach($content as $book)
 		  {
         #Get the books name from it's filepath and tidy it up.
-		    $Name = str_replace('_',' ', pathinfo($book,PATHINFO_FILENAME));	
+		    $Name = str_replace('_',' ', pathinfo($book,PATHINFO_BASENAME ));	
 			  try
 			  {
 				  $Name[0] = strtoupper($Name[0]);
