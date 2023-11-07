@@ -1,10 +1,13 @@
 from flask import Flask
+from flask_cors import CORS, cross_origin
 import os
 import shutil
 import json
 
 app = Flask(__name__)
 mainDir = "./Books"
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route("/")
@@ -38,6 +41,7 @@ def allowed_file(filename):
 
 
 @app.route("/delete-book/<book_name>&&<ext>&&<folder>", methods=["GET"])
+@cross_origin()
 def Remove_book(book_name, ext, folder):
     target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
     if os.path.exists(target):

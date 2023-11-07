@@ -25,15 +25,17 @@
 		  $Output .='<ul>';
 		  foreach($content as $book)
 		  {
-        #Get the books name from it's filepath and tidy it up.
+        #Get the books name from it's filepath and tidy it up. 
+        #TODO: consider re-implementing this, but having it tidy up the source files aswell so they can still be manipulated
+        $Name = pathinfo($book,PATHINFO_BASENAME);
+        /*
 		    $Name = str_replace('_',' ', pathinfo($book,PATHINFO_BASENAME ));	
-			  try
 			  {
 				  $Name[0] = strtoupper($Name[0]);
 			  }
 			  catch(Exception $e) {
 				  echo "<script>console.log('Failed to capitalise a title with error:".$e->getMessage()."')</script>";
-			  }
+			  }*/
         $Output .= '<li>'.$Name.'</li>';
       }
       $Output .='</ul></div>';

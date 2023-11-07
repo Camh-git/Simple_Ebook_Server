@@ -6,7 +6,7 @@ Remaining:
     Populate management with basic crud commands
     Implement management scripts
 	Modify CSS to allow decent mobile use
-	setup api
+	
 	setup calls
 
   Minor:
@@ -17,6 +17,9 @@ Remaining:
 	go through the js and add cammel case
 	set constant vars(not just const) where appropriate, apply screaming snake case
 	move management php/js to other files, make the folder and book select js names more sensible
+	re-implement the name tidying in the management dropdowns, have it change the source file name (maybe clean on upload since its also php) to maintain control
+	add user feedback when an API request goes through
+
 	
 	
 
@@ -24,4 +27,5 @@ Completed:
 	Convert the library to 4 collumns instead of 3
 	populate the management page's select elements using the library's contents
 	add kebab case for CSS
+	setup api
 	
