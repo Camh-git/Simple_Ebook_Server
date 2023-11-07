@@ -19,6 +19,8 @@ Remaining:
 	move management php/js to other files, make the folder and book select js names more sensible
 	re-implement the name tidying in the management dropdowns, have it change the source file name (maybe clean on upload since its also php) to maintain control
 	add user feedback when an API request goes through
+	implement password checks on the api fields that require them
+	see if it is possible to do without the extension paramaters on the api by using the basenames directly
 
 	
 	

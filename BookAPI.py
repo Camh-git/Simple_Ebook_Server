@@ -172,6 +172,11 @@ def Reasign_thumb(folder_name, book_name, thumb):
     return 501
 
 
+@app.route("/upload-thumb/<image>")
+def Upload_thumb(image):
+    return 501
+
+
 @app.route("/clear-thumbs/<option>", methods=["PUT"])
 def Clear_thumbs(option):
     return 501
