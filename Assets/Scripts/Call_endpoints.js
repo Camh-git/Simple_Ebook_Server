@@ -110,7 +110,14 @@ function Assign_submit_actions() {
     ).value;
     Call_manage_ip_lists(IP.value, List, Action, Code.value);
   });
-  document.getElementById("IPR_form").addEventListener("submit", (event) => {});
+  document.getElementById("IPR_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const Code = event.target.children[11];
+    const List = document.querySelector(
+      "input[type='radio'][name=IPR_list_choice]:checked"
+    ).value;
+    Call_toggle_ip_lists(List, Code.value);
+  });
 }
 
 /*Calling the API*/
@@ -159,6 +166,8 @@ function Call_toggle_readers(option, code) {
 function Call_manage_ip_lists(target, list, option, code) {
   fetch(`${ADDRESS}manage-acls/${target}&&${list}&&${option}&&${code}`);
 }
-function Call_toggle_ip_lists(option, code) {}
+function Call_toggle_ip_lists(option, code) {
+  fetch(`${ADDRESS}toggle-lists/${option}&&${code}`);
+}
 
 Assign_submit_actions();

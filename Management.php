@@ -316,13 +316,16 @@
       <h3>IP restrictions</h3>
       <p>Activate the whitelist, blacklist or neither</p>
       <label for = "IPR_Whitelist">Whitelist</label>
-      <input type = "Radio" name = "IPR_list_choice" id = "IPR_Whitelist"/>
+      <input type = "Radio" name = "IPR_list_choice" value = "Whitelist"/>
       <br>
       <label for = "IPR_Blacklist">Blacklist</label>
-      <input type = "Radio" name = "IPR_list_choice" id = "IPR_Blacklist"/>
+      <input type = "Radio" name = "IPR_list_choice" value = "Blacklist"/>
       <br>
       <label for = "IPR_None">None</label>
-      <input type = "Radio" name = "IPR_list_choice" id = "IPR_None"/>
+      <input type = "Radio" name = "IPR_list_choice" value = "None"/>
+      <br>
+      
+      <input type = "password" name = "IPR_list_code" placeholder = "Password"/>
       <br>
       
       <input type = "submit" value = "Change"> 
