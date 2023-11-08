@@ -48,7 +48,11 @@ function Assign_submit_actions() {
   });
 
   //Manage Library
-  document.getElementById("CF_form").addEventListener("submit", (event) => {});
+  document.getElementById("CF_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let Name = event.target.children[1];
+    Call_create_folder(Name.value);
+  });
   document
     .getElementById("MV_folder_form")
     .addEventListener("submit", (event) => {});
@@ -97,7 +101,9 @@ function Call_rename_folder(oldName, newName) {
 }
 
 //Manage library
-function Call_create_folder(name) {}
+function Call_create_folder(name) {
+  fetch(`${ADDRESS}create-folder/${name}`);
+}
 function Call_MV_folder(name, ext, oldFolder, newFolder) {}
 
 //Manage thumbnails
