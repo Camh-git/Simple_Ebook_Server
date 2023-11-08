@@ -90,9 +90,14 @@ function Assign_submit_actions() {
       ).value;
       Call_toggle_downloads(Toggle, Code.value);
     });
-  document
-    .getElementById("TOGR_form")
-    .addEventListener("submit", (event) => {});
+  document.getElementById("TOGR_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const Code = event.target.children[7];
+    const Toggle = document.querySelector(
+      "input[type='radio'][name=Reader_toggle]:checked"
+    ).value;
+    Call_toggle_readers(Toggle, Code.value);
+  });
   document.getElementById("IP_form").addEventListener("submit", (event) => {});
   document.getElementById("IPR_form").addEventListener("submit", (event) => {});
 }
@@ -137,7 +142,9 @@ function Call_clear_or_repop_thumb_cache(option) {}
 function Call_toggle_downloads(option, code) {
   fetch(`${ADDRESS}toggle-dl/${option}&&${code}`);
 }
-function Call_toggle_readers(option, code) {}
+function Call_toggle_readers(option, code) {
+  fetch(`${ADDRESS}toggle-readers/${option}&&${code}`);
+}
 function Call_manage_ip_lists(option, code) {}
 function Call_toggle_ip_lists(address, list, option, code) {}
 

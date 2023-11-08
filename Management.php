@@ -281,9 +281,9 @@
       <h3>Enable online readers?</h3>
       <p name = "Downloads enabled display">Readers should be: </p>
       <label for = "TOGR_toggle_enable">Enabled</label>
-      <input type = "Radio" name = "Reader_toggle" value = "DL_toggle_enable"/>
+      <input type = "Radio" name = "Reader_toggle" value = "True"/>
       <label for = "TOGR_toggle_disable">Disabled</label>
-      <input type = "Radio" name = "Reader_toggle" value="DL_toggle_disable"/>
+      <input type = "Radio" name = "Reader_toggle" value = "False"/>
       <br>
       <input type = "password" name = "TOGR_toggle_PW" placeholder = "Password"/>
       <input type = "submit" value = "Apply">
