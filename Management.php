@@ -262,11 +262,11 @@
     <form method = "POST" enctype = "multipart/form-data" id = "DL_toggle_form">
       <h3>Enable downloads?</h3>
 
-      <p name = "Downloads enabled display">Downloads are currently: </p>
+      <p name = "Downloads enabled display">Downloads should be: </p>
       <label for = "DL_toggle_enable">Enabled</label>
-      <input type = "checkbox" name = "DL_toggle_enable" value = "DL_toggle_enable"/>
+      <input type = "Radio" name = "DL_toggle" value = "True"/>
       <label for = "DL_toggle_disable">Disabled</label>
-      <input type = "checkbox" name = "DL_toggle_disable" value="DL_toggle_disable"/>
+      <input type = "Radio" name = "DL_toggle" value = "False"/>
       <br>
 
       <input type = "password" name = "DL_toggle_PW" placeholder = "Password"/> 
@@ -279,11 +279,11 @@
     <!--Enable or disable online readers-->
     <form method = "POST" enctype = "multipart/form-data" id = "TOGR_form">
       <h3>Enable online readers?</h3>
-      <p name = "Downloads enabled display">Readers are currently: </p>
+      <p name = "Downloads enabled display">Readers should be: </p>
       <label for = "TOGR_toggle_enable">Enabled</label>
-      <input type = "checkbox" name = "TOGR_toggle_enable" value = "DL_toggle_enable"/>
+      <input type = "Radio" name = "Reader_toggle" value = "DL_toggle_enable"/>
       <label for = "TOGR_toggle_disable">Disabled</label>
-      <input type = "checkbox" name = "TOGR_toggle_disable" value="DL_toggle_disable"/>
+      <input type = "Radio" name = "Reader_toggle" value="DL_toggle_disable"/>
       <br>
       <input type = "password" name = "TOGR_toggle_PW" placeholder = "Password"/>
       <input type = "submit" value = "Apply">

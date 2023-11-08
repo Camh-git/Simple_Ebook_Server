@@ -82,7 +82,14 @@ function Assign_submit_actions() {
   //Misc options
   document
     .getElementById("DL_toggle_form")
-    .addEventListener("submit", (event) => {});
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      const Code = event.target.children[7];
+      const Toggle = document.querySelector(
+        "input[type='radio'][name=DL_toggle]:checked"
+      ).value;
+      Call_toggle_downloads(Toggle, Code.value);
+    });
   document
     .getElementById("TOGR_form")
     .addEventListener("submit", (event) => {});
@@ -127,7 +134,9 @@ function Call_upload_thumb(image) {}
 function Call_clear_or_repop_thumb_cache(option) {}
 
 //Misc options
-function Call_toggle_downloads(option, code) {}
+function Call_toggle_downloads(option, code) {
+  fetch(`${ADDRESS}toggle-dl/${option}&&${code}`);
+}
 function Call_toggle_readers(option, code) {}
 function Call_manage_ip_lists(option, code) {}
 function Call_toggle_ip_lists(address, list, option, code) {}
