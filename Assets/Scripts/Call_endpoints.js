@@ -26,7 +26,17 @@ function Assign_submit_actions() {
   });
 
   //Manage folders
-  document.getElementById("DF_form").addEventListener("submit", (event) => {});
+  document.getElementById("DF_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let Folder = event.target.children[2];
+    let Delete = event.target.children[6];
+    if (Delete.checked) {
+      Delete = true;
+    } else {
+      Delete = false;
+    }
+    Call_delete_folder(Folder.options[Folder.selectedIndex].innerHTML, Delete);
+  });
   document.getElementById("RF_form").addEventListener("submit", (event) => {});
 
   //Manage Library
@@ -71,7 +81,9 @@ function Call_rename_book(name, ext, folder, newName) {
 
 //Manage folders
 function Call_upload_folder(folderName, contents) {}
-function Call_delete_folder(folderName, RMContent) {}
+function Call_delete_folder(folderName, RMContent) {
+  fetch(`${ADDRESS}delete-folder/${folderName}&&${RMContent}`);
+}
 function Call_rename_folder(oldName, newName) {}
 
 //Manage library
