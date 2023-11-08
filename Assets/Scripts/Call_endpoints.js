@@ -16,12 +16,12 @@ function Assign_submit_actions() {
     event.preventDefault();
     let Folder = event.target.children[2];
     let Book = event.target.children[5];
-    let New_name = event.target.children[7].value;
+    let New_name = event.target.children[7];
     Call_rename_book(
       Book.options[Book.selectedIndex].innerHTML.split(".")[0],
       Book.options[Book.selectedIndex].innerHTML.split(".")[1],
       Folder.options[Folder.selectedIndex].innerHTML,
-      New_name
+      New_name.value
     );
   });
 
@@ -37,7 +37,15 @@ function Assign_submit_actions() {
     }
     Call_delete_folder(Folder.options[Folder.selectedIndex].innerHTML, Delete);
   });
-  document.getElementById("RF_form").addEventListener("submit", (event) => {});
+  document.getElementById("RF_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let Folder = event.target.children[1];
+    let New_name = event.target.children[2];
+    Call_rename_folder(
+      Folder.options[Folder.selectedIndex].innerHTML,
+      New_name.value
+    );
+  });
 
   //Manage Library
   document.getElementById("CF_form").addEventListener("submit", (event) => {});
@@ -84,7 +92,9 @@ function Call_upload_folder(folderName, contents) {}
 function Call_delete_folder(folderName, RMContent) {
   fetch(`${ADDRESS}delete-folder/${folderName}&&${RMContent}`);
 }
-function Call_rename_folder(oldName, newName) {}
+function Call_rename_folder(oldName, newName) {
+  fetch(`${ADDRESS}rename-folder/${oldName}&&${newName}`);
+}
 
 //Manage library
 function Call_create_folder(name) {}
