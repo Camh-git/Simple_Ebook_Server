@@ -12,7 +12,18 @@ function Assign_submit_actions() {
       Book.options[Book.selectedIndex].innerHTML.split(".")[1]
     );
   });
-  document.getElementById("RS_form").addEventListener("submit", (event) => {});
+  document.getElementById("RS_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let Folder = event.target.children[2];
+    let Book = event.target.children[5];
+    let New_name = event.target.children[7].value;
+    Call_rename_book(
+      Book.options[Book.selectedIndex].innerHTML.split(".")[0],
+      Book.options[Book.selectedIndex].innerHTML.split(".")[1],
+      Folder.options[Folder.selectedIndex].innerHTML,
+      New_name
+    );
+  });
 
   //Manage folders
   document.getElementById("DF_form").addEventListener("submit", (event) => {});
@@ -46,14 +57,17 @@ function Assign_submit_actions() {
   document.getElementById("IPR_form").addEventListener("submit", (event) => {});
 }
 
+/*Calling the API*/
+const ADDRESS = "http://192.168.1.110:5000/";
+
 //Manage books
 function Call_upload_book(bookName) {}
 function Call_delete_book(folder, book, ext) {
-  fetch(
-    "http://192.168.1.110:5000/delete-book/" + book + "&&" + ext + "&&" + folder
-  );
+  fetch(`${ADDRESS}delete-book/${book}&&${ext}&&${folder}`);
 }
-function Call_rename_book(name, ext, folder, newName) {}
+function Call_rename_book(name, ext, folder, newName) {
+  fetch(`${ADDRESS}rename-book/${name}&&${ext}&&${folder}&&${newName}`);
+}
 
 //Manage folders
 function Call_upload_folder(folderName, contents) {}
