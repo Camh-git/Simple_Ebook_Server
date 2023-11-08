@@ -55,7 +55,18 @@ function Assign_submit_actions() {
   });
   document
     .getElementById("MV_folder_form")
-    .addEventListener("submit", (event) => {});
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      let Book = event.target.children[5];
+      let Old_folder = event.target.children[2];
+      let New_folder = event.target.children[8];
+      Call_MV_folder(
+        Book.options[Book.selectedIndex].innerHTML.split(".")[0],
+        Book.options[Book.selectedIndex].innerHTML.split(".")[1],
+        Old_folder.options[Old_folder.selectedIndex].innerHTML,
+        New_folder.options[New_folder.selectedIndex].innerHTML
+      );
+    });
 
   //Manage thumbnails
   document
@@ -104,7 +115,11 @@ function Call_rename_folder(oldName, newName) {
 function Call_create_folder(name) {
   fetch(`${ADDRESS}create-folder/${name}`);
 }
-function Call_MV_folder(name, ext, oldFolder, newFolder) {}
+function Call_MV_folder(name, ext, oldFolder, newFolder) {
+  fetch(
+    `${ADDRESS}move-book-to-folder/${name}&&${ext}&&${oldFolder}&&${newFolder}`
+  );
+}
 
 //Manage thumbnails
 function Call_re_assign_thumb(folder, book, thumb) {}

@@ -6,6 +6,7 @@ Remaining:
     Populate management with basic crud commands
 	Modify CSS to allow decent mobile use
 	setup api calls from the management page 
+	add password authentication to the required endpoints
 
   Minor:
 	Implement Epub reader
@@ -19,6 +20,8 @@ Remaining:
 	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
 	implement password checks on the api fields that require them
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
+	Modify endpoints to handle not having optional values provided
+	
 
 	
 	
