@@ -21,6 +21,7 @@ Remaining:
 	implement password checks on the api fields that require them
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
 	Modify endpoints to handle not having optional values provided
+	Modify manage acls route to only take the actual values call_endpoints sends
 	
 
 	

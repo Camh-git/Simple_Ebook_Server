@@ -98,7 +98,18 @@ function Assign_submit_actions() {
     ).value;
     Call_toggle_readers(Toggle, Code.value);
   });
-  document.getElementById("IP_form").addEventListener("submit", (event) => {});
+  document.getElementById("IP_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const IP = event.target.children[7];
+    const Code = event.target.children[8];
+    const List = document.querySelector(
+      "input[type='radio'][name=IP_list_choice]:checked"
+    ).value;
+    const Action = document.querySelector(
+      "input[type='radio'][name=IP_list_add_or_rm]:checked"
+    ).value;
+    Call_manage_ip_lists(IP.value, List, Action, Code.value);
+  });
   document.getElementById("IPR_form").addEventListener("submit", (event) => {});
 }
 
@@ -145,7 +156,9 @@ function Call_toggle_downloads(option, code) {
 function Call_toggle_readers(option, code) {
   fetch(`${ADDRESS}toggle-readers/${option}&&${code}`);
 }
-function Call_manage_ip_lists(option, code) {}
-function Call_toggle_ip_lists(address, list, option, code) {}
+function Call_manage_ip_lists(target, list, option, code) {
+  fetch(`${ADDRESS}manage-acls/${target}&&${list}&&${option}&&${code}`);
+}
+function Call_toggle_ip_lists(option, code) {}
 
 Assign_submit_actions();

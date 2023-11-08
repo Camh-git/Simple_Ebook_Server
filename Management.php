@@ -294,18 +294,19 @@
       <h3>Manage IP lists</h3>
       <p>Please select a list and enter an IP to add.</p>
       <label for = "IP_Whitelist">Whitelist</label>
-      <input type = "Radio" name = "IP_list_choice" id = "IP_Whitelist"/>
+      <input type = "Radio" name = "IP_list_choice" value = "Whitelist"/>
       <label for = "IP_Blacklist">Blacklist</label>
-      <input type = "Radio" name = "IP_list_choice" id = "IP_Blacklist"/>
+      <input type = "Radio" name = "IP_list_choice" value = "Blacklist"/>
       <br>
       
       <input type = "text" name = "IP_list_add_Target" placeholder = "0.0.0.0"/>
+      <input type = "password" name = "IP_list_code" placeholder = "Password"/>
       <br>
 
       <label for = "IP_list_add">Add</label>
-      <input type = "Radio" name = "IP_list_add_or_rm" id = "IP_list_add"/>
+      <input type = "Radio" name = "IP_list_add_or_rm" value = "ADD"/>
       <label for = "IP_list_rm">Remove</label>
-      <input type = "Radio" name = "IP_list_add_or_rm" id = "IP_list_rm"/>
+      <input type = "Radio" name = "IP_list_add_or_rm" value = "REMOVE"/>
       <br>
       
       <input type = "submit" value = "Change">            
