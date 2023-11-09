@@ -52,14 +52,19 @@
   <h2>This page is currently under construction</h2>
   <!--Note on input names: Each input name has a prefix related to it's form eg: inputs for delete single have the prefix DS_-->
   <!-- TODO: 
-    form actions, see each form
     Add thumbnail management form(auto fetch and manualy assgin/upload thumbs)
     Investigate adding a completion popup
     Swap the upload book and folder forms over the the python approach when ready
-    consistency pass on the toggles
   -->
+  
+  <section id = "Req_status_modal">
+    <div id="Req_status_modal_body">
+      <p>Click anywhere in the background to close this popup</P>
+    </div>
+  </section>
 
   <!--Manage books-->
+  
   <h2>Manage individual books</h2>
   <section class = "flex-container Management-row">
     <!--upload single, todo:Add a folder select-->

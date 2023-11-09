@@ -57,10 +57,9 @@ form {
   font-weight: bold;
   text-align: center;
   min-width: 2rem;
-  padding-left: 1rem;
   min-height: 50px;
   max-height: 10%;
-  padding-right: 1rem;
+  padding: 0 1rem 0 1rem;
 }
 
 /*Footer styles*/
@@ -142,13 +141,11 @@ form {
 }
 #Format-support-table td,
 #Format-support-table th {
-  border: 2px solid;
-  border-color: aliceblue;
+  border: 2px solid aliceblue;
   padding: 0.5vh;
 }
 #Format-support-table th {
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding: 1vh 0 1vh 0;
   text-align: left;
   background-color: #737373;
   color: white;
@@ -157,8 +154,7 @@ form {
 .collumn {
   float: left;
   width: 24vw;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding: 1vh 0 1vh 0;
   margin-bottom: 5vh;
 }
 .collumn li {
@@ -212,6 +208,22 @@ form {
 } /*padding-left:30px;border-left:6px solid crimson;*/
 
 /*Management styles*/
+#Req_status_modal {
+  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  width: 100vw;
+  height: 100vw;
+  position: fixed;
+  display: none;
+}
+#Req_status_modal_body {
+  background-color: #737373;
+  width: 50vw;
+  height: 50vh;
+  margin: 25vh 0 0 25vw;
+  border: 10px solid aliceblue;
+  border-radius: 10%;
+}
 .Management-row {
   width: 100vw;
   justify-content: center;
@@ -221,8 +233,7 @@ form {
   min-width: 15vw;
   max-width: 22.5vw;
   margin: 0 1.25vw 0 1.25vw;
-  padding-left: 2.5%;
-  padding-right: 2.5%;
+  padding: 0 2.5% 0 2.5%;
 }
 input,
 select {
