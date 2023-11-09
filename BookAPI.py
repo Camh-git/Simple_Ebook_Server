@@ -43,6 +43,8 @@ def allowed_file(filename):
 @app.route("/delete-book/<book_name>&&<ext>&&<folder>", methods=["GET"])
 @cross_origin()
 def Remove_book(book_name, ext, folder):
+    if (book_name == "" | ext == "" | folder == ""):
+        return "400"
     target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
     if os.path.exists(target):
         try:
@@ -56,6 +58,8 @@ def Remove_book(book_name, ext, folder):
 
 @app.route("/rename-book/<book_name>&&<ext>&&<folder>&&<new_name>")
 def Rename_book(book_name, ext, folder, new_name):
+    if (book_name == "" | ext == "" | folder == "" | new_name == ""):
+        return "400"
     target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
     if os.path.exists(target):
         try:
@@ -93,6 +97,8 @@ def Upload_folder(folder_name, contents):
 
 @app.route("/delete-folder/<folder_name>&&<delete_content>")
 def Delete_folder(folder_name, delete_content):
+    if (folder_name == "" | delete_content == ""):
+        return "400"
     target = "{0}/{1}".format(mainDir, folder_name)
     if os.path.exists(target):
         try:
@@ -119,6 +125,8 @@ def Delete_folder(folder_name, delete_content):
 
 @app.route("/rename-folder/<folder_name>&&<new_name>", methods=["GET"])
 def Rename_folder(folder_name, new_name):
+    if (folder_name == "" | new_name == ""):
+        return "400"
     target = "{0}/{1}".format(mainDir, folder_name)
     if os.path.exists(target):
         try:
@@ -134,6 +142,8 @@ def Rename_folder(folder_name, new_name):
 
 @app.route("/create-folder/<folder_name>", methods=["GET"])
 def Create_folder(folder_name):
+    if (folder_name == ""):
+        return "400"
     target = "{0}/{1}".format(mainDir, folder_name)
     if not os.path.exists(target):
         try:
@@ -148,6 +158,8 @@ def Create_folder(folder_name):
 @app.route("/move-book-to-folder/<book_name>&&<ext>&&<old_folder_name>&&<new_folder_name>", methods=["GET"])
 # example: http://192.168.1.110:5000/move-book-to-folder/MoveTest&&pdf&&TestFolder&&Misc
 def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, ):
+    if (book_name == "" | ext == "" | old_folder_name == "" | new_folder_name == ""):
+        return "400"
     oldPath = "{0}/{1}/{2}.{3}".format(mainDir,
                                        old_folder_name, book_name, ext)
     newPath = "{0}/{1}/{2}.{3}".format(mainDir,
@@ -206,6 +218,8 @@ def check_password(password):
 
 @app.route("/toggle-dl/<option>&&<code>")
 def Toggle_dls(option, code):
+    if (option == "" | code == ""):
+        return "400"
     if check_password(code):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
@@ -222,6 +236,8 @@ def Toggle_dls(option, code):
 
 @app.route("/toggle-readers/<option>&&<code>")
 def Toggle_readers(option, code):
+    if (option == "" | code == ""):
+        return "400"
     if check_password(code):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
@@ -239,6 +255,8 @@ def Toggle_readers(option, code):
 
 @app.route("/toggle-lists/<option>&&<code>")
 def Toggle_lists(option, code):
+    if (option == "" | code == ""):
+        return "400"
     if check_password(code):
         if os.path.exists("./settings.json"):
             settings = fetch_settings()
@@ -265,6 +283,8 @@ def Toggle_lists(option, code):
 
 @app.route("/manage-acls/<address>&&<list>&&<option>&&<code>")
 def Manage_acls(address, list, option, code):
+    if (address == "" | list == "" | option == "" | code == ""):
+        return "400"
     status = "0"
     if check_password(code):
         if os.path.exists("./settings.json"):
@@ -272,7 +292,7 @@ def Manage_acls(address, list, option, code):
             json_data = json.loads(settings)
 
             # Manage whitelist
-            if list.upper() in ("WHITELIST", "WHITE"):
+            if list.upper() in ("WHITELIST"):
                 if option.upper() == "ADD":
                     if address not in json_data["WhiteList"] and address not in json_data["BlackList"]:
                         json_data["WhiteList"].append(address)
@@ -287,7 +307,7 @@ def Manage_acls(address, list, option, code):
                     status = "406"
 
             # Manage blacklist
-            elif list.upper() in ("BLACKLIST", "BLACK"):
+            elif list.upper() in ("BLACKLIST"):
                 if option.upper() == "ADD":
                     if address not in json_data["BlackList"] and address not in json_data["WhiteList"]:
                         json_data["BlackList"].append(address)

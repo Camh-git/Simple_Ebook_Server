@@ -227,7 +227,7 @@
       <input type = "submit" value = "Upload"/>
     </form>
 
-    <!--Format thumbnail cache TODO:write this-->
+    <!--Format thumbnail cache-->
     <form method = "POST" enctype="multipart/form-data" id = "TH_format_form">
       <h3>Delete/populate thumbnail cache</h3>
       <p>

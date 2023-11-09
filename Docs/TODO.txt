@@ -5,7 +5,6 @@ Remaining:
   Major:
     Populate management with basic crud commands
 	Modify CSS to allow decent mobile use
-	setup api calls from the management page 
 	add password authentication to the required endpoints
 
   Minor:
@@ -18,12 +17,8 @@ Remaining:
 	move management php/js to other files, make the folder and book select js names more sensible
 	re-implement the name tidying in the management dropdowns, have it change the source file name to maintain control(maybe clean on upload since it's also php)
 	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
-	implement password checks on the api fields that require them
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
-	Modify endpoints to handle not having optional values provided
-	Modify manage acls route to only take the actual values call_endpoints sends
-	
-
+	Add a way to see the IP lists and their status on the management pannel
 	
 	
 
@@ -33,3 +28,6 @@ Completed:
 	add kebab case for CSS
 	Populate management with basic crud commands
 	setup api
+	setup api calls from the management page 
+	Modify manage acls route to only take the actual values call_endpoints sends
+	Modify endpoints to handle not having optional values provided
