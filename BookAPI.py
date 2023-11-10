@@ -331,7 +331,7 @@ def Manage_acls(address, list, option, code):
                 else:
                     status = "406"
             else:
-                status = "432"
+                status = "406"
 
             # Write to settings
             if status != "0":

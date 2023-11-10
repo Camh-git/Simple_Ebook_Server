@@ -118,10 +118,13 @@ function Assign_submit_actions() {
     ).value;
     Call_toggle_ip_lists(List, Code.value);
   });
+
+  DISPLAY.addEventListener("click", (event) => {
+    DISPLAY.style.display = "none";
+  });
 }
 
 /*Calling the API*/
-const ADDRESS = "http://192.168.1.110:5000/";
 
 //Manage books
 function Call_upload_book(bookName) {}
@@ -137,10 +140,9 @@ function Call_upload_folder(folderName, contents) {}
 function Call_delete_folder(folderName, RMContent) {
   fetch(`${ADDRESS}delete-folder/${folderName}&&${RMContent}`);
 }
-function Call_rename_folder(oldName, newName) {
-  fetch(`${ADDRESS}rename-folder/${oldName}&&${newName}`);
+async function Call_rename_folder(oldName, newName) {
+  Call_and_display(`${ADDRESS}rename-folder/${oldName}&&${newName}`);
 }
-
 //Manage library
 function Call_create_folder(name) {
   fetch(`${ADDRESS}create-folder/${name}`);
@@ -170,4 +172,65 @@ function Call_toggle_ip_lists(option, code) {
   fetch(`${ADDRESS}toggle-lists/${option}&&${code}`);
 }
 
+//sending the requests and handling the responses
+async function Call_and_display(requestString) {
+  const result = await fetch(requestString);
+  const data = await result.json();
+
+  DISPLAY.style.display = "block";
+  let response = "Response:<br>";
+  //200,400,401,404,406,409,410,428(delete),432,500,501,
+  switch (data) {
+    case 200:
+      response += "Success, the changes you requested have been made.";
+      break;
+    case 400:
+      response +=
+        "Request error: Please make sure all required fields are filled in.";
+      break;
+    case 401:
+      response +=
+        "Unathorised: This action requires authentication, please enter the correct password.";
+      break;
+    case 404:
+      response +=
+        "Not found: Please make sure that the book or folder you are accessing exists." +
+        "<br> If this error occured when using any of the forms in the 'Misc options' row please let the developer know.";
+      break;
+    case 406:
+      response +=
+        "Not acceptable: Please use documentation or the forms to ensure you send the correct arguments.";
+      break;
+    case 409:
+      response +=
+        "Conflict: Please make sure there isn't a book or folder that already has that name.";
+      break;
+    case 410:
+      response +=
+        "Gone: The value you wish to remove is not in the targeted list.";
+      break;
+    case 428:
+      response +=
+        "Warning: One or more of the books moved to /Misc had the MOVED tag applied, meaning a book with an identical name was already present" +
+        ", please resolve the conflict and remove the MOVED tag to avoid potential book loss in future merges.";
+      break;
+    case 500:
+      response +=
+        "Server error: please contact the developer with the following data:" +
+        data;
+      break;
+    case 501:
+      response +=
+        "Not implemented: This feature isn't ready yet, but you can always check " +
+        "<a href='https://github.com/Camh-git/Simple_Ebook_Server'>Our github</a> for updates";
+      "";
+      break;
+    default:
+      response += "No pre-prepared message, status: " + data;
+  }
+  DISPLAY.children[0].innerHTML = "<h2>click to close<h2><br>" + response;
+}
+
+const ADDRESS = "http://192.168.1.110:5000/";
+const DISPLAY = document.getElementById("Req_status_modal");
 Assign_submit_actions();
