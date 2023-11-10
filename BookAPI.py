@@ -43,7 +43,7 @@ def allowed_file(filename):
 @app.route("/delete-book/<book_name>&&<ext>&&<folder>", methods=["GET"])
 @cross_origin()
 def Remove_book(book_name, ext, folder):
-    if (book_name == "" | ext == "" | folder == ""):
+    if (book_name == "" or ext == "" or folder == ""):
         return "400"
     target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
     if os.path.exists(target):
@@ -58,7 +58,7 @@ def Remove_book(book_name, ext, folder):
 
 @app.route("/rename-book/<book_name>&&<ext>&&<folder>&&<new_name>")
 def Rename_book(book_name, ext, folder, new_name):
-    if (book_name == "" | ext == "" | folder == "" | new_name == ""):
+    if (book_name == "" or ext == "" or folder == "" or new_name == ""):
         return "400"
     target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
     if os.path.exists(target):
@@ -97,7 +97,7 @@ def Upload_folder(folder_name, contents):
 
 @app.route("/delete-folder/<folder_name>&&<delete_content>")
 def Delete_folder(folder_name, delete_content):
-    if (folder_name == "" | delete_content == ""):
+    if (folder_name == "" or delete_content == ""):
         return "400"
     target = "{0}/{1}".format(mainDir, folder_name)
     if os.path.exists(target):
@@ -125,7 +125,7 @@ def Delete_folder(folder_name, delete_content):
 
 @app.route("/rename-folder/<folder_name>&&<new_name>", methods=["GET"])
 def Rename_folder(folder_name, new_name):
-    if (folder_name == "" | new_name == ""):
+    if (folder_name == "" or new_name == ""):
         return "400"
     target = "{0}/{1}".format(mainDir, folder_name)
     if os.path.exists(target):
@@ -158,7 +158,7 @@ def Create_folder(folder_name):
 @app.route("/move-book-to-folder/<book_name>&&<ext>&&<old_folder_name>&&<new_folder_name>", methods=["GET"])
 # example: http://192.168.1.110:5000/move-book-to-folder/MoveTest&&pdf&&TestFolder&&Misc
 def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, ):
-    if (book_name == "" | ext == "" | old_folder_name == "" | new_folder_name == ""):
+    if (book_name == "" or ext == "" or old_folder_name == "" or new_folder_name == ""):
         return "400"
     oldPath = "{0}/{1}/{2}.{3}".format(mainDir,
                                        old_folder_name, book_name, ext)
@@ -218,7 +218,7 @@ def check_password(password):
 
 @app.route("/toggle-dl/<option>&&<code>")
 def Toggle_dls(option, code):
-    if (option == "" | code == ""):
+    if (option == "" or code == ""):
         return "400"
     if check_password(code):
         if os.path.exists("./settings.json"):
@@ -236,7 +236,7 @@ def Toggle_dls(option, code):
 
 @app.route("/toggle-readers/<option>&&<code>")
 def Toggle_readers(option, code):
-    if (option == "" | code == ""):
+    if (option == "" or code == ""):
         return "400"
     if check_password(code):
         if os.path.exists("./settings.json"):
@@ -255,7 +255,7 @@ def Toggle_readers(option, code):
 
 @app.route("/toggle-lists/<option>&&<code>")
 def Toggle_lists(option, code):
-    if (option == "" | code == ""):
+    if (option == "" or code == ""):
         return "400"
     if check_password(code):
         if os.path.exists("./settings.json"):
@@ -283,7 +283,7 @@ def Toggle_lists(option, code):
 
 @app.route("/manage-acls/<address>&&<list>&&<option>&&<code>")
 def Manage_acls(address, list, option, code):
-    if (address == "" | list == "" | option == "" | code == ""):
+    if (address == "" or list == "" or option == "" or code == ""):
         return "400"
     status = "0"
     if check_password(code):
