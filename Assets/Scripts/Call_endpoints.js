@@ -6,10 +6,12 @@ function Assign_submit_actions() {
     event.preventDefault();
     let Folder = event.target.children[2];
     let Book = event.target.children[5];
-    Call_delete_book(
-      Folder.options[Folder.selectedIndex].innerHTML,
-      Book.options[Book.selectedIndex].innerHTML.split(".")[0],
-      Book.options[Book.selectedIndex].innerHTML.split(".")[1]
+    Call_and_display(
+      `${ADDRESS}delete-book/${
+        Book.options[Book.selectedIndex].innerHTML.split(".")[0]
+      }&&${Book.options[Book.selectedIndex].innerHTML.split(".")[1]}&&${
+        Folder.options[Folder.selectedIndex].innerHTML
+      }`
     );
   });
   document.getElementById("RS_form").addEventListener("submit", (event) => {
@@ -17,11 +19,12 @@ function Assign_submit_actions() {
     let Folder = event.target.children[2];
     let Book = event.target.children[5];
     let New_name = event.target.children[7];
-    Call_rename_book(
-      Book.options[Book.selectedIndex].innerHTML.split(".")[0],
-      Book.options[Book.selectedIndex].innerHTML.split(".")[1],
-      Folder.options[Folder.selectedIndex].innerHTML,
-      New_name.value
+    Call_and_display(
+      `${ADDRESS}rename-book/${
+        Book.options[Book.selectedIndex].innerHTML.split(".")[0]
+      }&&${Book.options[Book.selectedIndex].innerHTML.split(".")[1]}&&${
+        Folder.options[Folder.selectedIndex].innerHTML
+      }&&${New_name.value}`
     );
   });
 
@@ -35,15 +38,21 @@ function Assign_submit_actions() {
     } else {
       Delete = false;
     }
-    Call_delete_folder(Folder.options[Folder.selectedIndex].innerHTML, Delete);
+    Call_and_display(
+      `${ADDRESS}delete-folder/${
+        Folder.options[Folder.selectedIndex].innerHTML
+      }&&${Delete}`
+    );
   });
+
   document.getElementById("RF_form").addEventListener("submit", (event) => {
     event.preventDefault();
     let Folder = event.target.children[1];
     let New_name = event.target.children[2];
-    Call_rename_folder(
-      Folder.options[Folder.selectedIndex].innerHTML,
-      New_name.value
+    Call_and_display(
+      `${ADDRESS}rename-folder/${
+        Folder.options[Folder.selectedIndex].innerHTML
+      }&&${New_name.value}`
     );
   });
 
@@ -51,8 +60,9 @@ function Assign_submit_actions() {
   document.getElementById("CF_form").addEventListener("submit", (event) => {
     event.preventDefault();
     let Name = event.target.children[1];
-    Call_create_folder(Name.value);
+    Call_and_display(`${ADDRESS}create-folder/${Name.value}`);
   });
+
   document
     .getElementById("MV_folder_form")
     .addEventListener("submit", (event) => {
@@ -60,11 +70,13 @@ function Assign_submit_actions() {
       let Book = event.target.children[5];
       let Old_folder = event.target.children[2];
       let New_folder = event.target.children[8];
-      Call_MV_folder(
-        Book.options[Book.selectedIndex].innerHTML.split(".")[0],
-        Book.options[Book.selectedIndex].innerHTML.split(".")[1],
-        Old_folder.options[Old_folder.selectedIndex].innerHTML,
-        New_folder.options[New_folder.selectedIndex].innerHTML
+
+      Call_and_display(
+        `${ADDRESS}move-book-to-folder/${
+          Book.options[Book.selectedIndex].innerHTML.split(".")[0]
+        }&&${Book.options[Book.selectedIndex].innerHTML.split(".")[1]}&&${
+          Old_folder.options[Old_folder.selectedIndex].innerHTML
+        }&&${New_folder.options[New_folder.selectedIndex].innerHTML}`
       );
     });
 
@@ -88,16 +100,18 @@ function Assign_submit_actions() {
       const Toggle = document.querySelector(
         "input[type='radio'][name=DL_toggle]:checked"
       ).value;
-      Call_toggle_downloads(Toggle, Code.value);
+      Call_and_display(`${ADDRESS}toggle-dl/${Toggle}&&${Code.value}`);
     });
+
   document.getElementById("TOGR_form").addEventListener("submit", (event) => {
     event.preventDefault();
     const Code = event.target.children[7];
     const Toggle = document.querySelector(
       "input[type='radio'][name=Reader_toggle]:checked"
     ).value;
-    Call_toggle_readers(Toggle, Code.value);
+    Call_and_display(`${ADDRESS}toggle-readers/${Toggle}&&${Code.value}`);
   });
+
   document.getElementById("IP_form").addEventListener("submit", (event) => {
     event.preventDefault();
     const IP = event.target.children[7];
@@ -108,68 +122,23 @@ function Assign_submit_actions() {
     const Action = document.querySelector(
       "input[type='radio'][name=IP_list_add_or_rm]:checked"
     ).value;
-    Call_manage_ip_lists(IP.value, List, Action, Code.value);
+    Call_and_display(
+      `${ADDRESS}manage-acls/${IP.value}&&${List}&&${Action}&&${Code.value}`
+    );
   });
+
   document.getElementById("IPR_form").addEventListener("submit", (event) => {
     event.preventDefault();
     const Code = event.target.children[11];
     const List = document.querySelector(
       "input[type='radio'][name=IPR_list_choice]:checked"
     ).value;
-    Call_toggle_ip_lists(List, Code.value);
+    Call_and_display(List, Code.value);
   });
 
   DISPLAY.addEventListener("click", (event) => {
     DISPLAY.style.display = "none";
   });
-}
-
-/*Calling the API*/
-
-//Manage books
-function Call_upload_book(bookName) {}
-function Call_delete_book(folder, book, ext) {
-  fetch(`${ADDRESS}delete-book/${book}&&${ext}&&${folder}`);
-}
-function Call_rename_book(name, ext, folder, newName) {
-  fetch(`${ADDRESS}rename-book/${name}&&${ext}&&${folder}&&${newName}`);
-}
-
-//Manage folders
-function Call_upload_folder(folderName, contents) {}
-function Call_delete_folder(folderName, RMContent) {
-  fetch(`${ADDRESS}delete-folder/${folderName}&&${RMContent}`);
-}
-async function Call_rename_folder(oldName, newName) {
-  Call_and_display(`${ADDRESS}rename-folder/${oldName}&&${newName}`);
-}
-//Manage library
-function Call_create_folder(name) {
-  fetch(`${ADDRESS}create-folder/${name}`);
-}
-function Call_MV_folder(name, ext, oldFolder, newFolder) {
-  fetch(
-    `${ADDRESS}move-book-to-folder/${name}&&${ext}&&${oldFolder}&&${newFolder}`
-  );
-}
-
-//Manage thumbnails
-function Call_re_assign_thumb(folder, book, thumb) {}
-function Call_upload_thumb(image) {}
-function Call_clear_or_repop_thumb_cache(option) {}
-
-//Misc options
-function Call_toggle_downloads(option, code) {
-  fetch(`${ADDRESS}toggle-dl/${option}&&${code}`);
-}
-function Call_toggle_readers(option, code) {
-  fetch(`${ADDRESS}toggle-readers/${option}&&${code}`);
-}
-function Call_manage_ip_lists(target, list, option, code) {
-  fetch(`${ADDRESS}manage-acls/${target}&&${list}&&${option}&&${code}`);
-}
-function Call_toggle_ip_lists(option, code) {
-  fetch(`${ADDRESS}toggle-lists/${option}&&${code}`);
 }
 
 //sending the requests and handling the responses
@@ -179,7 +148,6 @@ async function Call_and_display(requestString) {
 
   DISPLAY.style.display = "block";
   let response = "Response:<br>";
-  //200,400,401,404,406,409,410,428(delete),432,500,501,
   switch (data) {
     case 200:
       response += "Success, the changes you requested have been made.";
@@ -194,7 +162,7 @@ async function Call_and_display(requestString) {
       break;
     case 404:
       response +=
-        "Not found: Please make sure that the book or folder you are accessing exists." +
+        "Not found: Please make sure that the book or folder you are accessing exists and hasn't been moved or renamed." +
         "<br> If this error occured when using any of the forms in the 'Misc options' row please let the developer know.";
       break;
     case 406:
@@ -203,7 +171,7 @@ async function Call_and_display(requestString) {
       break;
     case 409:
       response +=
-        "Conflict: Please make sure there isn't a book or folder that already has that name.";
+        "Conflict: Please make sure there isn't a book or folder that already has that name.<br> If you saw this while editing the ACLs then this ip is probably already on a list.";
       break;
     case 410:
       response +=

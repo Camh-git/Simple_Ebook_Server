@@ -158,6 +158,7 @@ def Create_folder(folder_name):
     if not os.path.exists(target):
         try:
             os.makedirs(target)
+            return "200"
         except Exception as e:
             return "500: " + str(e)
     else:
