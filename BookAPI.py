@@ -60,7 +60,10 @@ def Remove_book(book_name, ext, folder):
 def Rename_book(book_name, ext, folder, new_name):
     if (book_name == "" or ext == "" or folder == "" or new_name == ""):
         return "400"
+    # Make sure the book exists and that a file with a matching name doesn't already exist
     target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
+    if os.path.exists("{0}/{1}/{2}.{3}".format(mainDir, folder, new_name, ext)):
+        return "409"
     if os.path.exists(target):
         try:
             os.rename(
@@ -100,6 +103,7 @@ def Delete_folder(folder_name, delete_content):
     if (folder_name == "" or delete_content == ""):
         return "400"
     target = "{0}/{1}".format(mainDir, folder_name)
+    notifyChange = False
     if os.path.exists(target):
         try:
             if delete_content.upper() != "TRUE":
@@ -112,6 +116,7 @@ def Delete_folder(folder_name, delete_content):
                     if os.path.exists(destination):
                         os.rename(
                             start, "{0}/Misc/MOVED:{1}".format(mainDir, book))
+                        notifyChange = True
                     else:
                         os.rename(start, destination)
 
@@ -120,6 +125,8 @@ def Delete_folder(folder_name, delete_content):
             return "500: " + str(e)
     else:
         return "404"
+    if (notifyChange):
+        return "428"
     return "200"
 
 
@@ -127,7 +134,10 @@ def Delete_folder(folder_name, delete_content):
 def Rename_folder(folder_name, new_name):
     if (folder_name == "" or new_name == ""):
         return "400"
+    # Make sure the folder exists, and stop if a folder with the new name already exists
     target = "{0}/{1}".format(mainDir, folder_name)
+    if os.path.exists("{0}/{1}".format(mainDir, new_name)):
+        return "409"
     if os.path.exists(target):
         try:
             os.rename(target, "{0}/{1}".format(mainDir, new_name))
