@@ -60,7 +60,7 @@ function Assign_submit_actions() {
   document.getElementById("CF_form").addEventListener("submit", (event) => {
     event.preventDefault();
     let Name = event.target.children[1];
-    Call_and_display(`${ADDRESS}create-folder/${Name.value}`);
+    Call_and_display(`${ADDRESS}create-folder/${Name.value}`, true);
   });
 
   document
@@ -143,7 +143,11 @@ function Assign_submit_actions() {
 }
 
 //sending the requests and handling the responses
-async function Call_and_display(requestString) {
+async function Call_and_display(
+  requestString,
+  update_lib_selects = false,
+  show_ip_lists = false
+) {
   const result = await fetch(requestString);
   const data = await result.json();
 
@@ -202,6 +206,18 @@ async function Call_and_display(requestString) {
       response += "No pre-prepared message, status: " + data;
   }
   DISPLAY.children[0].innerHTML = "<h2>click to close<h2><br>" + response;
+
+  //Handle optional params
+  if (update_lib_selects) {
+    Book_folder = document.getElementById("Book_collection");
+    const lib_content = await fetch(`${ADDRESS}list-books`);
+    Book_folder.innerHTML = await lib_content.json();
+  }
+  if (show_ip_lists) {
+    //Get settings
+    //Show lists in tables
+    //Show which list is active
+  }
 }
 
 const ADDRESS = "http://192.168.1.110:5000/";

@@ -21,11 +21,15 @@ def welcome():
 
 @app.route("/list-books")
 def list_books():
-    response = ""
+    list = ''
     for folder in os.listdir(mainDir):
-        response += "->" + folder
+        list += '<div class = "Book_folder"><h5>{0}</h5><ul>'.format(
+            folder)
         for book in os.listdir("{0}/{1}".format(mainDir, folder)):
-            response += ">>" + book
+            list += '<li>{0}</li>'.format(book)
+        list += '</ul></div>'
+    response = app.response_class(response=json.dumps(
+        list), status=200, mimetype='application/json')
     return response
 
 
