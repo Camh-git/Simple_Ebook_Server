@@ -19,9 +19,7 @@ Remaining:
 	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
 	Add a way to see the IP lists and their status on the management pannel
-	add update dir and show ip lists options for call_and_display  
-	
-	
+	add update dir and show ip lists options for call_and_display
 
 Completed:
 	Convert the library to 4 collumns instead of 3

@@ -102,6 +102,9 @@ def Upload_folder(folder_name, contents):
 def Delete_folder(folder_name, delete_content):
     if (folder_name == "" or delete_content == ""):
         return "400"
+    if (folder_name.upper() == "MISC" or folder_name.upper() == "UPLOADS"):
+        return "403"
+
     target = "{0}/{1}".format(mainDir, folder_name)
     notifyChange = False
     if os.path.exists(target):
@@ -134,6 +137,9 @@ def Delete_folder(folder_name, delete_content):
 def Rename_folder(folder_name, new_name):
     if (folder_name == "" or new_name == ""):
         return "400"
+    if (folder_name.upper() == "MISC" or folder_name.upper() == "UPLOADS"):
+        return "403"
+
     # Make sure the folder exists, and stop if a folder with the new name already exists
     target = "{0}/{1}".format(mainDir, folder_name)
     if os.path.exists("{0}/{1}".format(mainDir, new_name)):
@@ -163,7 +169,6 @@ def Create_folder(folder_name):
             return "500: " + str(e)
     else:
         return "409"
-    return "200"
 
 
 @app.route("/move-book-to-folder/<book_name>&&<ext>&&<old_folder_name>&&<new_folder_name>", methods=["GET"])

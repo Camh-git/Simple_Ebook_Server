@@ -136,6 +136,7 @@ function Assign_submit_actions() {
     Call_and_display(List, Code.value);
   });
 
+  //Allow the user to close the response popup
   DISPLAY.addEventListener("click", (event) => {
     DISPLAY.style.display = "none";
   });
@@ -159,6 +160,10 @@ async function Call_and_display(requestString) {
     case 401:
       response +=
         "Unathorised: This action requires authentication, please enter the correct password.";
+      break;
+    case 403:
+      response +=
+        "Forbidden: Users are not allowed to rename or delete the Misc and upload folders";
       break;
     case 404:
       response +=
