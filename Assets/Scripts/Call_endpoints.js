@@ -133,7 +133,11 @@ function Assign_submit_actions() {
     const List = document.querySelector(
       "input[type='radio'][name=IPR_list_choice]:checked"
     ).value;
-    Call_and_display(List, Code.value);
+    Call_and_display(
+      `${ADDRESS}toggle-lists/${List}&&${Code.value}`,
+      false,
+      true
+    );
   });
 
   //Allow the user to close the response popup

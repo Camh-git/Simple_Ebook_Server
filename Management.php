@@ -345,7 +345,6 @@
 <script src = "Assets/Scripts/Append_H&F.js"> </script>
 <script type = "module">
   import "./Assets/Scripts/Populate_management_selects.js"
-  Pop_management_selects()
 </script>
 <script src = "Assets/Scripts/Call_endpoints.js"></script>
 
