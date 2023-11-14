@@ -20,6 +20,7 @@ Remaining:
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
 	Add a way to see the IP lists and their status on the management pannel
 	add update dir and show ip lists options for call_and_display
+	add security to fetch settings
 
 Completed:
 	Convert the library to 4 collumns instead of 3

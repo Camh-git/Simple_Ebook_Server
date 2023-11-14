@@ -236,6 +236,19 @@ def check_password(password):
     return True
 
 
+@app.route("/fetch-settings")
+def Fetch_settings():
+    if os.path.exists("./settings.json"):
+        settings = fetch_settings()
+        json_data = json.loads(settings)
+
+        response = app.response_class(
+            response=json.dumps(json_data), status=200, mimetype='application/json')
+        return response
+    else:
+        return "404"
+
+
 @app.route("/toggle-dl/<option>&&<code>")
 def Toggle_dls(option, code):
     if (option == "" or code == ""):
