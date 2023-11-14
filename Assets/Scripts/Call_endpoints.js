@@ -123,7 +123,9 @@ function Assign_submit_actions() {
       "input[type='radio'][name=IP_list_add_or_rm]:checked"
     ).value;
     Call_and_display(
-      `${ADDRESS}manage-acls/${IP.value}&&${List}&&${Action}&&${Code.value}`
+      `${ADDRESS}manage-acls/${IP.value}&&${List}&&${Action}&&${Code.value}`,
+      false,
+      true
     );
   });
 
@@ -209,7 +211,6 @@ async function Call_and_display(
     default:
       response += "No pre-prepared message, status: " + data;
   }
-  DISPLAY.children[0].innerHTML = "<h2>click to close<h2><br>" + response;
 
   //Handle optional params
   if (update_lib_selects) {
@@ -219,9 +220,39 @@ async function Call_and_display(
   }
   if (show_ip_lists) {
     //Get settings
+    const lists = await fetch(`${ADDRESS}fetch-settings`);
+    list_data = await lists.json();
+
     //Show lists in tables
+    response += "<table><tr><th>Whitelist</th><th>Blacklist</th></tr>";
+
+    for (
+      let i = 0;
+      i <
+      Math.max(list_data["WhiteList"].length, list_data["BlackList"].length);
+      i++
+    ) {
+      WL_data = list_data["WhiteList"][i];
+      BL_data = list_data["BlackList"][i];
+      if (WL_data === undefined) {
+        WL_data = "";
+      }
+      if (BL_data === undefined) {
+        BL_data = "";
+      }
+      response += `<tr><td>${WL_data}</td><td>${BL_data}</td></tr>`;
+    }
     //Show which list is active
+    if (list_data["EnableWhiteList"]) {
+      response += "<br>The Whitelist is enabled.";
+    } else if (list_data["EnableBlackList"]) {
+      response += "<br>The Blacklist is enabled.";
+    } else {
+      response += "<br>Neither of the ACLs are active.";
+    }
   }
+
+  DISPLAY.children[0].innerHTML = "<h2>click to close<h2><br>" + response;
 }
 
 const ADDRESS = "http://192.168.1.110:5000/";

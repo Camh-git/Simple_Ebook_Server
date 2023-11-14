@@ -224,6 +224,18 @@ form {
   border: 10px solid aliceblue;
   border-radius: 10%;
 }
+#Req_status_modal_body table {
+  color: white;
+  width: 25vw;
+  margin-left: 12.5vw;
+  margin-top: 5vh;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+#Req_status_modal_body td {
+  text-align: center;
+  font-size: 1.1rem;
+}
 .Management-row {
   width: 100vw;
   justify-content: center;
