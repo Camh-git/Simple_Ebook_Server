@@ -3,7 +3,6 @@ This should really be a trello/zenhub board
 Remaining:
 
   Major:
-    Populate management with basic crud commands
 	Modify CSS to allow decent mobile use
 	add password authentication to the required endpoints
 
@@ -19,8 +18,8 @@ Remaining:
 	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
 	Add a way to see the IP lists and their status on the management pannel
-	add update dir and show ip lists options for call_and_display
 	add security to fetch settings
+	Maybe find a way to remove the stacking Populate_management_selects.js script tags on the management that happens when the selects are updated
 
 Completed:
 	Convert the library to 4 collumns instead of 3
@@ -29,5 +28,6 @@ Completed:
 	Populate management with basic crud commands
 	setup api
 	setup api calls from the management page 
+	Populate management with basic crud commands
 	Modify manage acls route to only take the actual values call_endpoints sends
 	Modify endpoints to handle not having optional values provided

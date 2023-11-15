@@ -9,8 +9,11 @@ function Pop_management_selects() {
   const footer = document.getElementById("footer_container");
   document.body.appendChild(footer);
 
-  //spilt up the selects into folders, books and misc
+  //clear any existing entries, spilt up the selects into folders, books and misc
   const SELECT_LIST = document.querySelectorAll("select");
+  for (let i = 0; i < SELECT_LIST.length; i++) {
+    SELECT_LIST[i].innerHTML = "<option>No selection</option>";
+  }
   let folderSelects = [];
   let bookSelects = []; //TODO: check if this is redundant
   let miscFolders = [];
@@ -58,7 +61,7 @@ function Pop_management_selects() {
           ) {
             //Once found, go to it's sibling list and collect the books
             let bookList = Folders[x].nextSibling.childNodes;
-            for (y = 0; y < bookList.length; y++) {
+            for (let y = 0; y < bookList.length; y++) {
               bookSelectContents +=
                 "<option value = " +
                 bookList[y].innerHTML.replace(":", "") +
@@ -81,4 +84,4 @@ function Pop_management_selects() {
 
   //Case by case handling for the misc selects
 }
-export default Pop_management_selects();
+Pop_management_selects();

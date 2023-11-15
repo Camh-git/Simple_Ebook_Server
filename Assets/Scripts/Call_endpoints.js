@@ -11,7 +11,8 @@ function Assign_submit_actions() {
         Book.options[Book.selectedIndex].innerHTML.split(".")[0]
       }&&${Book.options[Book.selectedIndex].innerHTML.split(".")[1]}&&${
         Folder.options[Folder.selectedIndex].innerHTML
-      }`
+      }`,
+      true
     );
   });
   document.getElementById("RS_form").addEventListener("submit", (event) => {
@@ -24,7 +25,8 @@ function Assign_submit_actions() {
         Book.options[Book.selectedIndex].innerHTML.split(".")[0]
       }&&${Book.options[Book.selectedIndex].innerHTML.split(".")[1]}&&${
         Folder.options[Folder.selectedIndex].innerHTML
-      }&&${New_name.value}`
+      }&&${New_name.value}`,
+      true
     );
   });
 
@@ -41,7 +43,8 @@ function Assign_submit_actions() {
     Call_and_display(
       `${ADDRESS}delete-folder/${
         Folder.options[Folder.selectedIndex].innerHTML
-      }&&${Delete}`
+      }&&${Delete}`,
+      true
     );
   });
 
@@ -52,7 +55,8 @@ function Assign_submit_actions() {
     Call_and_display(
       `${ADDRESS}rename-folder/${
         Folder.options[Folder.selectedIndex].innerHTML
-      }&&${New_name.value}`
+      }&&${New_name.value}`,
+      true
     );
   });
 
@@ -76,7 +80,8 @@ function Assign_submit_actions() {
           Book.options[Book.selectedIndex].innerHTML.split(".")[0]
         }&&${Book.options[Book.selectedIndex].innerHTML.split(".")[1]}&&${
           Old_folder.options[Old_folder.selectedIndex].innerHTML
-        }&&${New_folder.options[New_folder.selectedIndex].innerHTML}`
+        }&&${New_folder.options[New_folder.selectedIndex].innerHTML}`,
+        true
       );
     });
 
@@ -217,6 +222,7 @@ async function Call_and_display(
     Book_folder = document.getElementById("Book_collection");
     const lib_content = await fetch(`${ADDRESS}list-books`);
     Book_folder.innerHTML = await lib_content.json();
+    run_pop_select();
   }
   if (show_ip_lists) {
     //Get settings
@@ -254,7 +260,13 @@ async function Call_and_display(
 
   DISPLAY.children[0].innerHTML = "<h2>click to close<h2><br>" + response;
 }
-
+function run_pop_select() {
+  //re-usable no-module way of importing the populate script
+  const pop_select_script = document.createElement("script");
+  pop_select_script.src = "./Assets/Scripts/Populate_management_selects.js";
+  document.body.prepend(pop_select_script);
+}
 const ADDRESS = "http://192.168.1.110:5000/";
 const DISPLAY = document.getElementById("Req_status_modal");
+const SELECT_LIST = document.querySelectorAll("select");
 Assign_submit_actions();
