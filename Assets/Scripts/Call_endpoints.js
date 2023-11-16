@@ -1,6 +1,5 @@
 function Assign_submit_actions() {
   //Get the submit btns/forms and assign their actions to the functions
-
   //Manage books
   document.getElementById("DS_form").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -219,10 +218,11 @@ async function Call_and_display(
 
   //Handle optional params
   if (update_lib_selects) {
-    Book_folder = document.getElementById("Book_collection");
-    const lib_content = await fetch(`${ADDRESS}list-books`);
-    Book_folder.innerHTML = await lib_content.json();
-    run_pop_select();
+    //re-usable no-module way of importing the populate script
+    const pop_select_script = document.createElement("script");
+    pop_select_script.src = "./Assets/Scripts/Populate_management_selects.js";
+    document.body.prepend(pop_select_script);
+    pop_select_script.remove();
   }
   if (show_ip_lists) {
     //Get settings
@@ -260,13 +260,7 @@ async function Call_and_display(
 
   DISPLAY.children[0].innerHTML = "<h2>click to close<h2><br>" + response;
 }
-function run_pop_select() {
-  //re-usable no-module way of importing the populate script
-  const pop_select_script = document.createElement("script");
-  pop_select_script.src = "./Assets/Scripts/Populate_management_selects.js";
-  document.body.prepend(pop_select_script);
-}
+
 const ADDRESS = "http://192.168.1.110:5000/";
 const DISPLAY = document.getElementById("Req_status_modal");
-const SELECT_LIST = document.querySelectorAll("select");
 Assign_submit_actions();

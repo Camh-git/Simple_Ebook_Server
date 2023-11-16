@@ -23,7 +23,7 @@ def welcome():
 def list_books():
     list = ''
     for folder in os.listdir(mainDir):
-        list += '<div class = "Book_folder"><h5>{0}</h5><ul>'.format(
+        list += '<div class = "Book_folder"><h5 class="book_list_title">{0}</h5><ul>'.format(
             folder)
         for book in os.listdir("{0}/{1}".format(mainDir, folder)):
             list += '<li>{0}</li>'.format(book)

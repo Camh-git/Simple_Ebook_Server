@@ -1,5 +1,8 @@
-function Pop_management_selects() {
-  //This script collects all the book info php left behind and creates an object from it.
+async function Pop_management_selects() {
+  //This script collects book info and creates an object from it.
+  const Book_folder = document.getElementById("Book_collection");
+  const lib_content = await fetch(`http://192.168.1.110:5000/list-books`);
+  Book_folder.innerHTML = await lib_content.json();
 
   //Get and hide the folders and their associated books, move the pannel to the correct position
   const FOLDERS = document.getElementById("Book_collection");
@@ -29,7 +32,8 @@ function Pop_management_selects() {
 
   //populate the folder selects with all the folders
   let selectContents = "";
-  const FOLDER_TITLES = document.querySelectorAll("h5");
+  const FOLDER_TITLES = document.getElementsByClassName("book_list_title");
+  console.log(FOLDER_TITLES.length);
   for (let i = 0; i < FOLDER_TITLES.length; i++) {
     selectContents +=
       "<option value = " +
@@ -84,4 +88,5 @@ function Pop_management_selects() {
 
   //Case by case handling for the misc selects
 }
+
 Pop_management_selects();

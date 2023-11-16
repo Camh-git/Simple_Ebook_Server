@@ -5,47 +5,7 @@
     <link rel="stylesheet" href="Assets/StyleSheet.css"/>		
   </head>
 	
-<div id = "header_container"> </div>
-<?php
-    #Fetch every folder in books   
-  	$path = "\Books\\".DIRECTORY_SEPARATOR."*";
-	  $Folders = glob($path,GLOB_ONLYDIR);
-	
-	  $Collumn_num = 1;
-    $Output = '<div id = "Book_collection">';
-    #Show the contents of every book folder
-  	foreach ($Folders as $dir){
-      $Output .= "<div class ='Book_folder'>";
-		  #Get and print the folder name
-		  $Title = substr($dir,6);
-		  $Output .='<h5>'.$Title.':</h5>';
-		  $content = glob("".$dir."/{*.*}",GLOB_BRACE);
-
-      #List the books
-		  $Output .='<ul>';
-		  foreach($content as $book)
-		  {
-        #Get the books name from it's filepath and tidy it up. 
-        #TODO: consider re-implementing this, but having it tidy up the source files aswell so they can still be manipulated
-        $Name = pathinfo($book,PATHINFO_BASENAME);
-        /*
-		    $Name = str_replace('_',' ', pathinfo($book,PATHINFO_BASENAME ));	
-			  {
-				  $Name[0] = strtoupper($Name[0]);
-			  }
-			  catch(Exception $e) {
-				  echo "<script>console.log('Failed to capitalise a title with error:".$e->getMessage()."')</script>";
-			  }*/
-        $Output .= '<li>'.$Name.'</li>';
-      }
-      $Output .='</ul></div>';
-
-    }
-    $Output .="</div>";
-		#This output is echoed onto the screen so it can be manipulated by JS
-		echo($Output);
-?>
-
+<div id = "header_container"></div>
 <body>
 <div id = "Management_pannel">
   <h1>Management</h1>
@@ -53,10 +13,9 @@
   <!--Note on input names: Each input name has a prefix related to it's form eg: inputs for delete single have the prefix DS_-->
   <!-- TODO: 
     Add thumbnail management form(auto fetch and manualy assgin/upload thumbs)
-    Investigate adding a completion popup
-    Swap the upload book and folder forms over the the python approach when ready
+    Swap the upload book and folder forms over to the python approach when ready
   -->
-  
+
   <section id = "Req_status_modal">
     <div id="Req_status_modal_body">
       <p>Click anywhere in the background to close this popup</P>
@@ -342,10 +301,9 @@
 </body>
 
 <div id = "footer_container"></div>
+<div id = "Book_collection">
 <script src = "Assets/Scripts/Append_H&F.js"> </script>
-<script type = "module">
-  import "./Assets/Scripts/Populate_management_selects.js"
-</script>
+<script src = "./Assets/Scripts/Populate_management_selects.js"></script>
 <script src = "Assets/Scripts/Call_endpoints.js"></script>
-
+<div id = "Book_collection">
 </html>

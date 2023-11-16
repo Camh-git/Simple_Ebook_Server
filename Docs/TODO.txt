@@ -17,9 +17,9 @@ Remaining:
 	re-implement the name tidying in the management dropdowns, have it change the source file name to maintain control(maybe clean on upload since it's also php)
 	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
-	Add a way to see the IP lists and their status on the management pannel
 	add security to fetch settings
-	Maybe find a way to remove the stacking Populate_management_selects.js script tags on the management that happens when the selects are updated
+	
+	Investigate why the placement of the management page's "book_collection" div changes how the page populates
 
 Completed:
 	Convert the library to 4 collumns instead of 3
@@ -31,3 +31,5 @@ Completed:
 	Populate management with basic crud commands
 	Modify manage acls route to only take the actual values call_endpoints sends
 	Modify endpoints to handle not having optional values provided
+	add update dir and show ip lists options for call_and_display
+	Maybe find a way to remove the stacking Populate_management_selects.js script tags on the management that happens when the selects are updated
