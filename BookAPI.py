@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS, cross_origin
+import glob
 import os
 import shutil
 import json
@@ -209,9 +210,34 @@ def Upload_thumb(image):
     return 501
 
 
-@app.route("/clear-thumbs/<option>", methods=["PUT"])
-def Clear_thumbs(option):
-    return 501
+@app.route("/clear-thumbs/<regen>&&<rmManual>")
+def Clear_thumbs(regen, rmManual):
+    path = "./Assets/Images/Thumbnail_cache/"
+
+    if os.path.exists(path):
+        files = glob.glob(path+"*")
+        # Clear the existing cache, execept for manual uploads (can alt with param)
+        if (rmManual == "true"):
+            for f in files:
+                os.remove(f)
+        else:
+            for f in files:
+                # Add check here
+                os.remove(f)
+
+        if (regen == "true"):
+            try:
+                generate_thumbs()
+            except Exception as e:
+                return "500"
+
+        return "200"
+    else:
+        return "404"
+
+
+def generate_thumbs():
+    return "501"
 
 # Misc option functions
 # TODO: add password authentication to these endpoints

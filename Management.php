@@ -200,16 +200,14 @@
       </p>
       <p>Re-populate will automaticaly empty and then refill the folder</p>
 
-      <table>
-        <tr>
-          <label for = "Thumb_delete_all">Clear cache</label>
-          <input type = "Radio" name = "Thumb_cache_format" id = "Thumb_delete_all"/>
-        </tr>
-        <tr>
-          <label for = "Thumb_regen">Repopulate cache</label>
-          <input type = "Radio" name = "Thumb_cache_format" id = "Thumb_regen"/> 
-        </tr>
-      </table>
+      
+      <label for = "Thumb_regen">Repopulate cache</label>
+      <input type = "checkbox" name = "Thumb_cache_format" id = "Thumb_regen"/> 
+      <br>
+      
+      <label for = "Thumb_delete_all">Remove manual additions</label>
+      <input type = "checkbox" name = "Thumb_cache_format" id = "Thumb_rm_manual"/>
+      <br>
       
       <input type = "submit" value = "Start"/>
       <h3 class = "Warning">

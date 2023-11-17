@@ -93,7 +93,22 @@ function Assign_submit_actions() {
     .addEventListener("submit", (event) => {});
   document
     .getElementById("TH_format_form")
-    .addEventListener("submit", (event) => {});
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      let regen = event.target.children[4];
+      let rmManual = event.target.children[7];
+      if (regen.checked) {
+        regen = true;
+      } else {
+        regen = false;
+      }
+      if (rmManual.checked) {
+        rmManual = true;
+      } else {
+        rmManual = false;
+      }
+      Call_and_display(`${ADDRESS}clear-thumbs/${regen}&&${rmManual}`);
+    });
 
   //Misc options
   document
@@ -151,7 +166,6 @@ function Assign_submit_actions() {
     DISPLAY.style.display = "none";
   });
 }
-
 //sending the requests and handling the responses
 async function Call_and_display(
   requestString,

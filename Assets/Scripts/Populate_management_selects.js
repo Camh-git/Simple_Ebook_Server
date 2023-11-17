@@ -33,7 +33,6 @@ async function Pop_management_selects() {
   //populate the folder selects with all the folders
   let selectContents = "";
   const FOLDER_TITLES = document.getElementsByClassName("book_list_title");
-  console.log(FOLDER_TITLES.length);
   for (let i = 0; i < FOLDER_TITLES.length; i++) {
     selectContents +=
       "<option value = " +

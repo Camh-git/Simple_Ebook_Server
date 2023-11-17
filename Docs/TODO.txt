@@ -18,8 +18,8 @@ Remaining:
 	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
 	add security to fetch settings
-	
 	Investigate why the placement of the management page's "book_collection" div changes how the page populates
+	add a option to clear endpoints to allow keeping of manualy uploaded files
 
 Completed:
 	Convert the library to 4 collumns instead of 3
