@@ -215,15 +215,14 @@ def Clear_thumbs(regen, rmManual):
     path = "./Assets/Images/Thumbnail_cache/"
 
     if os.path.exists(path):
-        files = glob.glob(path+"*")
-        # Clear the existing cache, execept for manual uploads (can alt with param)
+        # Clear the existing cache, execept for manual uploads (unless instructed)
         if (rmManual == "true"):
-            for f in files:
-                os.remove(f)
+            for file in os.listdir(path):
+                os.remove(path+file)
         else:
-            for f in files:
-                # Add check here
-                os.remove(f)
+            for file in os.listdir(path):
+                if not file.startswith("MAN-"):
+                    os.remove(path+file)
 
         if (regen == "true"):
             try:
