@@ -184,12 +184,13 @@
     </form>
 
     <!--Upload thumbnail -->
-    <form method = "POST" enctype="multipart/form-data" id = "TH_upload_form">
+    <form method = "POST" enctype="multipart/form-data" id = "TH_upload_form" action = "Assets/Scripts/Upload_thumb.php">
       <h3>Upload a thumbnail</h3>
-      <input type = "file" name = "Thumb_upload" accept = ".png,.jpg,.jpeg,.svg,.gif,.webp,.xcf,.psd"/>
+      <input type = "file" name = "New_thumb_inp" accept = ".png,.jpg,.jpeg,.svg,.gif,.webp,.xcf,.psd"/>
       <br>
       <input type = "submit" value = "Upload"/>
     </form>
+    <!-- -->
 
     <!--Format thumbnail cache-->
     <form method = "POST" enctype="multipart/form-data" id = "TH_format_form">
@@ -202,7 +203,7 @@
 
       
       <label for = "Thumb_regen">Repopulate cache</label>
-      <input type = "checkbox" name = "Thumb_cache_format" id = "Thumb_regen"/> 
+      <input type = "checkbox" name = "Thumb_cache_format" id = "Thumb_regen" checked = "True"/> 
       <br>
       
       <label for = "Thumb_delete_all">Remove manual additions</label>

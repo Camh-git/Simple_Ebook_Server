@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_cors import CORS, cross_origin
-import glob
 import os
 import shutil
 import json

@@ -1,17 +1,17 @@
 <?php
-  if(isset($_FILES['US_file_inp']))
+  if(isset($_FILES['New_thumb_inp']))
   {
     //var_dump($_FILES); #For debug, disable in production
     try{
-      $file = $_FILES["US_file_inp"];
-      $targetPath="../../Books/Uploads/".basename($file["name"]);
+      $file = $_FILES["New_thumb_inp"];
+      $targetPath="../../Assets/Images/Thumbnail_cache/".basename($file["name"]);
     
       if(copy($file['tmp_name'],$targetPath))
       {
-        echo("Book uploaded to: Uploads/".basename($_FILES["US_file_inp"]["name"]));
+        echo("Thumbnail uploaded to: /".basename($_FILES["New_thumb_inp"]["name"]));
       }
       //Send the user to the success screen
-      readfile("../Confirmation_messages/Upload_book_success.html");
+      readfile("../Confirmation_messages/Upload_thumb_success.html");
     }
     catch(Exception $e) {
       echo $e->getMessage();

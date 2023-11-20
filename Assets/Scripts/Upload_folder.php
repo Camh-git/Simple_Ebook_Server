@@ -22,6 +22,7 @@
             if(move_uploaded_file($tmpFilePath, $newFilePath)) {} 
           }
         }
+        readfile("../Confirmation_messages/Upload_folder_success.html");
       }
       catch(Exception $e) {
         echo $e->getMessage();
