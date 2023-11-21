@@ -144,7 +144,8 @@ function Assign_submit_actions() {
     Call_and_display(
       `${ADDRESS}manage-acls/${IP.value}&&${List}&&${Action}&&${Code.value}`,
       false,
-      true
+      true,
+      Code
     );
   });
 
@@ -157,7 +158,8 @@ function Assign_submit_actions() {
     Call_and_display(
       `${ADDRESS}toggle-lists/${List}&&${Code.value}`,
       false,
-      true
+      true,
+      Code
     );
   });
 
@@ -170,7 +172,8 @@ function Assign_submit_actions() {
 async function Call_and_display(
   requestString,
   update_lib_selects = false,
-  show_ip_lists = false
+  show_ip_lists = false,
+  code = ""
 ) {
   const result = await fetch(requestString);
   const data = await result.json();
@@ -179,8 +182,16 @@ async function Call_and_display(
   let response = "Response:<br>";
   switch (data) {
     case 200:
+    case 204:
       response += "Success, the changes you requested have been made.";
       break;
+    case 201:
+      response += "Created, the additions you requested have been made.";
+    case 202:
+      response +=
+        " Accepted, your request is being processed, be sure to check back soon.";
+    case 205:
+      response += "Success, please reload the page to see your changes.";
     case 400:
       response +=
         "Request error: Please make sure all required fields are filled in.";
@@ -238,9 +249,9 @@ async function Call_and_display(
     document.body.prepend(pop_select_script);
     pop_select_script.remove();
   }
-  if (show_ip_lists) {
+  if (show_ip_lists && data == "200") {
     //Get settings
-    const lists = await fetch(`${ADDRESS}fetch-settings`);
+    const lists = await fetch(`${ADDRESS}fetch-settings/${code}`);
     list_data = await lists.json();
 
     //Show lists in tables

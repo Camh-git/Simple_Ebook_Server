@@ -199,9 +199,22 @@ def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, ):
 # Thumbnail management functions
 
 
-@app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>", methods=["PUT"])
+@app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>")
 def Reasign_thumb(folder_name, book_name, thumb):
-    return 501
+    if os.path.exists("./Assets/Images/Thumbnail_map.json"):
+        map = ""
+        with open("./Assets/Images/Thumbnail_map.json", "r") as json_file:
+            json_data = json_file.read()
+            map = json.loads(json_data)
+
+        # Manipulate the map
+        return map["Books"]
+
+        with open("./Assets/Images/Thumbnail_map.json", "w") as json_file:
+            json.dump(map, json_file, indent=4)
+            return "200"
+    else:
+        return "404"
 
 
 @app.route("/upload-thumb/<image>")
@@ -238,32 +251,53 @@ def generate_thumbs():
     return "501"
 
 # Misc option functions
-# TODO: add password authentication to these endpoints
+# TODO: implement the password check, opt: make settings json handlers not file specific
 
 
-def fetch_settings():
-    with open("settings.json", "r") as json_file:
+def read_json_no_code(file):
+    with open(file, "r") as json_file:
         data = json_file.read()
         return data
 
 
-def write_settings(data):
-    try:
-        with open("settings.json", "w") as json_file:
-            json.dump(data, json_file, indent=4)
-            return "200"
-    except Exception as e:
-        return "500: " + str(e)
+def write_json_no_code(file, data):
+    with open(file, "w") as json_file:
+        json.dump(data, json_file, indent=4)
+        return "200"
+
+
+def fetch_settings(password):
+    if check_password(password):
+        try:
+            with open("settings.json", "r") as json_file:
+                data = json_file.read()
+                return data
+        except Exception as e:
+            return "500: " + str(e)
+    else:
+        return "401"
+
+
+def write_settings(data, password):
+    if check_password(password):
+        try:
+            with open("settings.json", "w") as json_file:
+                json.dump(data, json_file, indent=4)
+                return "200"
+        except Exception as e:
+            return "500: " + str(e)
+    else:
+        return "401"
 
 
 def check_password(password):
     return True
 
 
-@app.route("/fetch-settings")
-def Fetch_settings():
+@app.route("/fetch-settings/<code>")
+def Show_settings(code):
     if os.path.exists("./settings.json"):
-        settings = fetch_settings()
+        settings = fetch_settings(code)
         json_data = json.loads(settings)
 
         response = app.response_class(
@@ -279,13 +313,13 @@ def Toggle_dls(option, code):
         return "400"
     if check_password(code):
         if os.path.exists("./settings.json"):
-            settings = fetch_settings()
+            settings = fetch_settings(code)
             json_data = json.loads(settings)
             if option.upper() == "TRUE":
                 json_data["EnableDownloads"] = True
             else:
                 json_data["EnableDownloads"] = False
-            return write_settings(json_data)
+            return write_settings(json_data, code)
         return "404"
     else:
         return "401"
@@ -297,13 +331,13 @@ def Toggle_readers(option, code):
         return "400"
     if check_password(code):
         if os.path.exists("./settings.json"):
-            settings = fetch_settings()
+            settings = fetch_settings(code)
             json_data = json.loads(settings)
             if option.upper() == "TRUE":
                 json_data["EnableReaders"] = True
             else:
                 json_data["EnableReaders"] = False
-            return write_settings(json_data)
+            return write_settings(json_data, code)
         else:
             return "404"
     else:
@@ -316,7 +350,7 @@ def Toggle_lists(option, code):
         return "400"
     if check_password(code):
         if os.path.exists("./settings.json"):
-            settings = fetch_settings()
+            settings = fetch_settings(code)
             json_data = json.loads(settings)
             if option.upper() == "WHITELIST":
                 json_data["EnableWhiteList"] = True
@@ -329,7 +363,7 @@ def Toggle_lists(option, code):
                 json_data["EnableBlackList"] = False
             else:
                 return "406"
-            return write_settings(json_data)
+            return write_settings(json_data, code)
         else:
             return "404"
     else:
@@ -345,7 +379,7 @@ def Manage_acls(address, list, option, code):
     status = "0"
     if check_password(code):
         if os.path.exists("./settings.json"):
-            settings = fetch_settings()
+            settings = fetch_settings(code)
             json_data = json.loads(settings)
 
             # Manage whitelist
@@ -383,7 +417,7 @@ def Manage_acls(address, list, option, code):
             # Write to settings
             if status != "0":
                 return status
-            return write_settings(json_data)
+            return write_settings(json_data, code)
         else:
             return "404"
     else:
