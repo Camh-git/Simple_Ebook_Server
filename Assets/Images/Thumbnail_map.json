@@ -1,5 +1,6 @@
 {
-  //This will probably use the google books api to get images
-  //Example obj: {"Folder":"","Name":"","Thumb":""}
-  "Books": [{ "Folder": "abc", "Name": "123", "Thumb": "thumb.png" }]
+  "Books": [
+    { "Folder": "Misc", "Name": "apples.txt", "Thumb": "New1.png" },
+    { "Folder": "test", "Name": "Move.txt", "Thumb": "New2.jpg" }
+  ]
 }

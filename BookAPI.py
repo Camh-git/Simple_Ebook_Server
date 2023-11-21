@@ -202,17 +202,17 @@ def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, ):
 @app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>")
 def Reasign_thumb(folder_name, book_name, thumb):
     if os.path.exists("./Assets/Images/Thumbnail_map.json"):
-        map = ""
-        with open("./Assets/Images/Thumbnail_map.json", "r") as json_file:
-            json_data = json_file.read()
-            map = json.loads(json_data)
+        json_data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
+        map = json.loads(json_data)
 
         # Manipulate the map
-        return map["Books"]
+        for book in map["Books"]:
+            if book["Folder"] == folder_name and book["Name"] == book_name:
+                book.update({"Thumb": thumb})
 
-        with open("./Assets/Images/Thumbnail_map.json", "w") as json_file:
-            json.dump(map, json_file, indent=4)
-            return "200"
+        # return str(map["Books"][0]["Name"] in os.listdir("./Books/"+map["Books"][0]["Folder"]))
+        return write_json_no_code("./Assets/Images/Thumbnail_map.json", map)
+
     else:
         return "404"
 
@@ -255,15 +255,21 @@ def generate_thumbs():
 
 
 def read_json_no_code(file):
-    with open(file, "r") as json_file:
-        data = json_file.read()
-        return data
+    try:
+        with open(file, "r") as json_file:
+            data = json_file.read()
+            return data
+    except Exception as e:
+        return "500: " + str(e)
 
 
 def write_json_no_code(file, data):
-    with open(file, "w") as json_file:
-        json.dump(data, json_file, indent=4)
-        return "200"
+    try:
+        with open(file, "w") as json_file:
+            json.dump(data, json_file, indent=4)
+            return "200"
+    except Exception as e:
+        return "500: " + str(e)
 
 
 def fetch_settings(password):

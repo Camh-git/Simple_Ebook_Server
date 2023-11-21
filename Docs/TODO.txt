@@ -21,6 +21,10 @@ Remaining:
 	Investigate why the placement of the management page's "book_collection" div changes how the page populates
 	add a option to clear endpoints to allow keeping of manualy uploaded files
 
+  Notes:
+	Thumbnails will probably use the google books api to get images
+	Example thumbnail map obj: {"Folder":"","Name":"","Thumb":""}
+
 Completed:
 	Convert the library to 4 collumns instead of 3
 	populate the management page's select elements using the library's contents

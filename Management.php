@@ -175,10 +175,12 @@
       </select>
       <br>
 
-      <p>Select new image.</p>
-      <select name = "Thumb_new_select">
+      <label for = "TH_new_select">Select new image.</label>
+      <select name = "TH_new_select">
         <option Value = "None">No selection</option>
       </select>
+      <br>
+      <br>
 
       <input type = "submit" value = "Change"/>
     </form>
@@ -235,7 +237,7 @@
       <input type = "password" name = "DL_toggle_PW" placeholder = "Password"/> 
       <input type = "submit" value = "Apply">
 
-      <h3 class="Warning">Note: this function is solely for personal use, do not enable if server is shared</h3>
+      <h3 class="Warning">Note: This function is solely for personal use, do not enable if server is shared</h3>
       
     </form>
 
