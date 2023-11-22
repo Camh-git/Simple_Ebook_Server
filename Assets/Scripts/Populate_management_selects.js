@@ -4,11 +4,12 @@ async function Pop_management_selects() {
   const lib_content = await fetch(`http://192.168.1.110:5000/list-books`);
   Book_folder.innerHTML = await lib_content.json();
 
-  //Get and hide the folders and their associated books, move the pannel to the correct position
-  const FOLDERS = document.getElementById("Book_collection");
-  FOLDERS.style.display = "none";
-  const controls = document.getElementById("Management_pannel");
-  document.body.appendChild(controls);
+  //Collect the thumbnail info in a similar manner
+  const Thumb_collection = document.getElementById("Thumb_collection");
+  const Thumb_content = await fetch(`http://192.168.1.110:5000/list-thumbs`);
+  Thumb_collection.innerHTML += await Thumb_content.json();
+
+  //Get the folders and their associated books, move the pannel to the correct position
   const footer = document.getElementById("footer_container");
   document.body.appendChild(footer);
 
@@ -34,12 +35,8 @@ async function Pop_management_selects() {
   let selectContents = "";
   const FOLDER_TITLES = document.getElementsByClassName("book_list_title");
   for (let i = 0; i < FOLDER_TITLES.length; i++) {
-    selectContents +=
-      "<option value = " +
-      FOLDER_TITLES[i].innerHTML.replace(":", "") +
-      ">" +
-      FOLDER_TITLES[i].innerHTML.replace(":", "") +
-      "</option>";
+    const entry = FOLDER_TITLES[i].innerHTML.replace(":", "");
+    selectContents += `<option value = ${entry}>${entry}</option>`;
   }
   for (let i = 0; i < folderSelects.length; i++) {
     folderSelects[i].innerHTML += selectContents;
@@ -65,13 +62,8 @@ async function Pop_management_selects() {
             //Once found, go to it's sibling list and collect the books
             let bookList = Folders[x].nextSibling.childNodes;
             for (let y = 0; y < bookList.length; y++) {
-              bookSelectContents +=
-                "<option value = " +
-                bookList[y].innerHTML.replace(":", "") +
-                ">" +
-                bookList[y].innerHTML.replace(":", "") +
-                "</option>";
-              //console.log(bookList[y].innerHTML);
+              const entry = bookList[y].innerHTML.replace(":", "");
+              bookSelectContents += `<option value = '${entry}'>${entry}</option>`;
             }
           }
         }
@@ -86,6 +78,13 @@ async function Pop_management_selects() {
   }
 
   //Case by case handling for the misc selects
+  const Thumb_select = document.getElementById("TH_new_select");
+  Thumb_select.innerHTML = "<option>No selection</option>";
+  Thumb_list = document.getElementById("Thumb_list").children;
+  for (let i = 0; i < Thumb_list.length; i++) {
+    const entry = Thumb_list[i].innerHTML.replace(":", "");
+    Thumb_select.innerHTML += `<option value = '${entry}'>${entry}</option>`;
+  }
 }
 
 Pop_management_selects();

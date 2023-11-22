@@ -14,8 +14,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def welcome():
     return "Hello from basic ebook server"
 
-# TODO: modify methods to handle not having optional values
-
 
 # Book methods
 
@@ -199,6 +197,21 @@ def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, ):
 # Thumbnail management functions
 
 
+@app.route("/list-thumbs")
+def List_Thumbs():
+    list = '<ul id = "Thumb_list">'
+    for image in os.listdir("./Assets/Images/Thumbnail_cache/"):
+        list += '<li>{0}</li>'.format(image)
+    list += '</ul>'
+    response = app.response_class(response=json.dumps(
+        list), status=200, mimetype='application/json')
+    return response
+
+
+def generate_thumbs():
+    return "501"
+
+
 @app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>")
 def Reasign_thumb(folder_name, book_name, thumb):
     if os.path.exists("./Assets/Images/Thumbnail_map.json"):
@@ -208,7 +221,7 @@ def Reasign_thumb(folder_name, book_name, thumb):
         # Manipulate the map
         for book in map["Books"]:
             if book["Folder"] == folder_name and book["Name"] == book_name:
-                book.update({"Thumb": thumb})
+                book.update({"Thumb": thumb.replace(" ", "")})
 
         # return str(map["Books"][0]["Name"] in os.listdir("./Books/"+map["Books"][0]["Folder"]))
         return write_json_no_code("./Assets/Images/Thumbnail_map.json", map)
@@ -246,9 +259,6 @@ def Clear_thumbs(regen, rmManual):
     else:
         return "404"
 
-
-def generate_thumbs():
-    return "501"
 
 # Misc option functions
 # TODO: implement the password check, opt: make settings json handlers not file specific

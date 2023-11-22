@@ -36,7 +36,6 @@
     </form>
 
     <!--Delete single-->
-    <!--TODO: make this send a variable with the filename-->
     <form method = "POST" enctype = "multipart/form-data" id = "DS_form">
       <h3>Delete book</h3>
       <label for = "DS_folder_select">Select folder</label>
@@ -54,7 +53,7 @@
       <input type="submit" value = "Submit" />
     </form>
 
-    <!--Rename single TODO:write this-->
+    <!--Rename single-->
     <form method = "POST" enctype = "multipart/form-data" id = "RS_form">
       <h3>Rename book</h3>
       <label for = "RS_folder_select">Select folder</label>
@@ -77,7 +76,7 @@
   <!--Manage folders-->
   <h2>Manage folders</h2>
   <section class="flex-container Management-row">
-    <!--Upload folder TODO: make this take a name for the folder, fix upload -->
+    <!--Upload folder -->
     <form method = "POST" enctype = "multipart/form-data" action = "Assets/Scripts/Upload_folder.php">
       <h3>Upload folder</h3>
       <input type = "text" name = "UF_name" placeholder = "name">
@@ -87,7 +86,7 @@
       <input type = "submit" value = "upload" />
     </form>
 
-    <!--Delete folder TODO:double check this works with new naming-->
+    <!--Delete folder-->
     <form method = "POST" enctype = "multipart/form-data" id = "DF_form">
       <h3>Delete folder</h3>
 
@@ -103,7 +102,7 @@
       <label for = "DS_Delete_content">Delete folder content?(Content will be moved to misc if not checked)</label>
     </form>
 
-    <!--Rename folder TODO: fix the path compilation, add the rename function-->
+    <!--Rename folder-->
     <form method = "POST" enctype = "multipart/form-data" id = "RF_form"> 
       <h3>Rename folder</h3>
 
@@ -159,7 +158,7 @@
   <!--Manage thumbnails-->
   <h2>Manage Thumbnails</h2>
   <section class = "flex-container Management-row">
-    <!--Manage thumbnails TODO:write this-->
+    <!--Manage thumbnails-->
     <form method = "POST" enctype="multipart/form-data" id = "TH_select_form">
       <h3>Re-assign Thumbnails</h3>
 
@@ -176,7 +175,7 @@
       <br>
 
       <label for = "TH_new_select">Select new image.</label>
-      <select name = "TH_new_select">
+      <select name = "TH_new_select" id = "TH_new_select">
         <option Value = "None">No selection</option>
       </select>
       <br>
@@ -300,11 +299,11 @@
 </div>
 
 </body>
-
 <div id = "footer_container"></div>
-<div id = "Book_collection">
+<div id = "Thumb_collection" class = "Display-none">
+<div id = "Book_collection" class = "Display-none">
 <script src = "Assets/Scripts/Append_H&F.js"> </script>
 <script src = "./Assets/Scripts/Populate_management_selects.js"></script>
 <script src = "Assets/Scripts/Call_endpoints.js"></script>
-<div id = "Book_collection">
+
 </html>

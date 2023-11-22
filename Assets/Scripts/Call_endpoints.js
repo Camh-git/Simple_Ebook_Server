@@ -87,7 +87,18 @@ function Assign_submit_actions() {
   //Manage thumbnails
   document
     .getElementById("TH_select_form")
-    .addEventListener("submit", (event) => {});
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      let Folder = event.target.children[2];
+      let Book = event.target.children[5];
+      let Image = event.target.children[8];
+      Call_and_display(
+        `${ADDRESS}reassign-thumb/${
+          Folder.options[Folder.selectedIndex].innerHTML
+        }&&${Book.options[Book.selectedIndex].innerHTML}&&
+        ${Image.options[Image.selectedIndex].innerHTML}`
+      );
+    });
   document
     .getElementById("TH_upload_form")
     .addEventListener("submit", (event) => {});

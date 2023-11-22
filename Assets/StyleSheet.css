@@ -41,6 +41,9 @@ form {
 ::marker {
   color: aliceblue;
 }
+.Display-none {
+  display: none;
+}
 
 /*Header styles*/
 #Header-bar {

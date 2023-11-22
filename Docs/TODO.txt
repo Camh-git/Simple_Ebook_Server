@@ -4,7 +4,7 @@ Remaining:
 
   Major:
 	Modify CSS to allow decent mobile use
-	add password authentication to the required endpoints
+	add password authentication
 
   Minor:
 	Implement Epub reader
@@ -13,13 +13,12 @@ Remaining:
 	populate and use the thumbnail cache
 	go through the js and add cammel case/ generaly tidy up
 	set constant vars(not just const) where appropriate, apply screaming snake case
-	move management php/js to other files, make the folder and book select js names more sensible
 	re-implement the name tidying in the management dropdowns, have it change the source file name to maintain control(maybe clean on upload since it's also php)
-	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
-	add security to fetch settings
-	Investigate why the placement of the management page's "book_collection" div changes how the page populates
-	add a option to clear endpoints to allow keeping of manualy uploaded files
+	add a option to the clear x endpoints to allow keeping of manualy uploaded files
+	figure out why book_collection nests itself within the thumbnail select
+	when "no selection" is chosen on a folder select make sure the book select says the same
+	modify reasign-thumb endpoint to add a new entry if a book without a thumbnail already assigned is entered
 
   Notes:
 	Thumbnails will probably use the google books api to get images
@@ -36,4 +35,7 @@ Completed:
 	Modify manage acls route to only take the actual values call_endpoints sends
 	Modify endpoints to handle not having optional values provided
 	add update dir and show ip lists options for call_and_display
+	move management php/js to other files, make the folder and book select js names more sensible
 	Maybe find a way to remove the stacking Populate_management_selects.js script tags on the management that happens when the selects are updated
+	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
+	add security to fetch settings
