@@ -244,7 +244,7 @@ async function Call_and_display(
       break;
     case 501:
       response +=
-        "Not implemented: This feature isn't ready yet, but you can always check " +
+        "Not implemented: This feature isn't ready yet, please check back later.<br>you can keep up to date at: " +
         "<a href='https://github.com/Camh-git/Simple_Ebook_Server'>Our github</a> for updates";
       "";
       break;

@@ -219,9 +219,15 @@ def Reasign_thumb(folder_name, book_name, thumb):
         map = json.loads(json_data)
 
         # Manipulate the map
+        bookFound = False
         for book in map["Books"]:
             if book["Folder"] == folder_name and book["Name"] == book_name:
+                bookFound = True
                 book.update({"Thumb": thumb.replace(" ", "")})
+        if not bookFound:
+            # Add the book to the map if it doesn't already have an entry
+            map["Books"].append(
+                {"Folder": folder_name, "Name": book_name, "Thumb": thumb.replace(" ", "")})
 
         # return str(map["Books"][0]["Name"] in os.listdir("./Books/"+map["Books"][0]["Folder"]))
         return write_json_no_code("./Assets/Images/Thumbnail_map.json", map)
