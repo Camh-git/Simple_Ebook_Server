@@ -6,13 +6,6 @@ function getheader() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4) {
-        /*
-        console.log(
-          "Header request state/status: ",
-          this.readyState,
-          this.status
-        );
-        */
         if (this.status == 200) {
           HEADER_CONTAINER.innerHTML = this.responseText;
         } else if (this.status == 404) {
@@ -35,13 +28,6 @@ function getfooter() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4) {
-        /*
-        console.log(
-          "Footer request state/status: ",
-          this.readyState,
-          this.status
-        );
-        */
         if (this.status == 200) {
           FOOTER_CONTAINER.innerHTML = this.responseText;
         } else if (this.status == 404) {

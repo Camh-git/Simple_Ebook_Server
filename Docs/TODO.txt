@@ -9,6 +9,8 @@ Remaining:
   Minor:
 	Implement Epub reader
 	Implement a reader for simple txt files
+	Implement Mobi reader
+	Implement HTML reader
 	Add a start guide to the readme
 	populate and use the thumbnail cache
 	go through the js and add cammel case/ generaly tidy up
@@ -18,7 +20,9 @@ Remaining:
 	add a option to the clear x endpoints to allow keeping of manualy uploaded files
 	figure out why book_collection nests itself within the thumbnail select
 	when "no selection" is chosen on a folder select make sure the book select says the same
-	modify reasign-thumb endpoint to add a new entry if a book without a thumbnail already assigned is entered
+	update append h&f
+	Move the pages to the pages folder
+	
 
   Notes:
 	Thumbnails will probably use the google books api to get images
@@ -39,3 +43,4 @@ Completed:
 	Maybe find a way to remove the stacking Populate_management_selects.js script tags on the management that happens when the selects are updated
 	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
 	add security to fetch settings
+	modify reasign-thumb endpoint to add a new entry if a book without a thumbnail already assigned is entered
