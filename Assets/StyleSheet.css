@@ -102,6 +102,8 @@ form {
   overflow: hidden;
   width: 20vw;
   height: 25vh;
+  max-width: 33vw;
+  max-height: 33vh;
   margin: 1vh 1vw 1vh 1vw;
   animation: 5s Fade infinite ease-out;
 }
@@ -121,9 +123,11 @@ form {
 }
 #Instruction-segment {
   width: 100vw;
-  margin-left: 0vw;
-  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
+
 .Instruction-entry {
   display: inline-block;
   margin-top: -5vh;
@@ -137,9 +141,27 @@ form {
   padding: 1vw;
   overflow: visible;
 }
-#Carousel-container img {
-  max-width: 33vw;
-  max-height: 33vh;
+@media screen and (max-width: 720px) {
+  #Carousel-container img {
+    width: 49vw;
+    height: 20vh;
+  }
+  #Instruction-segment {
+    flex-wrap: wrap;
+  }
+  .Instruction-entry {
+    width: 80vw;
+    margin-left: 10vw;
+  }
+  .Instruction-entry img {
+    width: 20vw;
+    padding: 5vw;
+  }
+
+  #Format-support-table {
+    width: 90vw;
+    margin-left: 0vw;
+  }
 }
 #Format-support-table {
   border-collapse: collapse;
@@ -150,12 +172,11 @@ form {
 #Format-support-table td,
 #Format-support-table th {
   border: 2px solid var(--LightBorder);
-  padding: 0.5vh;
+  padding: 1vh;
 }
 #Format-support-table th {
-  padding: 1vh 0 1vh 0;
-  text-align: left;
-  background-color: var(--Form_PopupBG);
+  padding: 1vh 1vw 1vh 0.5vw;
+  background-color: #1e596f;
   color: var(--LightText);
 }
 /*Library styles*/
