@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, abort, request
 from flask_cors import CORS, cross_origin
 import os
 import shutil
@@ -13,6 +13,18 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route("/")
 def welcome():
     return "Hello from basic ebook server"
+
+
+@app.before_request
+def check_ACLS():
+    json_data = read_json_no_code("settings.json")
+    settings = json.loads(json_data)
+    if settings["EnableWhiteList"] == True:
+        if request.remote_addr not in settings["WhiteList"]:
+            return "401"
+    elif settings["EnableBlackList"] == True:
+        if request.remote_addr in settings["BlackList"]:
+            return "401"
 
 
 # Book methods

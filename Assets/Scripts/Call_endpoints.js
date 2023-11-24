@@ -209,7 +209,7 @@ async function Call_and_display(
       break;
     case 401:
       response +=
-        "Unathorised: This action requires authentication, please enter the correct password.";
+        "Unathorised: This action requires authentication.<br> please make sure you are authorised <br> and ensure you have entered the correct password.";
       break;
     case 403:
       response +=

@@ -5,6 +5,7 @@ Remaining:
   Major:
 	Modify CSS to allow decent mobile use
 	add password authentication
+	Modify library to use dropdowns instead of full lists if there are more then 5 folders (misc, uploads and 3 custom)
 
   Minor:
 	Implement Epub reader
@@ -22,6 +23,7 @@ Remaining:
 	when "no selection" is chosen on a folder select make sure the book select says the same
 	update append h&f
 	Move the pages to the pages folder
+	Add "you should move the books out of here" message to uploads
 	
 
   Notes:
