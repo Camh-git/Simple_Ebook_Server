@@ -91,6 +91,7 @@ form {
 }
 #Homepage-container h2 {
   margin-top: 10vh;
+  padding: 1vh;
 }
 #Carousel-container {
   width: 90vw;
@@ -158,23 +159,41 @@ form {
     padding: 5vw;
   }
 
-  #Format-support-table {
+  .Format-support-table {
     width: 90vw;
     margin-left: 0vw;
   }
 }
-#Format-support-table {
+@media screen and (max-width: 1000px) {
+  .Format-support-table.Desktop {
+    display: none;
+  }
+  .Format-support-table.Mobile {
+    display: block;
+    width: 50vw;
+    margin-left: 25vw;
+  }
+}
+@media screen and (min-width: 1001px) {
+  .Format-support-table.Desktop {
+    display: block;
+  }
+  .Format-support-table.Mobile {
+    display: none;
+  }
+}
+.Format-support-table {
   border-collapse: collapse;
   width: 50vw;
-  margin-left: 25vw;
+  margin-left: 28vw;
   color: var(--LightText);
 }
-#Format-support-table td,
-#Format-support-table th {
+.Format-support-table td,
+.Format-support-table th {
   border: 2px solid var(--LightBorder);
   padding: 1vh;
 }
-#Format-support-table th {
+.Format-support-table th {
   padding: 1vh 1vw 1vh 0.5vw;
   background-color: #1e596f;
   color: var(--LightText);
