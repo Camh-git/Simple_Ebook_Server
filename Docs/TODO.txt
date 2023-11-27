@@ -46,3 +46,6 @@ Completed:
 	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
 	add security to fetch settings
 	modify reasign-thumb endpoint to add a new entry if a book without a thumbnail already assigned is entered
+
+The server is located at: http://192.168.0.110/Simple_Ebook_Server/Home.html
+The books folder is located at: web root/Simple_Ebook_server/Books

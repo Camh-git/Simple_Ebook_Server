@@ -10,12 +10,8 @@
 <body>
 <div id = "Management_pannel">
   <h1>Management</h1>
-  <h2>This page is currently under construction</h2>
   <!--Note on input names: Each input name has a prefix related to it's form eg: inputs for delete single have the prefix DS_-->
-  <!-- TODO: 
-    Add thumbnail management form(auto fetch and manualy assgin/upload thumbs)
-    Swap the upload book and folder forms over to the python approach when ready
-  -->
+  <!-- TODO: Swap the upload book and folder forms over to the python approach when ready -->
 
   <section id = "Req_status_modal">
     <div id="Req_status_modal_body">
@@ -26,7 +22,7 @@
   <!--Manage books-->
   
   <h2>Manage individual books</h2>
-  <section class = "flex-container Management-row">
+  <section class = "Management-row">
     <!--upload single, todo:Add a folder select-->
     <form method = "POST" enctype = "multipart/form-data" id = "US_form" action = "Assets/Scripts/Upload_single.php">
       <h3>Upload book</h3>
@@ -76,7 +72,7 @@
 
   <!--Manage folders-->
   <h2>Manage folders</h2>
-  <section class="flex-container Management-row">
+  <section class=" Management-row">
     <!--Upload folder -->
     <form method = "POST" enctype = "multipart/form-data" action = "Assets/Scripts/Upload_folder.php">
       <h3>Upload folder</h3>
@@ -120,7 +116,7 @@
 
   <!--Manage libray-->
   <h2>Manage library</h2>
-  <section class = "flex-container Management-row">
+  <section class = "Management-row">
     <!--Create empty folder TODO:find a way to fix the permissions issue-->
     <form method = "POST"  enctype = "multipart/form-data" id = "CF_form">
       <h3>Create new folder</h3>
@@ -158,7 +154,7 @@
 
   <!--Manage thumbnails-->
   <h2>Manage Thumbnails</h2>
-  <section class = "flex-container Management-row">
+  <section class = "Management-row">
     <!--Manage thumbnails-->
     <form method = "POST" enctype="multipart/form-data" id = "TH_select_form">
       <h3>Re-assign Thumbnails</h3>
@@ -222,7 +218,7 @@
 
   <!--Misc options-->
   <h2>Misc options</h2>
-  <section class = "flex-container Management-row">
+  <section class = "Management-row">
     <!--Enable or disable downloads-->
     <form method = "POST" enctype = "multipart/form-data" id = "DL_toggle_form">
       <h3>Enable downloads?</h3>
