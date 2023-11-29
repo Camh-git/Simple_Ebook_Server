@@ -164,7 +164,10 @@ form {
     margin-left: 0vw;
   }
 }
-@media screen and (max-width: 1000px) {
+.Format-support-table.Mobile {
+  max-width: 50vw;
+}
+@media screen and (max-width: 500px) {
   .Format-support-table.Desktop {
     display: none;
   }
@@ -174,18 +177,39 @@ form {
     margin-left: 25vw;
   }
 }
+@media screen and (min-width: 501px) {
+  .Format-support-table.Desktop {
+    display: none;
+  }
+  .Format-support-table.Mobile {
+    display: block;
+    width: 50vw;
+    margin-left: 33vw;
+  }
+}
 @media screen and (min-width: 1001px) {
   .Format-support-table.Desktop {
     display: block;
+    margin-left: 15vw;
   }
   .Format-support-table.Mobile {
     display: none;
   }
 }
+@media screen and (min-width: 1201px) {
+  .Format-support-table.Desktop {
+    margin-left: 20vw;
+  }
+}
+@media screen and (min-width: 1301px) {
+  .Format-support-table.Desktop {
+    margin-left: 28vw;
+  }
+}
+
 .Format-support-table {
   border-collapse: collapse;
   width: 50vw;
-  margin-left: 28vw;
   color: var(--LightText);
 }
 .Format-support-table td,
