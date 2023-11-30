@@ -298,8 +298,8 @@
 
 </body>
 <div id = "footer_container"></div>
-<div id = "Thumb_collection" class = "Display-none">
-<div id = "Book_collection" class = "Display-none">
+<div id = "Thumb_collection" class = "Display-none"></div>
+<div id = "Book_collection" class = "Display-none"></div>
 <script src = "Assets/Scripts/Append_H&F.js"> </script>
 <script src = "./Assets/Scripts/Populate_management_selects.js"></script>
 <script src = "Assets/Scripts/Call_endpoints.js"></script>
