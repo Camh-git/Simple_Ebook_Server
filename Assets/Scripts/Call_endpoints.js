@@ -232,6 +232,9 @@ async function Call_and_display(
       response +=
         "Gone: The value you wish to remove is not in the targeted list.";
       break;
+    case 423:
+      response +=
+        "Locked: The selected Management function is currently disabled, contact an administrator.";
     case 428:
       response +=
         "Warning: One or more of the books moved to /Misc had the MOVED tag applied, meaning a book with an identical name was already present" +

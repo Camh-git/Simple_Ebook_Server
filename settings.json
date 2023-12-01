@@ -3,6 +3,11 @@
   "EnableReaders": "True",
   "EnableWhiteList": "True",
   "EnableBlackList": "False",
+  "EnableManagement": "False",
+  "EnableUpload": "True",
+  "EnableRename": "True",
+  "EnableReAssign": "True",
+  "EnableDelete": "True",
   "WhiteList": [],
   "BlackList": []
 }

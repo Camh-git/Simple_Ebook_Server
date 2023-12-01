@@ -19,12 +19,36 @@ def welcome():
 def check_ACLS():
     json_data = read_json_no_code("settings.json")
     settings = json.loads(json_data)
+
+    # Check if the caller meets ACL requirements
     if settings["EnableWhiteList"] == True:
         if request.remote_addr not in settings["WhiteList"]:
             return "401"
     elif settings["EnableBlackList"] == True:
         if request.remote_addr in settings["BlackList"]:
             return "401"
+
+    # Check that the requested endpoint is enabled
+    if settings["EnableManagement"] != "True":
+        # Allow the request through if it's heading to one of the non-management endpoings
+        if not request.path == "/list-books" and not request.path == "/list-folders" and not request.path == "/list-thumbs" and not "/fetch-settings" in request.path:
+            return "423"
+
+    if settings["EnableUpload"] != "True":
+        if "/post-book" in request.path or "/post-folder" in request.path or "/upload-thumb" in request.path:
+            return "423"
+
+    if settings["EnableRename"] != "True":
+        if "/rename-book" in request.path or "/rename-folder" in request.path:
+            return "423"
+
+    if settings["EnableReAssign"] != "True":
+        if "/move-book-to-folder" in request.path or "/reassign-thumb" in request.path:
+            return "423"
+
+    if settings["EnableDelete"] != "True":
+        if "/delete-book" in request.path or "/delete-folder" in request.path or "/clear-thumbs" in request.path:
+            return "423"
 
 
 # Book methods
