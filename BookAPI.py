@@ -29,9 +29,9 @@ def check_ACLS():
             return "401"
 
     # Check that the requested endpoint is enabled
-    if settings["EnableManagement"] != "True":
+    if settings["EnableManagement"] != True:
         # Allow the request through if it's heading to one of the non-management endpoings
-        if not request.path == "/list-books" and not request.path == "/list-folders" and not request.path == "/list-thumbs" and not "/fetch-settings" in request.path:
+        if not request.path == "/list-books" and not request.path == "/list-folders" and not request.path == "/list-thumbs" and not "/fetch-settings" in request.path and not "/toggle-management" in request.path:
             return "423"
 
     if settings["EnableUpload"] != "True":
@@ -478,6 +478,43 @@ def Manage_acls(address, list, option, code):
             return write_settings(json_data, code)
         else:
             return "404"
+    else:
+        return "401"
+
+
+# Management control options
+
+@app.route("/toggle-management/<option>&&<function>&&<code>")
+def Toggle_management(option, function, code):
+    if (option == "" or code == ""):
+        return "400"
+    # Check if the function is valid, and select the correct json option to change
+    setting = ""
+    if not (function.upper() == "MANAGEMENT" or function.upper() == "UPLOAD" or function.upper() == "DELETE" or function.upper() == "RENAME" or function.upper() == "MOVE"):
+        return "406"
+    elif function.upper() == "MANAGEMENT":
+        setting = "EnableManagement"
+    elif function.upper() == "UPLOAD":
+        setting = "EnableUpload"
+    elif function.upper() == "DELETE":
+        setting = "EnableDelete"
+    elif function.upper() == "RENAME":
+        setting = "EnableRename"
+    elif function.upper() == "MOVE":
+        setting = "EnableReAssign"
+
+    if check_password(code):
+        settings = fetch_settings(code)
+        json_data = json.loads(settings)
+
+        if option.upper() == "TRUE":
+            json_data[setting] = True
+        elif option.upper() == "FALSE":
+            json_data[setting] = False
+        else:
+            return "406"
+
+        return write_settings(json_data, code)
     else:
         return "401"
 

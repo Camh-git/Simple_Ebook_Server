@@ -174,6 +174,54 @@ function Assign_submit_actions() {
     );
   });
 
+  //Management options
+  document.getElementById("MNT_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const Code = event.target.children[8];
+    const Toggle = document.querySelector(
+      "input[type='radio'][name=MNT_toggle]:checked"
+    ).value;
+    Call_and_display(
+      `${ADDRESS}/toggle-management/${Toggle}&&MANAGEMENT&&${Code}`
+    );
+  });
+
+  document.getElementById("MNU_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const Code = event.target.children[8];
+    const Toggle = document.querySelector(
+      "input[type='radio'][name=MNU_toggle]:checked"
+    ).value;
+    Call_and_display(`${ADDRESS}/toggle-management/${Toggle}&&UPLOAD&&${Code}`);
+  });
+
+  document.getElementById("MND_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const Code = event.target.children[8];
+    const Toggle = document.querySelector(
+      "input[type='radio'][name=MND_toggle]:checked"
+    ).value;
+    Call_and_display(`${ADDRESS}/toggle-management/${Toggle}&&DELETE&&${Code}`);
+  });
+
+  document.getElementById("MNR_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const Code = event.target.children[8];
+    const Toggle = document.querySelector(
+      "input[type='radio'][name=MNR_toggle]:checked"
+    ).value;
+    Call_and_display(`${ADDRESS}/toggle-management/${Toggle}&&RENAME&&${Code}`);
+  });
+
+  document.getElementById("MNM_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const Code = event.target.children[8];
+    const Toggle = document.querySelector(
+      "input[type='radio'][name=MNM_toggle]:checked"
+    ).value;
+    Call_and_display(`${ADDRESS}/toggle-management/${Toggle}&&MOVE&&${Code}`);
+  });
+
   //Allow the user to close the response popup
   DISPLAY.addEventListener("click", (event) => {
     DISPLAY.style.display = "none";

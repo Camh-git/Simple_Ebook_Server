@@ -5,9 +5,9 @@
   "EnableBlackList": "False",
   "EnableManagement": "False",
   "EnableUpload": "True",
+  "EnableDelete": "True",
   "EnableRename": "True",
   "EnableReAssign": "True",
-  "EnableDelete": "True",
   "WhiteList": [],
   "BlackList": []
 }
