@@ -1,13 +1,13 @@
 {
-  "EnableDownloads": "False",
-  "EnableReaders": "True",
-  "EnableWhiteList": "True",
-  "EnableBlackList": "False",
-  "EnableManagement": "False",
-  "EnableUpload": "True",
-  "EnableDelete": "True",
-  "EnableRename": "True",
-  "EnableReAssign": "True",
+  "EnableDownloads": false,
+  "EnableReaders": true,
+  "EnableWhiteList": false,
+  "EnableBlackList": false,
+  "EnableManagement": true,
+  "EnableUpload": true,
+  "EnableDelete": true,
+  "EnableRename": true,
+  "EnableReAssign": true,
   "WhiteList": [],
   "BlackList": []
 }

@@ -34,19 +34,19 @@ def check_ACLS():
         if not request.path == "/list-books" and not request.path == "/list-folders" and not request.path == "/list-thumbs" and not "/fetch-settings" in request.path and not "/toggle-management" in request.path:
             return "423"
 
-    if settings["EnableUpload"] != "True":
+    if settings["EnableUpload"] != True:
         if "/post-book" in request.path or "/post-folder" in request.path or "/upload-thumb" in request.path:
             return "423"
 
-    if settings["EnableRename"] != "True":
+    if settings["EnableRename"] != True:
         if "/rename-book" in request.path or "/rename-folder" in request.path:
             return "423"
 
-    if settings["EnableReAssign"] != "True":
+    if settings["EnableReAssign"] != True:
         if "/move-book-to-folder" in request.path or "/reassign-thumb" in request.path:
             return "423"
 
-    if settings["EnableDelete"] != "True":
+    if settings["EnableDelete"] != True:
         if "/delete-book" in request.path or "/delete-folder" in request.path or "/clear-thumbs" in request.path:
             return "423"
 

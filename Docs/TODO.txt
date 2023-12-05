@@ -26,8 +26,6 @@ Remaining:
 	Add "you should move the books out of here" message to uploads
 	Implement security/encryption on the settings file
 	Add a way to cache the settings so they dont have to be called every req, keep them safe and make sure they get updated on change and load
-	Do a consitency pass on the true and flase values in settings, and where they get checked in the API
-	
 
   Notes:
 	Thumbnails will probably use the google books api to get images
