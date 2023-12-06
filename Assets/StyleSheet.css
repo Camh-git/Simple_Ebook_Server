@@ -261,6 +261,16 @@ form {
   float: left;
   margin-left: -5px;
 }
+.collumn li .Details h4 {
+  padding: 0;
+  margin: 0;
+}
+.collumn li .Details p,
+.collumn li .Details a {
+  offset: 0;
+  margin-left: 5%;
+  display: inline;
+}
 .collumn li p,
 .collumn li a {
   color: var(--LightText);

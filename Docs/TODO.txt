@@ -23,8 +23,10 @@ Remaining:
 	when "no selection" is chosen on a folder select make sure the book select says the same
 	update append h&f
 	Move the pages to the pages folder
+	Make the reader and download button blocking work
 	Implement security/encryption on the settings file
 	Add a way to cache the settings so they dont have to be called every req, keep them safe and make sure they get updated on change and load
+	do a consistency pass on the populate_library_entries.js vars
 
   Notes:
 	Thumbnails will probably use the google books api to get images
