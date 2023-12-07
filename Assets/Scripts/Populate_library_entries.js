@@ -1,14 +1,23 @@
 async function Populate_library_entries() {
+  //Get the thumnail list
+  const Thumb_list = document.getElementById("Thumb_collection");
+  const Thumb_content = await fetch(`http://192.168.1.110:5000/list-thumbs`);
+  const Thumb_info = await Thumb_content.json();
+  Thumb_list.innerHTML = Thumb_info;
+
   //Getting the book list from the API
   const Book_list = document.getElementById("Book_content");
   const lib_content = await fetch(`http://192.168.1.110:5000/list-books`);
-  info = await lib_content.json();
+  let Book_info = await lib_content.json();
 
   //Manipulate the returned book lists to match the expected formatting, fetch the thumbnails, write and colour the file type and add the download button
-  info = info.replaceAll("h5", "h2").replaceAll("/h5", "/h2");
-  Book_list.innerHTML = await info;
+  Book_info = Book_info.replaceAll("h5", "h2")
+    .replaceAll("/h5", "/h2")
+    .replaceAll("<ul", "<ul name = 'Book_folder'")
+    .replaceAll("<li", "<li name = 'Book_entry'");
+  Book_list.innerHTML = Book_info;
 
-  const Lists = document.getElementsByTagName("LI");
+  const Lists = document.getElementsByName("Book_entry");
   for (item of Lists) {
     //Save the filename, clear the div and add it's class
     const parent_folder =
@@ -63,8 +72,38 @@ async function Populate_library_entries() {
     item.children[1].appendChild(download_button);
 
     //Add thumnail image
-  }
+    const thumb_image = document.createElement("img");
+    thumb_image.alt = `Thumbnail for: ${content}`;
+    //check the thumbnail list for the book's specific thumbnail, use a generic image if not found
 
+    if (1 == 2) {
+    } else {
+      switch (file_type.toUpperCase()) {
+        case ".PDF":
+          thumb_image.src = "./Assets/Images/Icons/Icon_pdf_file.png";
+          break;
+        case ".TXT":
+          thumb_image.src = "./Assets/Images/Icons/Text-txt.png";
+          break;
+        case ".EPUB":
+          thumb_image.src = "./Assets/Images/Icons/Epub_logo.png";
+          break;
+        case ".MOBI":
+          thumb_image.src = "./Assets/Images/Icons/Icon_mobi_file.png";
+          break;
+        case ".AZW3":
+          thumb_image.src = "./Assets/Images/Icons/logo-azw3-2101145464.png";
+          break;
+        case ".HTML":
+          thumb_image.src = "./Assets/Images/Icons/HTML5_logo_black.png";
+          break;
+        default:
+          thumb_image.src = "./Assets/Images/Icons/library_books_FILL0.svg";
+          break;
+      }
+    }
+    item.children[0].appendChild(thumb_image);
+  }
   const FOLDERS = document.getElementsByClassName("Book_folder");
   console.log("Total number of folders found: " + FOLDERS.length);
 
@@ -131,5 +170,6 @@ async function Populate_library_entries() {
     let Parent = MissingTitleSpaces.parentElement;
     Parent.removeChild(MissingTitleSpaces);
   }
+  console.log("Library setup complete");
 }
 Populate_library_entries();
