@@ -244,6 +244,12 @@ def List_Thumbs():
     return response
 
 
+@app.route("/thumb-map")
+def show_thumb_map():
+    data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
+    return data
+
+
 def generate_thumbs():
     return "501"
 

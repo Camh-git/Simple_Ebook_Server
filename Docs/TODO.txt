@@ -26,7 +26,7 @@ Remaining:
 	Make the reader and download button blocking work
 	Implement security/encryption on the settings file
 	Add a way to cache the settings so they dont have to be called every req, keep them safe and make sure they get updated on change and load
-	do a consistency pass on the populate_library_entries.js vars
+	Convert the book and thumb lists to return json, updated their handlers in management and library
 
   Notes:
 	Thumbnails will probably use the google books api to get images
