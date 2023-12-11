@@ -18,11 +18,9 @@ Remaining:
 	set constant vars(not just const) where appropriate, apply screaming snake case
 	re-implement the name tidying in the management dropdowns, have it change the source file name to maintain control(maybe clean on upload since it's also php)
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
-	add a option to the clear x endpoints to allow keeping of manualy uploaded files
-	figure out why book_collection nests itself within the thumbnail select
 	when "no selection" is chosen on a folder select make sure the book select says the same
 	update append h&f
-	Move the pages to the pages folder
+	Move the pages to the pages folder - WIP - needs script + header updates, script updates, index and home redirects
 	Make the reader and download button blocking work
 	Implement security/encryption on the settings file
 	Add a way to cache the settings so they dont have to be called every req, keep them safe and make sure they get updated on change and load
@@ -45,9 +43,11 @@ Completed:
 	add update dir and show ip lists options for call_and_display
 	move management php/js to other files, make the folder and book select js names more sensible
 	Maybe find a way to remove the stacking Populate_management_selects.js script tags on the management that happens when the selects are updated
+	add an option to the clear x endpoints to allow keeping of manualy uploaded files
 	add user feedback when an API request goes through - and fetch the new books list so that the dropdowns remain synced
 	add security to fetch settings
 	modify reasign-thumb endpoint to add a new entry if a book without a thumbnail already assigned is entered
+	figure out why book_collection nests itself within the thumbnail select	- was missing close tags
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/Home.html
 The books folder is located at: web root/Simple_Ebook_server/Books

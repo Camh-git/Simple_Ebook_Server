@@ -1,9 +1,11 @@
-async function Call_and_display(
+export async function Call_and_display(
   requestString,
   update_lib_selects = false,
   show_ip_lists = false,
   code = ""
 ) {
+  const ADDRESS = "http://192.168.1.110:5000/";
+  const DISPLAY = document.getElementById("Req_status_modal");
   const result = await fetch(requestString);
   const data = await result.json();
 

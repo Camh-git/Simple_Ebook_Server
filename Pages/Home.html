@@ -1,0 +1,172 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="../Assets/StyleSheet.css" />
+    <link rel="icon" href="../Assets/Images/favicon.ico" />
+  </head>
+  <div id="header_container"></div>
+
+  <body>
+    <h1>Simple Ebook server</h1>
+    <div id="Homepage-container">
+      <h2>Welcome to Simple Ebook server</h2>
+
+      <section id="Carousel-container">
+        <img
+          id="Hero_img_1"
+          src="../Assets/Images/Ereader.jpg"
+          alt="An e-reader"
+        />
+        <img
+          id="Hero_img_2"
+          src="../Assets/Images/Library.jpg"
+          alt="A row of library shelfs"
+        />
+        <h3>An accessible place to store all your Ebooks on the network</h3>
+      </section>
+
+      <section name="Instructions">
+        <h2>How to use the server</h2>
+        <section id="Instruction-segment">
+          <figure class="Instruction-entry">
+            <h3>Browse library</h3>
+            <img
+              src="../Assets/Images/Icons/library_books_FILL0.svg"
+              alt="Browse icon"
+            />
+            <p>
+              The library neatly displays all the books you have saved on the
+              server, located in the /Books folder.
+              <br /><br />
+              Your books are shown in their folders to make them easier to find
+              and can be be managed using the library and book options on the
+              management page.
+            </p>
+          </figure>
+
+          <figure class="Instruction-entry">
+            <h3>Read</h3>
+            <img
+              src="../Assets/Images/Icons/menu_book_FILL0.svg"
+              alt="Read icon"
+            />
+            <p>
+              You can read your books on the browser using our library page,
+              just look for a green file type after the name and click to enjoy.
+              <br /><br />
+              Books that are in an unsupported file type will show up as
+              yellow(WIP/beta support) or red (currently unsupported), you can
+              still read them, but they will have to be downloaded first.
+            </p>
+          </figure>
+
+          <figure class="Instruction-entry">
+            <h3>Manage</h3>
+            <img
+              src="../Assets/Images/Icons/settings_FILL0.svg"
+              alt="Manage icon"
+            />
+            <p>
+              The management page allows you to manage your library, it's
+              functions include uploading, deleting and renaming books and
+              folders, creating folders and moving books between folders.
+              <br /><br />
+              It also includes server options like disabling downloads,
+              blacklisting and disabling readers, to see all the functions
+              please visit the management page.
+            </p>
+          </figure>
+        </section>
+      </section>
+
+      <section name="Format table">
+        <h2>Currently supported formats</h2>
+        <table class="Format-support-table Desktop">
+          <tr>
+            <th>Format</th>
+            <td>.pdf</td>
+            <td>.txt</td>
+            <td>.epub</td>
+            <td>.mobi</td>
+            <td>.azw3</td>
+            <td>.html</td>
+          </tr>
+          <tr>
+            <th>Status</th>
+            <td>Readable</td>
+            <td>Downloadable</td>
+            <td>Downloadable, reader WIP</td>
+            <td>Downloadable</td>
+            <td>Downloadable</td>
+            <td>Not supported</td>
+          </tr>
+        </table>
+        <table class="Format-support-table Mobile">
+          <tr>
+            <th>Format</th>
+            <th>Status</th>
+          </tr>
+          <tr>
+            <td>.pdf</td>
+            <td>Readable</td>
+          </tr>
+          <tr>
+            <td>.txt</td>
+            <td>Downloadable</td>
+          </tr>
+          <tr>
+            <td>.epub</td>
+            <td>Downloadable, reader WIP</td>
+          </tr>
+          <tr>
+            <td>.mobi</td>
+            <td>Downloadable</td>
+          </tr>
+          <tr>
+            <td>.azw3</td>
+            <td>Downloadable</td>
+          </tr>
+          <tr>
+            <td>.html</td>
+            <td>Downloadable</td>
+          </tr>
+        </table>
+      </section>
+
+      <h2>
+        Thank you for using simple eBook server, we hope you find it useful
+      </h2>
+    </div>
+  </body>
+
+  <div id="footer_container"></div>
+  <script src="../Assets/Scripts/Append_H&F.js"></script>
+  <script>
+    //swap out the image every 5seconds
+    let pos = 2;
+
+    const INTERVAL = setInterval(function () {
+      const FILES = [
+        "Ereader.jpg",
+        "Library.jpg",
+        "Library_bookshelf.jpg",
+        "Small_bookshelf.jpg",
+      ];
+      const ALTS = [
+        "An e-reader",
+        "A row of library shelfs",
+        "A bookshelf with a library ladder in front",
+        "A trio of bookshelfs in a contemporary library",
+      ];
+      let h1 = document.getElementById("Hero_img_1");
+      let h2 = document.getElementById("Hero_img_2");
+      if (pos + 1 > FILES.length - 1) {
+        pos = 0;
+      }
+      h1.src = h2.src;
+      h2.src = "Assets/Images/" + FILES[pos];
+      pos++;
+    }, 5000);
+  </script>
+</html>

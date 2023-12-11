@@ -392,6 +392,6 @@
 <div id = "Book_collection" class = "Display-none"></div>
 <script src = "Assets/Scripts/Append_H&F.js"> </script>
 <script src = "./Assets/Scripts/Populate_management_selects.js"></script>
-<script src = "Assets/Scripts/Call_endpoints.js"></script>
+<script type="module" src = "Assets/Scripts/Set_management_listeners.js"></script>
 
 </html>

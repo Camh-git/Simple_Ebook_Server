@@ -1,4 +1,4 @@
-import Call_and_display from "./Call_and_display.js";
+import { Call_and_display } from "./Call_and_display.js";
 
 function Assign_submit_actions() {
   //Get the submit btns/forms and assign their actions to the functions
