@@ -20,11 +20,12 @@ Remaining:
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
 	when "no selection" is chosen on a folder select make sure the book select says the same
 	update append h&f
-	Move the pages to the pages folder - WIP - needs script + header updates, script updates, index and home redirects
 	Make the reader and download button blocking work
 	Implement security/encryption on the settings file
 	Add a way to cache the settings so they dont have to be called every req, keep them safe and make sure they get updated on change and load
 	Convert the book and thumb lists to return json, updated their handlers in management and library
+	Find a way to add the address to settings and have it be available project wide as well, since it is hardcoded in a few places.
+	Attempt to fix changelog and credits
 
   Notes:
 	Thumbnails will probably use the google books api to get images
@@ -48,6 +49,7 @@ Completed:
 	add security to fetch settings
 	modify reasign-thumb endpoint to add a new entry if a book without a thumbnail already assigned is entered
 	figure out why book_collection nests itself within the thumbnail select	- was missing close tags
+	Move the pages to the pages folder
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/Home.html
 The books folder is located at: web root/Simple_Ebook_server/Books

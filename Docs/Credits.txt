@@ -1,0 +1,15 @@
+Image resources used in this project will generally come from wikimedia commons, Icons will generaly be from google material.io
+Image credits:
+    Homepage
+    Ereader.jpg: https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Ereader.jpg/640px-Ereader.jpg
+    Small_bookshelf.jpg: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Library_bookshelf.jpg/640px-Library_bookshelf.jpg
+    Library: https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Bookshelf_of_Sanko_Library_2.jpg/640px-Bookshelf_of_Sanko_Library_2.jpg
+    Library_bookshelf:https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Bookshelf_Prunksaal_OeNB_Vienna_AT_matl00786ch.jpg/640px-Bookshelf_Prunksaal_OeNB_Vienna_AT_matl00786ch.jpg
+
+
+Icon credits:
+    Homepage
+    menu_book_FILL0: https://fonts.google.com/icons?icon.query=book&selected=Material+Symbols+Outlined:menu_book:FILL@0;wght@400;GRAD@0;opsz@48&icon.platform=web
+    Settings: https://fonts.google.com/icons?selected=Material+Symbols+Outlined:settings:FILL@0;wght@400;GRAD@0;opsz@48
+    Browse_gallery: https://fonts.google.com/icons?icon.query=collection&selected=Material+Symbols+Outlined:browse_gallery:FILL@0;wght@400;GRAD@0;opsz@48&icon.platform=web
+    

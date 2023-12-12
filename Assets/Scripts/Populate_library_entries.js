@@ -80,7 +80,7 @@ async function Populate_library_entries() {
 
     //Add the download button
     const download_button = document.createElement("a");
-    download_button.href = `./Books/${parent_folder}/${content}`;
+    download_button.href = `../Books/${parent_folder}/${content}`;
     download_button.textContent = "Download";
     item.children[1].appendChild(download_button);
 
@@ -92,25 +92,25 @@ async function Populate_library_entries() {
     } else {
       switch (file_type.toUpperCase()) {
         case ".PDF":
-          thumb_image.src = "./Assets/Images/Icons/Icon_pdf_file.png";
+          thumb_image.src = "../Assets/Images/Icons/Icon_pdf_file.png";
           break;
         case ".TXT":
-          thumb_image.src = "./Assets/Images/Icons/Text-txt.png";
+          thumb_image.src = "../Assets/Images/Icons/Text-txt.png";
           break;
         case ".EPUB":
-          thumb_image.src = "./Assets/Images/Icons/Epub_logo.png";
+          thumb_image.src = "../Assets/Images/Icons/Epub_logo.png";
           break;
         case ".MOBI":
-          thumb_image.src = "./Assets/Images/Icons/Icon_mobi_file.png";
+          thumb_image.src = "../Assets/Images/Icons/Icon_mobi_file.png";
           break;
         case ".AZW3":
-          thumb_image.src = "./Assets/Images/Icons/logo-azw3-2101145464.png";
+          thumb_image.src = "../Assets/Images/Icons/logo-azw3-2101145464.png";
           break;
         case ".HTML":
-          thumb_image.src = "./Assets/Images/Icons/HTML5_logo_black.png";
+          thumb_image.src = "../Assets/Images/Icons/HTML5_logo_black.png";
           break;
         default:
-          thumb_image.src = "./Assets/Images/Icons/library_books_FILL0.svg";
+          thumb_image.src = "../Assets/Images/Icons/library_books_FILL0.svg";
           break;
       }
     }

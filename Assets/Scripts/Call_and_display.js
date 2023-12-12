@@ -79,7 +79,7 @@ export async function Call_and_display(
   if (update_lib_selects) {
     //re-usable no-module way of importing the populate script
     const pop_select_script = document.createElement("script");
-    pop_select_script.src = "./Assets/Scripts/Populate_management_selects.js";
+    pop_select_script.src = "../Assets/Scripts/Populate_management_selects.js";
     document.body.prepend(pop_select_script);
     pop_select_script.remove();
   }

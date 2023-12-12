@@ -1,7 +1,7 @@
 //This is the functional version
 function getheader() {
   const HEADER_CONTAINER = document.getElementById("header_container");
-  const HEADER_FILE = "Assets/Header.html";
+  const HEADER_FILE = "../Assets/Header.html";
   if (HEADER_FILE) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -23,7 +23,7 @@ function getheader() {
 
 function getfooter() {
   var FOOTER_CONTAINER = document.getElementById("footer_container");
-  var FOOTER_FILE = "Assets/Footer.html";
+  var FOOTER_FILE = "../Assets/Footer.html";
   if (FOOTER_FILE) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {

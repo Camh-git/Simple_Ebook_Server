@@ -1,8 +1,0 @@
-This changelog runs from old to new.
-
-v0.2: 26/12/22: Inital relase, homepage and static library.
-v0.25: 28/12/22: Dynamic library implemented, populates itself with content from the books folder.
-v0.26: 29/12/22: Dynamic library now shows the file type of each document.
-v0.265: 30/12/22: File type indicator now changes colour to indicate level of support.
-v0.28: 2/1/22: Added seperate download button, system added to change title lines based on filetype, Title lines now open documents with appropriate viewers.
-v0.29: 3/1/22: Fixed download file names to match document name rather than path, styling changes, depreciated static library page and populate library script.
