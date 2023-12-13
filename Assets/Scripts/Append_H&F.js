@@ -1,47 +1,7 @@
-//This is the functional version
-function getheader() {
-  const HEADER_CONTAINER = document.getElementById("header_container");
-  const HEADER_FILE = "../Assets/Header.html";
-  if (HEADER_FILE) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4) {
-        if (this.status == 200) {
-          HEADER_CONTAINER.innerHTML = this.responseText;
-        } else if (this.status == 404) {
-          HEADER_CONTAINER.innerHTML = "Page not found.";
-        } else {
-          HEADER_CONTAINER.innerHTML = "Error fetching header.";
-        }
-      }
-    };
-    xhttp.open("GET", HEADER_FILE, true);
-    xhttp.send();
-    return;
-  }
+function getH_and_F() {
+  //Uses jquery to load the relevent file into each container
+  $("#header_container").load("../Assets/Header.html");
+  $("#footer_container").load("../Assets/Footer.html");
+  return;
 }
-
-function getfooter() {
-  var FOOTER_CONTAINER = document.getElementById("footer_container");
-  var FOOTER_FILE = "../Assets/Footer.html";
-  if (FOOTER_FILE) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4) {
-        if (this.status == 200) {
-          FOOTER_CONTAINER.innerHTML = this.responseText;
-        } else if (this.status == 404) {
-          FOOTER_CONTAINER.innerHTML = "Page not found.";
-        } else {
-          header_container.innerHTML = "Error fetching footer.";
-        }
-      }
-    };
-    xhttp.open("GET", FOOTER_FILE, true);
-    xhttp.send();
-    return;
-  }
-}
-
-getheader();
-getfooter();
+getH_and_F();

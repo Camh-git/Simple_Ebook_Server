@@ -19,7 +19,6 @@ Remaining:
 	re-implement the name tidying in the management dropdowns, have it change the source file name to maintain control(maybe clean on upload since it's also php)
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
 	when "no selection" is chosen on a folder select make sure the book select says the same
-	update append h&f
 	Make the reader and download button blocking work
 	Implement security/encryption on the settings file
 	Add a way to cache the settings so they dont have to be called every req, keep them safe and make sure they get updated on change and load
@@ -50,6 +49,7 @@ Completed:
 	figure out why book_collection nests itself within the thumbnail select	- was missing close tags
 	Move the pages to the pages folder
 	Attempt to fix changelog and credits
+	update append h&f
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/Home.html
 The books folder is located at: web root/Simple_Ebook_server/Books
