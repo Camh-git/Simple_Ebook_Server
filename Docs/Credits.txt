@@ -12,4 +12,9 @@ Icon credits:
     menu_book_FILL0: https://fonts.google.com/icons?icon.query=book&selected=Material+Symbols+Outlined:menu_book:FILL@0;wght@400;GRAD@0;opsz@48&icon.platform=web
     Settings: https://fonts.google.com/icons?selected=Material+Symbols+Outlined:settings:FILL@0;wght@400;GRAD@0;opsz@48
     Browse_gallery: https://fonts.google.com/icons?icon.query=collection&selected=Material+Symbols+Outlined:browse_gallery:FILL@0;wght@400;GRAD@0;opsz@48&icon.platform=web
-    
+    .PDF logo: https://commons.wikimedia.org/w/index.php?search=pdf&title=Special:MediaSearch&go=Go&type=image
+    .TXT logo: https://en.wikipedia.org/wiki/File:Text-txt.svg
+    .EPUB logo: https://commons.wikimedia.org/wiki/File:Epub_logo.svg
+    .MOBI logo: https://commons.wikimedia.org/wiki/File:Icon_mobi_file.svg
+    .AZW3 logo: https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fs3.amazonaws.com%2Flibapps%2Fcustomers%2F2714%2Fimages%2Fkindle_app_icon.png&f=1&nofb=1&ipt=e456448ff4a55e3b74c9d45a163b7604092cc3781e67a53c0019cb74c330e2c8&ipo=images
+    .HTML logo: https://commons.wikimedia.org/wiki/File:HTML5_logo_and_wordmark.svg

@@ -7,7 +7,10 @@ v0.265: 30/12/22: File type indicator now changes colour to indicate level of su
 v0.28: 2/1/23: Added seperate download button, system added to change title lines based on filetype, Title lines now open documents with appropriate viewers.
 v0.29: 3/1/23: Fixed download file names to match document name rather than path, styling changes, depreciated static library page and populate library script.
 Note: This log fell into disrepair shortly after the update on 3/1/23, an attempt will be made to re-construct the log as best as possible.
-
+v0.3: ?/2/23: Library entries fully functional via php
+v0.3: ?/2/23: Inital management page forms setup 
+vNA:  ?/4/23: Did a small tidy up of the assets folder
+vNA:  ?/5/23: brief exploration of using epub.js resulting the the reader.html file
+vNA:  ?/8/23: Homepage gallery replaced with carousel, removed dev details
 Note: The project went on hiatus in january-october 2023 due to other commitments.
-
 Project moved to github on 24/10/23, follow the commit history for a more detailed changelog: https://github.com/Camh-git/Simple_Ebook_Server/commits/main/

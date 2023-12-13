@@ -104,7 +104,7 @@ async function Populate_library_entries() {
           thumb_image.src = "../Assets/Images/Icons/Icon_mobi_file.png";
           break;
         case ".AZW3":
-          thumb_image.src = "../Assets/Images/Icons/logo-azw3-2101145464.png";
+          thumb_image.src = "../Assets/Images/Icons/kindle_app_icon.png";
           break;
         case ".HTML":
           thumb_image.src = "../Assets/Images/Icons/HTML5_logo_black.png";
