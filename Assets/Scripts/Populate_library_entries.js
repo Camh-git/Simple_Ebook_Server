@@ -4,7 +4,6 @@ async function Populate_library_entries() {
   try {
     const thumb_content = await fetch(`http://192.168.1.110:5000/list-thumbs`);
     const Thumb_info = await thumb_content.json();
-    console.log(Thumb_info);
     thumb_list.innerHTML = Thumb_info;
   } catch {
     console.log("Thumbnail map not found, using placeholders");
@@ -87,8 +86,21 @@ async function Populate_library_entries() {
     //Add thumnail image
     const thumb_image = document.createElement("img");
     thumb_image.alt = `Thumbnail for: ${content}`;
+
     //check the thumbnail list for the book's specific thumbnail, use a generic image if not found
-    if (1 == 2) {
+    let thumb_url = "";
+    for (let i of thumb_list.children[0].children) {
+      if (
+        content.replace(/\.[^/.]+$/, "").toUpperCase() ==
+        String(i.innerHTML)
+          .replace(/\.[^/.]+$/, "")
+          .toUpperCase()
+      ) {
+        thumb_url = "../Assets/Images/Thumbnail_cache/" + i.innerHTML;
+      }
+    }
+    if (thumb_url != "") {
+      thumb_image.src = thumb_url;
     } else {
       switch (file_type.toUpperCase()) {
         case ".PDF":
