@@ -67,6 +67,23 @@ def list_books():
     return response
 
 
+@app.route("/json-list-books")
+def json_list_books():
+    data = '{"Books":['
+    for folder in os.listdir(mainDir):
+        data += '{"Folder":"'+folder + '","Content":['
+        emptyDir = True
+        for book in os.listdir("{0}/{1}".format(mainDir, folder)):
+            emptyDir = False
+            data += '{"Name":"' + book+'"},'
+        if not emptyDir:
+            data = data[:-1]
+        data += "]},"
+    data = data[:-1]
+    data += ']}'
+    return data
+
+
 @app.route("/post-book/<book_name>", methods=["POST"])
 def Upload_book(book_name):
     return 501

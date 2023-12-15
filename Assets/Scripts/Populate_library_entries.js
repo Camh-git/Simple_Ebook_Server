@@ -1,6 +1,19 @@
+async function get_map(url) {
+  try {
+    const req = await fetch(url);
+    const data = await req.json();
+    return data;
+  } catch {
+    console.log(`Failed to call:${url}, will use placeholders if possible`);
+  }
+}
+async function get_books() {}
+
 async function Populate_library_entries() {
   //Get the thumnail list
   const thumb_list = document.getElementById("Thumb_collection");
+  const THUMB_MAP = await get_map(`http://192.168.1.110:5000/thumb-map`);
+  const BOOK_MAP = await get_map(`http://192.168.1.110:5000/json-list-books`);
   try {
     const thumb_content = await fetch(`http://192.168.1.110:5000/list-thumbs`);
     const Thumb_info = await thumb_content.json();
@@ -8,7 +21,6 @@ async function Populate_library_entries() {
   } catch {
     console.log("Thumbnail map not found, using placeholders");
   }
-
   //Getting the book list from the API
   const book_list = document.getElementById("Book_content");
   try {
