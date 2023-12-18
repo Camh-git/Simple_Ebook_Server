@@ -22,9 +22,10 @@ Remaining:
 	Make the reader and download button blocking work
 	Implement security/encryption on the settings file
 	Add a way to cache the settings so they dont have to be called every req, keep them safe and make sure they get updated on change and load
-	Convert the book and thumb lists to return json, updated their handlers in management and library, they currently copy the old php approach
+	Convert the book and thumb lists (and thumb map) to return json, updated their handlers in management and library, they currently copy the old php approach, rm old endpoints
 	Find a way to add the address to settings and have it be available project wide, since it is hardcoded in a few places.
-	create a shared function for ripping appart filenames and extensions and comparing them
+	create a shared function for ripping appart filenames and extensions and comparing them in js (py has splitext)
+	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
 
   Notes:
 	Thumbnails will probably use the google books api to get images

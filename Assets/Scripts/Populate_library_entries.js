@@ -14,6 +14,7 @@ async function Populate_library_entries() {
   const thumb_list = document.getElementById("Thumb_collection");
   const THUMB_MAP = await get_map(`http://192.168.1.110:5000/thumb-map`);
   const BOOK_MAP = await get_map(`http://192.168.1.110:5000/json-list-books`);
+  console.log(BOOK_MAP);
   try {
     const thumb_content = await fetch(`http://192.168.1.110:5000/list-thumbs`);
     const Thumb_info = await thumb_content.json();
@@ -101,14 +102,11 @@ async function Populate_library_entries() {
 
     //check the thumbnail list for the book's specific thumbnail, use a generic image if not found
     let thumb_url = "";
-    for (let i of thumb_list.children[0].children) {
+    for (let i of THUMB_MAP.Images) {
       if (
-        content.replace(/\.[^/.]+$/, "").toUpperCase() ==
-        String(i.innerHTML)
-          .replace(/\.[^/.]+$/, "")
-          .toUpperCase()
+        content.replace(/\.[^/.]+$/, "").toUpperCase() == i.Name.toUpperCase()
       ) {
-        thumb_url = "../Assets/Images/Thumbnail_cache/" + i.innerHTML;
+        thumb_url = "../Assets/Images/Thumbnail_cache/" + i.Name + i.ext;
       }
     }
     if (thumb_url != "") {

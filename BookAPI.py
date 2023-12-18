@@ -261,9 +261,25 @@ def List_Thumbs():
     return response
 
 
+@app.route("/list-thumbs-json")
+def List_Thumbs_json():
+    list = '{"Images":['
+    empty_cache = True
+    for image in os.listdir("./Assets/Images/Thumbnail_cache/"):
+        empty_cache = False
+        components = os.path.splitext(image)
+        list += '{"Name":"' + components[0] + '","ext":"'+components[1]+'" },'
+    if not empty_cache:
+        list = list[:-1]
+    list += "]}"
+    return list
+
+
 @app.route("/thumb-map")
 def show_thumb_map():
     data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
+    data = data[:-2]
+    data += "," + List_Thumbs_json()[1:]
     return data
 
 
