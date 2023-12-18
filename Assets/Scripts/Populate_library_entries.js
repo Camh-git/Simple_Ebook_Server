@@ -7,164 +7,132 @@ async function get_map(url) {
     console.log(`Failed to call:${url}, will use placeholders if possible`);
   }
 }
-async function get_books() {}
 
 async function Populate_library_entries() {
-  //Get the thumnail list
-  const thumb_list = document.getElementById("Thumb_collection");
+  //Get the thumnail and book lists
   const THUMB_MAP = await get_map(`http://192.168.1.110:5000/thumb-map`);
   const BOOK_MAP = await get_map(`http://192.168.1.110:5000/json-list-books`);
   console.log(BOOK_MAP);
-  try {
-    const thumb_content = await fetch(`http://192.168.1.110:5000/list-thumbs`);
-    const Thumb_info = await thumb_content.json();
-    thumb_list.innerHTML = Thumb_info;
-  } catch {
-    console.log("Thumbnail map not found, using placeholders");
-  }
-  //Getting the book list from the API
-  const book_list = document.getElementById("Book_content");
-  try {
-    const lib_content = await fetch(`http://192.168.1.110:5000/list-books`);
-    let book_info = await lib_content.json();
-    //Manipulate the returned book lists to match the expected formatting, fetch the thumbnails, write and colour the file type and add the download button
-    book_info = book_info
-      .replaceAll("h5", "h2")
-      .replaceAll("/h5", "/h2")
-      .replaceAll("<ul", "<ul name = 'Book_folder'")
-      .replaceAll("<li", "<li name = 'Book_entry'");
-    book_list.innerHTML = book_info;
-  } catch {
-    //Let the user know the books aren't available
-    book_list.innerHTML =
-      "<br><br><br><h2>The API is currently unavailable</h2>";
-    book_list.style.display = "Inline";
-    return;
-  }
-
-  const lists = document.getElementsByName("Book_entry");
-  for (item of lists) {
-    //Save the filename, clear the div and add it's class
-    const parent_folder =
-      item.parentElement.parentElement.children[0].innerHTML;
-    const content = item.innerHTML;
-    item.innerHTML = "";
-    item.classList.add("Lib_entry");
-
-    //Add thumb div
-    const thumb_div = document.createElement("div");
-    thumb_div.classList.add("Thumb");
-    item.appendChild(thumb_div);
-
-    //Add details div, add the name back
-    const details_div = document.createElement("div");
-    details_div.classList.add("Details");
-    item.appendChild(details_div);
-
-    const header = document.createElement("h4");
-    header.innerHTML = content;
-    details_div.appendChild(header);
-
-    //Add file type and colour it
-    const file_type = item.children[1].innerHTML.slice(
-      item.children[1].innerHTML.lastIndexOf("."),
-      item.children[1].innerHTML.lastIndexOf("<")
-    );
-    const type_display = document.createElement("p");
-    type_display.innerHTML = file_type;
-    switch (file_type.toUpperCase()) {
-      case ".PDF":
-        type_display.style.color = "green";
-        break;
-      case ".TXT":
-      case ".EPUB":
-      case ".MOBI":
-      case ".AZW3":
-        type_display.style.color = "yellow";
-        break;
-      case ".HTML":
-        type_display.style.color = "red";
-        break;
-      default:
-        type_display.style.color = "white";
-    }
-    item.children[1].appendChild(type_display);
-
-    //Add the download button
-    const download_button = document.createElement("a");
-    download_button.href = `../Books/${parent_folder}/${content}`;
-    download_button.textContent = "Download";
-    item.children[1].appendChild(download_button);
-
-    //Add thumnail image
-    const thumb_image = document.createElement("img");
-    thumb_image.alt = `Thumbnail for: ${content}`;
-
-    //check the thumbnail list for the book's specific thumbnail, use a generic image if not found
-    let thumb_url = "";
-    for (let i of THUMB_MAP.Images) {
-      if (
-        content.replace(/\.[^/.]+$/, "").toUpperCase() == i.Name.toUpperCase()
-      ) {
-        thumb_url = "../Assets/Images/Thumbnail_cache/" + i.Name + i.ext;
-      }
-    }
-    if (thumb_url != "") {
-      thumb_image.src = thumb_url;
-    } else {
-      switch (file_type.toUpperCase()) {
-        case ".PDF":
-          thumb_image.src = "../Assets/Images/Icons/Icon_pdf_file.png";
-          break;
-        case ".TXT":
-          thumb_image.src = "../Assets/Images/Icons/Text-txt.png";
-          break;
-        case ".EPUB":
-          thumb_image.src = "../Assets/Images/Icons/Epub_logo.png";
-          break;
-        case ".MOBI":
-          thumb_image.src = "../Assets/Images/Icons/Icon_mobi_file.png";
-          break;
-        case ".AZW3":
-          thumb_image.src = "../Assets/Images/Icons/kindle_app_icon.png";
-          break;
-        case ".HTML":
-          thumb_image.src = "../Assets/Images/Icons/HTML5_logo_black.png";
-          break;
-        default:
-          thumb_image.src = "../Assets/Images/Icons/library_books_FILL0.svg";
-          break;
-      }
-    }
-    item.children[0].appendChild(thumb_image);
-  }
-  const FOLDERS = document.getElementsByClassName("Book_folder");
-  console.log("Total number of folders found: " + FOLDERS.length);
-
+  console.log("Total number of folders found: " + BOOK_MAP.Books.length);
+  //Get the collumns we will be adding the folders to
   const col_1 = document.getElementById("Col_1");
   const col_2 = document.getElementById("Col_2");
   const col_3 = document.getElementById("Col_3");
   const col_4 = document.getElementById("Col_4");
   let col_num = 0;
 
-  //Distributing the lists we stored in 'Folders' into the collumns
-  for (let item of FOLDERS) {
+  for (list of BOOK_MAP.Books) {
+    //Create the folder
+    const FOLDER_CONTAINER = document.createElement("ul");
+    FOLDER_CONTAINER.classList.add("Lib_folder");
+    const header = document.createElement("h2");
+    header.innerHTML = list.Folder;
+    FOLDER_CONTAINER.appendChild(header);
+
+    //Add the books
+    for (let book of list.Content) {
+      const BOOK_CONTAINER = document.createElement("li");
+      BOOK_CONTAINER.Name = "Book_entry";
+      BOOK_CONTAINER.classList.add("Lib_entry");
+
+      //Add the thumb div and thumbnail (or placeholder if not available)
+      const thumb_div = document.createElement("div");
+      thumb_div.classList.add("Thumb");
+      const thumb_image = document.createElement("img");
+      thumb_image.alt = `Thumbnail for: ${list.Folder}/${book.Name}`;
+
+      //Set the book's thumbnail, or select an appropriate the placeholder if not found
+      let thumb_url = "";
+      for (let i of THUMB_MAP.Images) {
+        if (book.Name.toUpperCase() == i.Name.toUpperCase()) {
+          thumb_url = "../Assets/Images/Thumbnail_cache/" + i.Name + i.ext;
+        }
+        if (thumb_url != "") {
+          thumb_image.src = thumb_url;
+        } else {
+          switch (book.ext.toUpperCase()) {
+            case ".PDF":
+              thumb_image.src = "../Assets/Images/Icons/Icon_pdf_file.png";
+              break;
+            case ".TXT":
+              thumb_image.src = "../Assets/Images/Icons/Text-txt.png";
+              break;
+            case ".EPUB":
+              thumb_image.src = "../Assets/Images/Icons/Epub_logo.png";
+              break;
+            case ".MOBI":
+              thumb_image.src = "../Assets/Images/Icons/Icon_mobi_file.png";
+              break;
+            case ".AZW3":
+              thumb_image.src = "../Assets/Images/Icons/kindle_app_icon.png";
+              break;
+            case ".HTML":
+              thumb_image.src = "../Assets/Images/Icons/HTML5_logo_black.png";
+              break;
+            default:
+              thumb_image.src =
+                "../Assets/Images/Icons/library_books_FILL0.svg";
+              break;
+          }
+        }
+      }
+      thumb_div.appendChild(thumb_image);
+      BOOK_CONTAINER.appendChild(thumb_div);
+
+      //Add details div and the name
+      const details_div = document.createElement("div");
+      details_div.classList.add("Details");
+
+      const book_title = document.createElement("h4");
+      book_title.innerHTML = book.Name;
+      details_div.appendChild(book_title);
+
+      //Add the file type display and colour it acording to support level
+      const type_display = document.createElement("p");
+      type_display.innerHTML = book.ext;
+      switch (book.ext.toUpperCase()) {
+        case ".PDF":
+          type_display.style.color = "green";
+          break;
+        case ".TXT":
+        case ".EPUB":
+        case ".MOBI":
+        case ".AZW3":
+          type_display.style.color = "yellow";
+          break;
+        case ".HTML":
+          type_display.style.color = "red";
+          break;
+        default:
+          type_display.style.color = "white";
+      }
+      details_div.appendChild(type_display);
+
+      //Add the download button
+      const download_button = document.createElement("a");
+      download_button.href = `../Books/${list.Folder}/${book.Name}${book.ext}`;
+      download_button.textContent = "Download";
+      details_div.appendChild(download_button);
+
+      //Append the details to the book and the completed book to the folder
+      BOOK_CONTAINER.appendChild(details_div);
+      FOLDER_CONTAINER.appendChild(BOOK_CONTAINER);
+    }
+
+    //Append the completed folder to the correct collumn and advance the counter
     switch (col_num) {
       case 0:
-        col_1.innerHTML += item.innerHTML;
+        col_1.appendChild(FOLDER_CONTAINER);
         break;
-
       case 1:
-        col_2.innerHTML += item.innerHTML;
+        col_2.appendChild(FOLDER_CONTAINER);
         break;
-
       case 2:
-        col_3.innerHTML += item.innerHTML;
+        col_3.appendChild(FOLDER_CONTAINER);
         break;
       case 3:
-        col_4.innerHTML += item.innerHTML;
+        col_4.appendChild(FOLDER_CONTAINER);
         break;
-
       default:
         console.log("Error, tried writting to collumn: " + col_num);
     }
@@ -172,11 +140,6 @@ async function Populate_library_entries() {
     if (col_num > 3) {
       col_num = 0;
     }
-  }
-
-  //Removing the lists left earlier
-  while (FOLDERS.length > 0) {
-    FOLDERS[0].parentNode.removeChild(FOLDERS[0]);
   }
 
   //Hide the missing spaces in titles warning, if one has not been applied

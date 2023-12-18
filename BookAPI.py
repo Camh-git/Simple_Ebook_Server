@@ -75,7 +75,9 @@ def json_list_books():
         emptyDir = True
         for book in os.listdir("{0}/{1}".format(mainDir, folder)):
             emptyDir = False
-            data += '{"Name":"' + book+'"},'
+            components = os.path.splitext(book)
+            data += '{"Name":"' + components[0] + \
+                '","ext":"' + components[1]+'"},'
         if not emptyDir:
             data = data[:-1]
         data += "]},"
