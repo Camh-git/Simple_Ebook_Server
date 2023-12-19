@@ -5,6 +5,7 @@ async function get_map(url) {
     return data;
   } catch {
     console.log(`Failed to call:${url}, will use placeholders if possible`);
+    return 500;
   }
 }
 
@@ -12,8 +13,16 @@ async function Populate_library_entries() {
   //Get the thumnail and book lists
   const THUMB_MAP = await get_map(`http://192.168.1.110:5000/thumb-map`);
   const BOOK_MAP = await get_map(`http://192.168.1.110:5000/json-list-books`);
-  console.log(BOOK_MAP);
-  console.log("Total number of folders found: " + BOOK_MAP.Books.length);
+  //Check that the books where found, display count if so, or notice if not
+  try {
+    console.log("Total number of folders found: " + BOOK_MAP.Books.length);
+  } catch {
+    const notice = document.createElement("h2");
+    notice.textContent =
+      "Sorry, the book list could not be found. Please make sure the book API is active and that you are connected to the internet.";
+    document.getElementById("Landing-segment").appendChild(notice);
+    return;
+  }
   //Get the collumns we will be adding the folders to
   const col_1 = document.getElementById("Col_1");
   const col_2 = document.getElementById("Col_2");
