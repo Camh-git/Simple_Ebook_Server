@@ -19,7 +19,7 @@ async function Populate_library_entries() {
   } catch {
     const notice = document.createElement("h2");
     notice.textContent =
-      "Sorry, the book list could not be found. Please make sure the book API is active and that you are connected to the internet.";
+      "Sorry, the book list could not be found. Please make sure the book API is active and that you can contact the server.";
     document.getElementById("Landing-segment").appendChild(notice);
     return;
   }

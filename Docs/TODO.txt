@@ -26,6 +26,9 @@ Remaining:
 	Find a way to add the address to settings and have it be available project wide, since it is hardcoded in a few places. (prob a seperate call api function, lots of opt args)
 	create a shared function for ripping appart filenames and extensions and comparing them in js (py has splitext)
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
+	Go through set_management listeners and set the relevant vars to use folder values so that the book dropdowns can drop the extensions
+	Find a method of breaking down the management page into less of a monalith
+	Add a rename endpoint for Thumbnails
 
   Notes:
 	Thumbnails will probably use the google books api to get images
