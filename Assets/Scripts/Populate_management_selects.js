@@ -12,10 +12,18 @@ async function Pop_management_selects() {
   //Get the thumnail and book lists
   const THUMB_MAP = await get_map(`http://192.168.1.110:5000/thumb-map`);
   const BOOK_MAP = await get_map(`http://192.168.1.110:5000/json-list-books`);
-  console.log(BOOK_MAP);
+  try {
+    console.log("Total number of folders found: " + BOOK_MAP.Books.length);
+  } catch {
+    document.getElementById("Management_pannel").innerHTML =
+      "<h1>Management</h1>" +
+      "<h3>Sorry, the call to the API to fetch the folders failed. The controls have been hidden to prevent any incorrect comands from being sent.</h3>" +
+      "<h4>Please make sure the book API is active and that you can contact the server.</h4>";
+    return;
+  }
 
   //Reset the selects and handle the folder selects
-  const SELECT_LIST = document.querySelectorAll("select"); //TODO: check this works
+  const SELECT_LIST = document.querySelectorAll("select");
 
   for (select of SELECT_LIST) {
     select.innerHTML = "<option>No selection</option>";
@@ -29,7 +37,7 @@ async function Pop_management_selects() {
       //Add listener
       select.addEventListener("change", function () {
         let targetBookSelect = document.getElementsByName(
-          this.getAttribute("name").substring(0, 2) + "_book_select" //TODO: investigate why using the select var here instead of this allways results in TH
+          this.getAttribute("name").substring(0, 2) + "_book_select"
         );
         if (typeof targetBookSelect !== "undefined") {
           //Find the right folder and add the books
@@ -38,7 +46,7 @@ async function Pop_management_selects() {
             if (this.options[this.selectedIndex].text == folder.Folder) {
               for (book of folder.Content) {
                 const option = document.createElement("option");
-                option.value = option.textContent = book.Name + book.ext;
+                option.value = option.textContent = book.Name + book.ext; //TODO: drop the ext from the displayed text once the handlers are re- configured
                 targetBookSelect[0].appendChild(option);
               }
             }
@@ -49,7 +57,7 @@ async function Pop_management_selects() {
   }
   //Case by case handling for the misc selects
   const Thumb_select = document.getElementById("TH_new_select");
-  for (image in THUMB_MAP.Images) {
+  for (image of THUMB_MAP.Images) {
     const option = document.createElement("option");
     option.value = option.textContent = image.Name + image.ext;
     Thumb_select.appendChild(option);

@@ -33,7 +33,7 @@ export async function Call_and_display(
       break;
     case 403:
       response +=
-        "Forbidden: Users are not allowed to rename or delete the Misc and upload folders";
+        "Forbidden: Users are not allowed to rename or delete the Misc and Upload folders";
       break;
     case 404:
       response +=
