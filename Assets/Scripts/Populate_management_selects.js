@@ -11,7 +11,7 @@ async function get_map(url) {
 async function Pop_management_selects() {
   //Get the thumnail and book lists
   const THUMB_MAP = await get_map(`http://192.168.1.110:5000/thumb-map`);
-  const BOOK_MAP = await get_map(`http://192.168.1.110:5000/json-list-books`);
+  const BOOK_MAP = await get_map(`http://192.168.1.110:5000/list-books`);
   try {
     console.log("Total number of folders found: " + BOOK_MAP.Books.length);
   } catch {

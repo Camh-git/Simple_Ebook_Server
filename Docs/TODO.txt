@@ -18,16 +18,14 @@ Remaining:
 	set constant vars(not just const) where appropriate, apply screaming snake case
 	re-implement the name tidying in the management dropdowns, have it change the source file name to maintain control(maybe clean on upload since it's also php)
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly
-	when "no selection" is chosen on a folder select make sure the book select says the same
 	Make the reader and download button blocking work
 	Implement security/encryption on the settings file
 	Add a way to cache the settings so they dont have to be called every req, keep them safe and make sure they get updated on change and load
-	Convert the book and thumb lists (and thumb map) to return json, updated their handlers in management and library, they currently copy the old php approach, rm old endpoints
 	Find a way to add the address to settings and have it be available project wide, since it is hardcoded in a few places. (prob a seperate call api function, lots of opt args)
 	create a shared function for ripping appart filenames and extensions and comparing them in js (py has splitext)
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
 	Go through set_management listeners and set the relevant vars to use folder values so that the book dropdowns can drop the extensions
-	Find a method of breaking down the management page into less of a monalith
+	Find a method of breaking down the management page into less of a monalith (WIP)
 	Add a rename endpoint for Thumbnails
 
   Notes:
@@ -55,6 +53,8 @@ Completed:
 	Move the pages to the pages folder
 	Attempt to fix changelog and credits
 	update append h&f
+	Convert the book and thumb lists (and thumb map) to return json, updated their handlers in management and library, they currently copy the old php approach, rm old endpoints
+	when "no selection" is chosen on a folder select make sure the book select says the same (coincidental to the above change)
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

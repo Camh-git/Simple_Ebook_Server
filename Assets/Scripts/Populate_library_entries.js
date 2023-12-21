@@ -12,7 +12,7 @@ async function get_map(url) {
 async function Populate_library_entries() {
   //Get the thumnail and book lists
   const THUMB_MAP = await get_map(`http://192.168.1.110:5000/thumb-map`);
-  const BOOK_MAP = await get_map(`http://192.168.1.110:5000/json-list-books`);
+  const BOOK_MAP = await get_map(`http://192.168.1.110:5000/list-books`);
   //Check that the books where found, display count if so, or notice if not
   try {
     console.log("Total number of folders found: " + BOOK_MAP.Books.length);

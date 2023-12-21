@@ -55,20 +55,6 @@ def check_ACLS():
 
 @app.route("/list-books")
 def list_books():
-    list = ''
-    for folder in os.listdir(mainDir):
-        list += '<div class = "Book_folder"><h5 class="book_list_title">{0}</h5><ul>'.format(
-            folder)
-        for book in os.listdir("{0}/{1}".format(mainDir, folder)):
-            list += '<li>{0}</li>'.format(book)
-        list += '</ul></div>'
-    response = app.response_class(response=json.dumps(
-        list), status=200, mimetype='application/json')
-    return response
-
-
-@app.route("/json-list-books")
-def json_list_books():
     data = '{"Books":['
     for folder in os.listdir(mainDir):
         data += '{"Folder":"'+folder + '","Content":['
@@ -254,17 +240,6 @@ def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, ):
 
 @app.route("/list-thumbs")
 def List_Thumbs():
-    list = '<ul id = "Thumb_list">'
-    for image in os.listdir("./Assets/Images/Thumbnail_cache/"):
-        list += '<li>{0}</li>'.format(image)
-    list += '</ul>'
-    response = app.response_class(response=json.dumps(
-        list), status=200, mimetype='application/json')
-    return response
-
-
-@app.route("/list-thumbs-json")
-def List_Thumbs_json():
     list = '{"Images":['
     empty_cache = True
     for image in os.listdir("./Assets/Images/Thumbnail_cache/"):
@@ -281,7 +256,7 @@ def List_Thumbs_json():
 def show_thumb_map():
     data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
     data = data[:-2]
-    data += "," + List_Thumbs_json()[1:]
+    data += "," + List_Thumbs()[1:]
     return data
 
 
