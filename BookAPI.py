@@ -105,12 +105,13 @@ def Rename_book(book_name, ext, folder, new_name):
         return "400"
     # Make sure the book exists and that a file with a matching name doesn't already exist
     target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
-    if os.path.exists("{0}/{1}/{2}.{3}".format(mainDir, folder, new_name, ext)):
+    renamed = "{0}/{1}/{2}.{3}".format(mainDir, folder, new_name, ext)
+    if os.path.exists(renamed):
         return "409"
     if os.path.exists(target):
         try:
             os.rename(
-                target, "{0}/{1}/{2}.{3}".format(mainDir, folder, new_name, ext))
+                target, renamed)
         except Exception as e:
             return "500: " + str(e)
     else:
@@ -185,11 +186,12 @@ def Rename_folder(folder_name, new_name):
 
     # Make sure the folder exists, and stop if a folder with the new name already exists
     target = "{0}/{1}".format(mainDir, folder_name)
-    if os.path.exists("{0}/{1}".format(mainDir, new_name)):
+    reNamed = "{0}/{1}".format(mainDir, new_name)
+    if os.path.exists(reNamed):
         return "409"
     if os.path.exists(target):
         try:
-            os.rename(target, "{0}/{1}".format(mainDir, new_name))
+            os.rename(target, reNamed)
         except Exception as e:
             return "500: " + str(e)
     else:
@@ -318,8 +320,30 @@ def Clear_thumbs(regen, rmManual):
         return "404"
 
 
+@app.route("/rename-thumb/<target>&&<ext>&&<newName>")
+def rename_thumb(target, ext, newName):
+    if (target == "" or ext == "" or newName == ""):
+        return "400"
+    # Make sure the book exists and that a file with a matching name doesn't already exist
+    image = "./Assets/Images/Thumbnail_cache/{0}.{1}".format(target, ext)
+    reNamed = "./Assets/Images/Thumbnail_cache/{0}.{1}".format(
+        newName, ext)
+    if os.path.exists(reNamed):
+        return "409"
+
+    if os.path.exists(image):
+        try:
+            os.rename(
+                image, reNamed)
+        except Exception as e:
+            return "500: " + str(e)
+    else:
+        return "404"
+    return "200"
+
+
 # Misc option functions
-# TODO: implement the password check, opt: make settings json handlers not file specific
+# TODO: implement the password check
 
 
 def read_json_no_code(file):
