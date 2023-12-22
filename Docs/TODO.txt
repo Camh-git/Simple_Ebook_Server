@@ -26,7 +26,7 @@ Remaining:
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
 	Go through set_management listeners and set the relevant vars to use folder values so that the book dropdowns can drop the extensions
 	Find a method of breaking down the management page into less of a monalith (WIP)
-	Add a rename endpoint for Thumbnails
+	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
 
   Notes:
 	Thumbnails will probably use the google books api to get images
@@ -55,6 +55,7 @@ Completed:
 	update append h&f
 	Convert the book and thumb lists (and thumb map) to return json, updated their handlers in management and library, they currently copy the old php approach, rm old endpoints
 	when "no selection" is chosen on a folder select make sure the book select says the same (coincidental to the above change)
+	Add a rename endpoint for Thumbnails
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

@@ -105,6 +105,19 @@ function Assign_submit_actions() {
     .getElementById("TH_upload_form")
     .addEventListener("submit", (event) => {});
   document
+    .getElementById("TH_rename_form")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      let target = event.target.children[2];
+      let newName = event.target.children[5];
+      console.log(newName.value);
+      Call_and_display(
+        `${ADDRESS}rename-thumb/${
+          target.options[target.selectedIndex].innerHTML
+        }&&${newName.value}`
+      );
+    });
+  document
     .getElementById("TH_format_form")
     .addEventListener("submit", (event) => {
       event.preventDefault();

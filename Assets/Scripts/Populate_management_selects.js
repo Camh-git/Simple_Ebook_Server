@@ -56,11 +56,13 @@ async function Pop_management_selects() {
     }
   }
   //Case by case handling for the misc selects
-  const Thumb_select = document.getElementById("TH_new_select");
+  const Thumb_selects = document.getElementsByName("TH_select");
   for (image of THUMB_MAP.Images) {
-    const option = document.createElement("option");
-    option.value = option.textContent = image.Name + image.ext;
-    Thumb_select.appendChild(option);
+    for (select of Thumb_selects) {
+      const option = document.createElement("option");
+      option.value = option.textContent = image.Name + image.ext;
+      select.appendChild(option);
+    }
   }
 }
 

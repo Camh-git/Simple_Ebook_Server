@@ -199,7 +199,7 @@
           <br />
 
           <label for="TH_new_select">Select new image.</label>
-          <select name="TH_new_select" id="TH_new_select">
+          <select name="TH_select" id="TH_new_select">
             <option value="None">No selection</option>
           </select>
           <br />
@@ -223,6 +223,21 @@
           />
           <br />
           <input type="submit" value="Upload" />
+        </form>
+
+        <!--Rename thumbnails-->
+        <form method="POST" enctype="multipart/form-data" id="TH_rename_form">
+          <h3>Rename Thumbnail</h3>
+
+          <label for="TH_rn_select">Select new image.</label>
+          <select name="TH_select" id="TH_rn_select">
+            <option value="None">No selection</option>
+          </select>
+          <br />
+          <br />
+          <input type="text" name="TH_rn_new_name" placeholder="New name" />
+
+          <input type="submit" value="Change" />
         </form>
 
         <!--Format thumbnail cache-->

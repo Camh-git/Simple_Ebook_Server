@@ -320,14 +320,15 @@ def Clear_thumbs(regen, rmManual):
         return "404"
 
 
-@app.route("/rename-thumb/<target>&&<ext>&&<newName>")
-def rename_thumb(target, ext, newName):
-    if (target == "" or ext == "" or newName == ""):
+@app.route("/rename-thumb/<target>&&<newName>")
+def rename_thumb(target, newName):
+    if (target == "" or newName == ""):
         return "400"
+    extension = os.path.splitext(target)[1]
     # Make sure the book exists and that a file with a matching name doesn't already exist
-    image = "./Assets/Images/Thumbnail_cache/{0}.{1}".format(target, ext)
-    reNamed = "./Assets/Images/Thumbnail_cache/{0}.{1}".format(
-        newName, ext)
+    image = "./Assets/Images/Thumbnail_cache/{0}".format(target)
+    reNamed = "./Assets/Images/Thumbnail_cache/{0}{1}".format(
+        newName, extension)
     if os.path.exists(reNamed):
         return "409"
 
