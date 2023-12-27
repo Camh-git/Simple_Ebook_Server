@@ -329,10 +329,12 @@ form {
 #Row_list li {
   list-style-type: none;
 }
-#Row_list li h2 {
+#Row_list li h2,
+#Row_list li img {
   display: inline-block;
 }
-#Row_list li :not(:first-child) {
+#Row_list li section {
+  display: none;
 }
 #Management_pannel h2 {
   margin-top: 10vh;
