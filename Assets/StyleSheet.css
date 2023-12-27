@@ -326,6 +326,14 @@ form {
   flex-direction: row;
   flex-wrap: wrap;
 }
+#Row_list li {
+  list-style-type: none;
+}
+#Row_list li h2 {
+  display: inline-block;
+}
+#Row_list li :not(:first-child) {
+}
 #Management_pannel h2 {
   margin-top: 10vh;
 }

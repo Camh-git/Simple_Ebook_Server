@@ -1,0 +1,74 @@
+<!--Enable or disable downloads-->
+<form method="POST" enctype="multipart/form-data" id="DL_toggle_form">
+  <h3>Enable downloads?</h3>
+
+  <p name="Downloads enabled display">Downloads should be:</p>
+  <label for="DL_toggle_enable" class="alwaysShow">Enabled</label>
+  <input type="Radio" name="DL_toggle" value="True" />
+  <label for="DL_toggle_disable" class="alwaysShow">Disabled</label>
+  <input type="Radio" name="DL_toggle" value="False" />
+  <br />
+
+  <input type="password" name="DL_toggle_PW" placeholder="Password" />
+  <input type="submit" value="Apply" />
+
+  <h3 class="Warning">
+    Note: This function is solely for personal use, do not enable if server is
+    shared
+  </h3>
+</form>
+
+<!--Enable or disable online readers-->
+<form method="POST" enctype="multipart/form-data" id="TOGR_form">
+  <h3>Enable online readers?</h3>
+  <p name="Downloads enabled display">Readers should be:</p>
+  <label for="TOGR_toggle_enable" class="alwaysShow">Enabled</label>
+  <input type="Radio" name="Reader_toggle" value="True" />
+  <label for="TOGR_toggle_disable" class="alwaysShow">Disabled</label>
+  <input type="Radio" name="Reader_toggle" value="False" />
+  <br />
+  <input type="password" name="TOGR_toggle_PW" placeholder="Password" />
+  <input type="submit" value="Apply" />
+</form>
+
+<!--Add an IP to either the black or white list-->
+<form method="POST" enctype="multipart/form-data" id="IP_form">
+  <h3>Manage IP lists</h3>
+  <p>Please select a list and enter an IP to add.</p>
+  <label for="IP_Whitelist" class="alwaysShow">Whitelist</label>
+  <input type="Radio" name="IP_list_choice" value="Whitelist" />
+  <label for="IP_Blacklist" class="alwaysShow">Blacklist</label>
+  <input type="Radio" name="IP_list_choice" value="Blacklist" />
+  <br />
+
+  <input type="text" name="IP_list_add_Target" placeholder="0.0.0.0" />
+  <input type="password" name="IP_list_code" placeholder="Password" />
+  <br />
+
+  <label for="IP_list_add" class="alwaysShow">Add</label>
+  <input type="Radio" name="IP_list_add_or_rm" value="ADD" />
+  <label for="IP_list_rm" class="alwaysShow">Remove</label>
+  <input type="Radio" name="IP_list_add_or_rm" value="REMOVE" />
+  <br />
+
+  <input type="submit" value="Change" />
+</form>
+
+<form method="POST" enctype="multipart/form-data" id="IPR_form">
+  <h3>IP restrictions</h3>
+  <p>Activate the whitelist, blacklist or neither</p>
+  <label for="IPR_Whitelist" class="alwaysShow">Whitelist</label>
+  <input type="Radio" name="IPR_list_choice" value="Whitelist" />
+  <br />
+  <label for="IPR_Blacklist" class="alwaysShow">Blacklist</label>
+  <input type="Radio" name="IPR_list_choice" value="Blacklist" />
+  <br />
+  <label for="IPR_None" class="alwaysShow">None</label>
+  <input type="Radio" name="IPR_list_choice" value="None" />
+
+  <br />
+  <input type="password" name="IPR_list_code" placeholder="Password" />
+  <br />
+
+  <input type="submit" value="Change" />
+</form>
