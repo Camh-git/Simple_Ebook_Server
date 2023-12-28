@@ -329,6 +329,12 @@ form {
 #Row_list li {
   list-style-type: none;
 }
+#Row_list li section {
+  display: flex;
+}
+#Row_list li h2 {
+  margin-top: 5vh;
+}
 #Row_list li h2,
 #Row_list li img {
   display: inline-block;

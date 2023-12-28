@@ -25,8 +25,9 @@ Remaining:
 	create a shared function for ripping appart filenames and extensions and comparing them in js (py has splitext)
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
 	Go through set_management listeners and set the relevant vars to use folder values so that the book dropdowns can drop the extensions
-	Find a method of breaking down the management page into less of a monalith (WIP)
+	Find a method of breaking down the management page into less of a monalith (WIP)	- needs debugging with the event handlers not being set sometimes
 	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
+	Tidy up/ segment the css
 
   Notes:
 	Thumbnails will probably use the google books api to get images

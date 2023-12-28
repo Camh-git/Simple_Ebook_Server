@@ -16,15 +16,23 @@ function get_rows() {
     group
       .getElementsByTagName("img")[0]
       .addEventListener("click", function (e) {
-        let section = e.target.parentNode.getElementsByTagName("section")[0];
-        if (section.style.display == "inline") {
-          section.style.display = "none";
-          e.target.src = "../Assets/Images/expand_more_white_24dp.svg";
-        } else {
-          section.style.display = "inline";
-          e.target.src = "../Assets/Images/expand_less_white_24dp.svg";
-        }
+        toggle_forms(e);
       });
+    group.getElementsByTagName("h2")[0].addEventListener("click", function (e) {
+      toggle_forms(e);
+    });
+
+    function toggle_forms(e) {
+      let section = e.target.parentNode.getElementsByTagName("section")[0];
+      let image = e.target.parentNode.getElementsByTagName("img")[0];
+      if (section.style.display == "flex") {
+        section.style.display = "none";
+        image.src = "../Assets/Images/expand_more_white_24dp.svg";
+      } else {
+        section.style.display = "flex";
+        image.src = "../Assets/Images/expand_less_white_24dp.svg";
+      }
+    }
   }
 }
 get_rows();
