@@ -57,12 +57,15 @@ async function Pop_management_selects() {
   }
   //Case by case handling for the misc selects
   const Thumb_selects = document.getElementsByName("TH_select");
-  for (image of THUMB_MAP.Images) {
-    for (select of Thumb_selects) {
+  for (select of Thumb_selects) {
+    for (image of THUMB_MAP.Images) {
       const option = document.createElement("option");
       option.value = option.textContent = image.Name + image.ext;
       select.appendChild(option);
     }
+    select.addEventListener("change", function () {
+      // TODO: update thumb list like above
+    });
   }
 }
 
