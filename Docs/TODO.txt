@@ -28,7 +28,8 @@ Remaining:
 	Find a method of breaking down the management page into less of a monalith (WIP)	- needs debugging with the event handlers not being set sometimes
 	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
 	Tidy up/ segment the css
-
+	figure out why Populate_management_selects errors when a folder select without a book select is changed, despite the if statement that should prevent it.
+	Investigate why the IP restriction toggles dont return text(might be fixed)
   Notes:
 	Thumbnails will probably use the google books api to get images
 	Example thumbnail map obj: {"Folder":"","Name":"","Thumb":""}

@@ -46,13 +46,13 @@
             <form method="POST" enctype="multipart/form-data" id="DS_form">
               <h3>Delete book</h3>
               <label for="DS_folder_select">Select folder</label>
-              <select name="DS_folder_select">
+              <select name="DS_folder_select" id="DS_folder_select">
                 <option value="None">No selection</option>
               </select>
               <br />
 
               <label for="DS_book_select">Select book</label>
-              <select name="DS_book_select">
+              <select name="DS_book_select" id="DS_book_select">
                 <option value="None">No selection</option>
               </select>
               <br />
@@ -64,13 +64,13 @@
             <form method="POST" enctype="multipart/form-data" id="RS_form">
               <h3>Rename book</h3>
               <label for="RS_folder_select">Select folder</label>
-              <select name="RS_folder_select">
+              <select name="RS_folder_select" id="RS_folder_select">
                 <option value="None">No selection</option>
               </select>
               <br />
 
               <label for="RS_book_select">Select book</label>
-              <select name="RS_book_select">
+              <select name="RS_book_select" id="RS_book_select">
                 <option value="None">No selection</option>
               </select>
               <br />
@@ -115,7 +115,6 @@
             <form method="POST" enctype="multipart/form-data" id="DF_form">
               <h3>Delete folder</h3>
 
-              <label for="DF_folder_select">Select folder</label>
               <select name="DF_folder_select">
                 <option value="None">No selection</option>
               </select>
@@ -126,6 +125,7 @@
               <input
                 type="checkbox"
                 name="DS_Delete_content"
+                id="DS_Delete_content"
                 value="DS_Delete_content"
               />
               <label for="DS_Delete_content" class="alwaysShow"
@@ -149,6 +149,7 @@
           </section>
         </li>
 
+        <!--Manage library-->
         <li>
           <h2>Manage library</h2>
           <image
@@ -156,7 +157,7 @@
             alt="Toggle book management"
           />
           <section class="Management-row">
-            <!--Create empty folder TODO:find a way to fix the permissions issue-->
+            <!--Create empty folder -->
             <form method="POST" enctype="multipart/form-data" id="CF_form">
               <h3>Create new folder</h3>
               <input type="text" name="CF_Name" placeholder="Enter name here" />
@@ -173,20 +174,23 @@
               <h3>Move book to new folder</h3>
 
               <label for="MV_folder_select">Select current folder</label>
-              <select name="MV_folder_select">
+              <select id="MV_folder_select" name="MV_folder_select">
                 <option value="None">No selection</option>
               </select>
               <br />
 
               <label for="MV_book_select">Select book</label>
-              <select name="MV_book_select">
+              <select id="MV_book_select" name="MV_book_select">
                 <option value="None">No selection</option>
               </select>
               <br />
 
               <!--NOTE: This naming inconsistency is intentional, it prevents the book select from changing when a new target is chosen -->
               <label for="mv_target_folder_select">Select new folder</label>
-              <select name="mv_target_folder_select">
+              <select
+                id="mv_target_folder_select"
+                name="mv_target_folder_select"
+              >
                 <option value="None">No selection</option>
               </select>
               <br />
@@ -211,13 +215,13 @@
               <h3>Re-assign Thumbnails</h3>
 
               <label for="TH_folder_select">Folder</label>
-              <select name="TH_folder_select">
+              <select name="TH_folder_select" id="TH_folder_select">
                 <option value="None">No selection</option>
               </select>
               <br />
 
               <label for="TH_book_select">Book</label>
-              <select name="TH_book_select">
+              <select name="TH_book_select" id="TH_book_select">
                 <option value="None">No selection</option>
               </select>
               <br />
@@ -310,6 +314,7 @@
           </section>
         </li>
 
+        <!--Misc options-->
         <li>
           <h2>Misc options</h2>
           <image
@@ -327,9 +332,19 @@
 
               <p name="Downloads enabled display">Downloads should be:</p>
               <label for="DL_toggle_enable" class="alwaysShow">Enabled</label>
-              <input type="Radio" name="DL_toggle" value="True" />
+              <input
+                type="Radio"
+                name="DL_toggle"
+                id="DL_toggle_enable"
+                value="True"
+              />
               <label for="DL_toggle_disable" class="alwaysShow">Disabled</label>
-              <input type="Radio" name="DL_toggle" value="False" />
+              <input
+                type="Radio"
+                name="DL_toggle"
+                id="DL_toggle_disable"
+                value="False"
+              />
               <br />
 
               <input
@@ -350,11 +365,21 @@
               <h3>Enable online readers?</h3>
               <p name="Downloads enabled display">Readers should be:</p>
               <label for="TOGR_toggle_enable" class="alwaysShow">Enabled</label>
-              <input type="Radio" name="Reader_toggle" value="True" />
+              <input
+                type="Radio"
+                name="Reader_toggle"
+                id="TOGR_toggle_enable"
+                value="True"
+              />
               <label for="TOGR_toggle_disable" class="alwaysShow"
                 >Disabled</label
               >
-              <input type="Radio" name="Reader_toggle" value="False" />
+              <input
+                type="Radio"
+                name="Reader_toggle"
+                id="TOGR_toggle_disable"
+                value="False"
+              />
               <br />
               <input
                 type="password"
@@ -369,9 +394,19 @@
               <h3>Manage IP lists</h3>
               <p>Please select a list and enter an IP to add.</p>
               <label for="IP_Whitelist" class="alwaysShow">Whitelist</label>
-              <input type="Radio" name="IP_list_choice" value="Whitelist" />
+              <input
+                type="Radio"
+                name="IP_list_choice"
+                id="IP_Whitelist"
+                value="Whitelist"
+              />
               <label for="IP_Blacklist" class="alwaysShow">Blacklist</label>
-              <input type="Radio" name="IP_list_choice" value="Blacklist" />
+              <input
+                type="Radio"
+                name="IP_list_choice"
+                id="IP_Blacklist"
+                value="Blacklist"
+              />
               <br />
 
               <input
@@ -387,9 +422,19 @@
               <br />
 
               <label for="IP_list_add" class="alwaysShow">Add</label>
-              <input type="Radio" name="IP_list_add_or_rm" value="ADD" />
+              <input
+                type="Radio"
+                name="IP_list_add_or_rm"
+                id="IP_list_add"
+                value="ADD"
+              />
               <label for="IP_list_rm" class="alwaysShow">Remove</label>
-              <input type="Radio" name="IP_list_add_or_rm" value="REMOVE" />
+              <input
+                type="Radio"
+                name="IP_list_add_or_rm"
+                id="IP_list_rm"
+                value="REMOVE"
+              />
               <br />
 
               <input type="submit" value="Change" />
@@ -399,13 +444,28 @@
               <h3>IP restrictions</h3>
               <p>Activate the whitelist, blacklist or neither</p>
               <label for="IPR_Whitelist" class="alwaysShow">Whitelist</label>
-              <input type="Radio" name="IPR_list_choice" value="Whitelist" />
+              <input
+                type="Radio"
+                name="IPR_list_choice"
+                id="IPR_Whitelist"
+                value="Whitelist"
+              />
               <br />
               <label for="IPR_Blacklist" class="alwaysShow">Blacklist</label>
-              <input type="Radio" name="IPR_list_choice" value="Blacklist" />
+              <input
+                type="Radio"
+                name="IPR_list_choice"
+                id="IPR_Blacklist"
+                value="Blacklist"
+              />
               <br />
               <label for="IPR_None" class="alwaysShow">None</label>
-              <input type="Radio" name="IPR_list_choice" value="None" />
+              <input
+                type="Radio"
+                name="IPR_list_choice"
+                id="IPR_None"
+                value="None"
+              />
 
               <br />
               <input
@@ -431,11 +491,25 @@
             <form method="POST" enctype="multipart/form-data" id="MNT_form">
               <h3>Enable management</h3>
               <p>Select if the remote management tools can be used or not</p>
-              <label for="MNT_list_choice" class="alwaysShow"> Enable </label>
-              <input type="Radio" name="MNT_toggle" value="True" />
+              <label for="MNT_list_choice_true" class="alwaysShow">
+                Enable
+              </label>
+              <input
+                type="Radio"
+                name="MNT_toggle"
+                id="MNT_list_choice_true"
+                value="True"
+              />
               <br />
-              <label for="MNT_list_choice" class="alwaysShow">Disable</label>
-              <input type="Radio" name="MNT_toggle" value="False" />
+              <label for="MNT_list_choice_false" class="alwaysShow"
+                >Disable</label
+              >
+              <input
+                type="Radio"
+                name="MNT_toggle"
+                id="MNT_list_choice_false"
+                value="False"
+              />
 
               <br />
               <input type="password" name="MNT_code" placeholder="Password" />
@@ -447,11 +521,25 @@
             <form method="POST" enctype="multipart/form-data" id="MNU_form">
               <h3>Enable Upload</h3>
               <p>Select if the Upload forms can be used</p>
-              <label for="MNU_list_choice" class="alwaysShow"> Enable </label>
-              <input type="Radio" name="MNU_toggle" value="True" />
+              <label for="MNU_list_choice_true" class="alwaysShow">
+                Enable
+              </label>
+              <input
+                type="Radio"
+                name="MNU_toggle"
+                id="MNU_list_choice_true"
+                value="True"
+              />
               <br />
-              <label for="MNU_list_choice" class="alwaysShow">Disable</label>
-              <input type="Radio" name="MNU_toggle" value="False" />
+              <label for="MNU_list_choice_false" class="alwaysShow"
+                >Disable</label
+              >
+              <input
+                type="Radio"
+                name="MNU_toggle"
+                id="MNU_list_choice_false"
+                value="False"
+              />
 
               <br />
               <input type="password" name="MNU_code" placeholder="Password" />
@@ -463,11 +551,25 @@
             <form method="POST" enctype="multipart/form-data" id="MND_form">
               <h3>Enable Delete</h3>
               <p>Select if the delete forms can be used</p>
-              <label for="MND_list_choice" class="alwaysShow"> Enable </label>
-              <input type="Radio" name="MND_toggle" value="True" />
+              <label for="MND_list_choice_true" class="alwaysShow">
+                Enable
+              </label>
+              <input
+                type="Radio"
+                name="MND_toggle"
+                id="MND_list_choice_true"
+                value="True"
+              />
               <br />
-              <label for="MND_list_choice" class="alwaysShow">Disable</label>
-              <input type="Radio" name="MND_toggle" value="False" />
+              <label for="MND_list_choice_false" class="alwaysShow"
+                >Disable</label
+              >
+              <input
+                type="Radio"
+                name="MND_toggle"
+                id="MND_list_choice_false"
+                value="False"
+              />
 
               <br />
               <input type="password" name="MND_code" placeholder="Password" />
@@ -479,11 +581,25 @@
             <form method="POST" enctype="multipart/form-data" id="MNR_form">
               <h3>Enable rename</h3>
               <p>Select if the rename forms can be used</p>
-              <label for="MNR_list_choice" class="alwaysShow"> Enable </label>
-              <input type="Radio" name="MNR_toggle" value="True" />
+              <label for="MNR_list_choice_true" class="alwaysShow">
+                Enable
+              </label>
+              <input
+                type="Radio"
+                name="MNR_toggle"
+                id="MNR_list_choice_true"
+                value="True"
+              />
               <br />
-              <label for="MNR_list_choice" class="alwaysShow">Disable</label>
-              <input type="Radio" name="MNR_toggle" value="False" />
+              <label for="MNR_list_choice_false" class="alwaysShow"
+                >Disable</label
+              >
+              <input
+                type="Radio"
+                name="MNR_toggle"
+                id="MNR_list_choice_false"
+                value="False"
+              />
 
               <br />
               <input type="password" name="MNR_code" placeholder="Password" />
@@ -495,11 +611,25 @@
             <form method="POST" enctype="multipart/form-data" id="MNM_form">
               <h3>Enable Move</h3>
               <p>Select if the move book/thumb forms can be used</p>
-              <label for="MNM_list_choice" class="alwaysShow"> Enable </label>
-              <input type="Radio" name="MNM_toggle" value="True" />
+              <label for="MNM_list_choice_true" class="alwaysShow">
+                Enable
+              </label>
+              <input
+                type="Radio"
+                name="MNM_toggle"
+                id="MNM_list_choice_true"
+                value="True"
+              />
               <br />
-              <label for="MNM_list_choice" class="alwaysShow">Disable</label>
-              <input type="Radio" name="MNM_toggle" value="False" />
+              <label for="MNM_list_choice_false" class="alwaysShow"
+                >Disable</label
+              >
+              <input
+                type="Radio"
+                name="MNM_toggle"
+                id="MNM_list_choice_false"
+                value="False"
+              />
 
               <br />
               <input type="password" name="MNM_code" placeholder="Password" />

@@ -86,7 +86,7 @@ export async function Call_and_display(
   if (show_ip_lists && data == "200") {
     //Get settings
     const lists = await fetch(`${ADDRESS}fetch-settings/${code}`);
-    list_data = await lists.json();
+    let list_data = await lists.json();
 
     //Show lists in tables
     response += "<table><tr><th>Whitelist</th><th>Blacklist</th></tr>";

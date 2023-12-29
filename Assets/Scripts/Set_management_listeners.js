@@ -34,8 +34,8 @@ function Assign_submit_actions() {
   //Manage folders
   document.getElementById("DF_form").addEventListener("submit", (event) => {
     event.preventDefault();
-    let Folder = event.target.children[2];
-    let Delete = event.target.children[6];
+    let Folder = event.target.children[1];
+    let Delete = event.target.children[5];
     if (Delete.checked) {
       Delete = true;
     } else {

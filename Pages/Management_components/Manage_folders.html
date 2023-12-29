@@ -23,7 +23,6 @@
 <form method="POST" enctype="multipart/form-data" id="DF_form">
   <h3>Delete folder</h3>
 
-  <label for="DF_folder_select">Select folder</label>
   <select name="DF_folder_select">
     <option value="None">No selection</option>
   </select>
@@ -31,7 +30,12 @@
 
   <input type="submit" value="Submit" />
   <br />
-  <input type="checkbox" name="DS_Delete_content" value="DS_Delete_content" />
+  <input
+    type="checkbox"
+    name="DS_Delete_content"
+    id="DS_Delete_content"
+    value="DS_Delete_content"
+  />
   <label for="DS_Delete_content" class="alwaysShow"
     >Delete folder content?(Content will be moved to misc if not checked)</label
   >
