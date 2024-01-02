@@ -31,12 +31,21 @@ async function Populate_library_entries() {
   let col_num = 0;
 
   for (list of BOOK_MAP.Books) {
-    //Create the folder
+    //Create the folder and it's toogle button
     const FOLDER_CONTAINER = document.createElement("ul");
     FOLDER_CONTAINER.classList.add("Lib_folder");
     const header = document.createElement("h2");
     header.innerHTML = list.Folder;
     FOLDER_CONTAINER.appendChild(header);
+
+    const toggle_img = document.createElement("img");
+    toggle_img.src = "../Assets/Images/expand_more_white_24dp.svg";
+    toggle_img.alt = "Expand/retract book list";
+    header.appendChild(toggle_img);
+
+    header.addEventListener("click", function (e) {
+      toggle_entries(e);
+    });
 
     //Add the books
     for (let book of list.Content) {
@@ -165,4 +174,32 @@ async function Populate_library_entries() {
 
   console.log("Library setup complete");
 }
+
+function toggle_entries(e) {
+  let list, img, head;
+  if (e.target.tagName == "IMG") {
+    list = e.target.parentNode.parentNode.getElementsByTagName("li");
+    img = e.target;
+    head = e.target.parentNode;
+  } else {
+    list = e.target.parentNode.getElementsByTagName("li");
+    img = e.target.getElementsByTagName("img")[0];
+    head = e.target;
+  }
+
+  if (list[0].style.display == "flex") {
+    for (entry of list) {
+      entry.style.display = "none";
+    }
+    img.src = "../Assets/Images/expand_more_white_24dp.svg";
+    img.style.background = head.style.background = "#737373";
+  } else {
+    for (entry of list) {
+      entry.style.display = "flex";
+    }
+    img.src = "../Assets/Images/expand_less_white_24dp.svg";
+    img.style.background = head.style.background = "#1e596f";
+  }
+}
+
 Populate_library_entries();

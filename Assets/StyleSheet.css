@@ -280,6 +280,21 @@ form {
   color: var(--warnColour);
   font-weight: bold;
 }
+.Lib_folder h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--Form_PopupBG);
+  padding: 1vw;
+  width: 12.5vw;
+  margin-left: 1.25vw;
+  min-height: 10vh;
+  border: 5px solid #ffffff;
+  border-radius: 25%;
+}
+.Lib_folder li {
+  display: none;
+}
 .LS-Type-ind {
   font-weight: bold;
 }
