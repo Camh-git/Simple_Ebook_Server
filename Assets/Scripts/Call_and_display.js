@@ -87,6 +87,7 @@ export async function Call_and_display(
     //Get settings
     const lists = await fetch(`${ADDRESS}fetch-settings/${code}`);
     let list_data = await lists.json();
+    let WL_data, BL_data;
 
     //Show lists in tables
     response += "<table><tr><th>Whitelist</th><th>Blacklist</th></tr>";
