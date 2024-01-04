@@ -39,7 +39,7 @@ async function Pop_management_selects() {
         let targetBookSelect = document.getElementsByName(
           this.getAttribute("name").substring(0, 2) + "_book_select"
         );
-        if (typeof targetBookSelect !== "undefined") {
+        if (typeof targetBookSelect[0] !== "undefined") {
           //Find the right folder and add the books
           targetBookSelect[0].innerHTML = "<option>No selection</option>";
           for (folder of BOOK_MAP.Books) {

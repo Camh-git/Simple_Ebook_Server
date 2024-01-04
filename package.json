@@ -2,6 +2,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "epub.js": "^0.2.15",
+    "epubjs": "^0.3.93",
     "fs": "^0.0.1-security"
   }
 }

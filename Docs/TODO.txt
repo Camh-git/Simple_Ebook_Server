@@ -6,28 +6,30 @@ Remaining:
 	Modify CSS to allow decent mobile use
 	add password authentication
 
-  Minor:
+  Feature additions:
 	Implement Epub reader
 	Implement a reader for simple txt files
 	Implement Mobi reader
 	Implement HTML reader
-	Add a start guide to the readme
-	populate and use the thumbnail cache
+
+  Feature changes:
+  	Add a script to populate the thumbnail cache (probably calling google books)
+	Change upload scripts from php to python
+	Make the reader and download button blocking work
+
+  Minor/ technical :	
+	
 	go through the js and add cammel case/ generaly tidy up
 	set constant vars(not just const) where appropriate, apply screaming snake case
-	re-implement the name tidying in the management dropdowns, have it change the source file name to maintain control(maybe clean on upload since it's also php)
-	see if it is possible to do without the extension paramaters on the api by using the basenames directly
-	Make the reader and download button blocking work
-	Implement security/encryption on the settings file
-	Add a way to cache the settings so they dont have to be called every req, keep them safe and make sure they get updated on change and load
-	Find a way to add the address to settings and have it be available project wide, since it is hardcoded in a few places. (prob a seperate call api function, lots of opt args)
-	create a shared function for ripping appart filenames and extensions and comparing them in js (py has splitext)
+	see if it is possible to do without the extension paramaters on the api by using the basenames directly (complicated due to )
+	Add a way to cache the settings so they dont have to be called every req, implement security and make sure they get updated on change and load
+	Find a way to make the address available project wide(prob settings), since it is hardcoded in a few places. (prob a seperate call api function, lots of opt args)
+	create a shared function for seperating filenames and extensions and comparing them in js
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
-	Go through set_management listeners and set the relevant vars to use folder values so that the book dropdowns can drop the extensions
+	Go through set_management listeners and set the relevant vars to use folder values so that the book dropdowns can drop the extensions, replace index based select
 	Find a method of breaking down the management page into less of a monalith (WIP)	- needs debugging with the event handlers not being set sometimes
 	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
 	Tidy up/ segment the css
-	figure out why Populate_management_selects errors when a folder select without a book select is changed, despite the if statement that should prevent it.
 	
   Notes:
 	Thumbnails will probably use the google books api to get images
@@ -52,6 +54,7 @@ Completed:
 	modify reasign-thumb endpoint to add a new entry if a book without a thumbnail already assigned is entered
 	figure out why book_collection nests itself within the thumbnail select	- was missing close tags
 	Move the pages to the pages folder
+	Add a start guide to the readme
 	Attempt to fix changelog and credits
 	update append h&f
 	Convert the book and thumb lists (and thumb map) to return json, updated their handlers in management and library, they currently copy the old php approach, rm old endpoints
@@ -59,6 +62,7 @@ Completed:
 	Add a rename endpoint for Thumbnails
 	Modify library to use dropdowns instead of full lists if there are more then 5 folders (misc, uploads and 3 custom)
 	Investigate why the IP restriction toggles dont return text
+	figure out why Populate_management_selects errors when a folder select without a book select is changed(was checking the list which would always be typeof object, change to check the first value).
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books
