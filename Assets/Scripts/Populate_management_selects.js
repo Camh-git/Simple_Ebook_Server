@@ -63,9 +63,6 @@ async function Pop_management_selects() {
       option.value = option.textContent = image.Name + image.ext;
       select.appendChild(option);
     }
-    select.addEventListener("change", function () {
-      // TODO: update thumb list like above
-    });
   }
 }
 

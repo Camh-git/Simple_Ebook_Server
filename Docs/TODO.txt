@@ -30,6 +30,7 @@ Remaining:
 	Find a method of breaking down the management page into less of a monalith (WIP)	- needs debugging with the event handlers not being set sometimes
 	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
 	Tidy up/ segment the css
+	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
 	
   Notes:
 	Thumbnails will probably use the google books api to get images
@@ -63,6 +64,7 @@ Completed:
 	Modify library to use dropdowns instead of full lists if there are more then 5 folders (misc, uploads and 3 custom)
 	Investigate why the IP restriction toggles dont return text
 	figure out why Populate_management_selects errors when a folder select without a book select is changed(was checking the list which would always be typeof object, change to check the first value).
+	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

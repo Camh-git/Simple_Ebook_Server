@@ -29,6 +29,7 @@ function Assign_submit_actions() {
       }&&${New_name.value}`,
       true
     );
+    New_name.value = "";
   });
 
   //Manage folders
@@ -59,6 +60,7 @@ function Assign_submit_actions() {
       }&&${New_name.value}`,
       true
     );
+    New_name.value = "";
   });
 
   //Manage Library
@@ -66,6 +68,7 @@ function Assign_submit_actions() {
     event.preventDefault();
     let Name = event.target.children[1];
     Call_and_display(`${ADDRESS}create-folder/${Name.value}`, true);
+    Name.value = "";
   });
 
   document
@@ -100,6 +103,7 @@ function Assign_submit_actions() {
         }&&${Book.options[Book.selectedIndex].innerHTML}&&
         ${Image.options[Image.selectedIndex].innerHTML}`
       );
+      Update_thumb_list(Image);
     });
   document
     .getElementById("TH_upload_form")
@@ -109,13 +113,14 @@ function Assign_submit_actions() {
     .addEventListener("submit", (event) => {
       event.preventDefault();
       let target = event.target.children[2];
-      let newName = event.target.children[5];
-      console.log(newName.value);
+      let New_name = event.target.children[5];
       Call_and_display(
         `${ADDRESS}rename-thumb/${
           target.options[target.selectedIndex].innerHTML
-        }&&${newName.value}`
+        }&&${New_name.value}`
       );
+      Update_thumb_list(target);
+      New_name.value = "";
     });
   document
     .getElementById("TH_format_form")
@@ -146,6 +151,7 @@ function Assign_submit_actions() {
         "input[type='radio'][name=DL_toggle]:checked"
       ).value;
       Call_and_display(`${ADDRESS}toggle-dl/${Toggle}&&${Code.value}`);
+      Code.value = "";
     });
 
   document.getElementById("TOGR_form").addEventListener("submit", (event) => {
@@ -155,6 +161,7 @@ function Assign_submit_actions() {
       "input[type='radio'][name=Reader_toggle]:checked"
     ).value;
     Call_and_display(`${ADDRESS}toggle-readers/${Toggle}&&${Code.value}`);
+    Code.value = "";
   });
 
   document.getElementById("IP_form").addEventListener("submit", (event) => {
@@ -173,6 +180,8 @@ function Assign_submit_actions() {
       true,
       Code
     );
+    IP.value = "";
+    Code.value = "";
   });
 
   document.getElementById("IPR_form").addEventListener("submit", (event) => {
@@ -187,6 +196,7 @@ function Assign_submit_actions() {
       true,
       Code
     );
+    Code.value = "";
   });
 
   //Management options
@@ -199,6 +209,7 @@ function Assign_submit_actions() {
     Call_and_display(
       `${ADDRESS}/toggle-management/${Toggle}&&MANAGEMENT&&${Code}`
     );
+    Code.value = "";
   });
 
   document.getElementById("MNU_form").addEventListener("submit", (event) => {
@@ -208,6 +219,7 @@ function Assign_submit_actions() {
       "input[type='radio'][name=MNU_toggle]:checked"
     ).value;
     Call_and_display(`${ADDRESS}/toggle-management/${Toggle}&&UPLOAD&&${Code}`);
+    Code.value = "";
   });
 
   document.getElementById("MND_form").addEventListener("submit", (event) => {
@@ -217,6 +229,7 @@ function Assign_submit_actions() {
       "input[type='radio'][name=MND_toggle]:checked"
     ).value;
     Call_and_display(`${ADDRESS}/toggle-management/${Toggle}&&DELETE&&${Code}`);
+    Code.value = "";
   });
 
   document.getElementById("MNR_form").addEventListener("submit", (event) => {
@@ -226,6 +239,7 @@ function Assign_submit_actions() {
       "input[type='radio'][name=MNR_toggle]:checked"
     ).value;
     Call_and_display(`${ADDRESS}/toggle-management/${Toggle}&&RENAME&&${Code}`);
+    Code.value = "";
   });
 
   document.getElementById("MNM_form").addEventListener("submit", (event) => {
@@ -235,12 +249,30 @@ function Assign_submit_actions() {
       "input[type='radio'][name=MNM_toggle]:checked"
     ).value;
     Call_and_display(`${ADDRESS}/toggle-management/${Toggle}&&MOVE&&${Code}`);
+    Code.value = "";
   });
 
   //Allow the user to close the response popup
   DISPLAY.addEventListener("click", (event) => {
     DISPLAY.style.display = "none";
   });
+}
+async function Update_thumb_list(select) {
+  try {
+    const req = await fetch(`http://192.168.1.110:5000/thumb-map`);
+    const data = await req.json();
+    if (typeof select.innerHTML !== "undefined") {
+      select.innerHTML = "<option>No selection</option>";
+      for (let thumb of data.Images) {
+        const option = document.createElement("option");
+        option.value = option.textContent = thumb.Name + thumb.ext;
+        select.appendChild(option);
+      }
+    }
+  } catch {
+    console.log(`Failed to call thumb list, will use placeholders if possible`);
+    return 500;
+  }
 }
 
 const ADDRESS = "http://192.168.1.110:5000/";
