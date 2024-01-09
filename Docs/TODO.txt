@@ -31,6 +31,11 @@ Remaining:
 	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
 	Tidy up/ segment the css
 	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
+	add some proper testing
+	create a single general data call util, similar to call_and_display, but for endpoints returning json instead of http codes to interpret.
+	create server IP util/setting, add form to management, visible when the "api offline" message is showing, that lets you set the server IP.
+	add a table of endpoints at /help
+	add a site map at /map
 	
   Notes:
 	Thumbnails will probably use the google books api to get images
@@ -65,6 +70,7 @@ Completed:
 	Investigate why the IP restriction toggles dont return text
 	figure out why Populate_management_selects errors when a folder select without a book select is changed(was checking the list which would always be typeof object, change to check the first value).
 	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
+	add a file support table at /support
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

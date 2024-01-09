@@ -560,6 +560,14 @@ def Toggle_management(option, function, code):
         return "401"
 
 
+@app.route("/file_support")
+def file_support():
+    content = ''
+    with open("./Pages/File_support_table.html") as file:
+        content = file.read()
+    return content
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def Catch_all(path):
