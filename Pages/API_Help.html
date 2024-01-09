@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API help</title>
+  </head>
+  <body>
+    <h1>Simple Ebook server API help</h1>
+    <p>
+      The following is a table of all the currently available endpoints, their
+      arguments and their purpose.
+    </p>
+    <table>
+      <tr>
+        <th>Endpoint</th>
+        <th>Arguments</th>
+        <th>Purpose/use</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td>/help</td>
+        <td>None</td>
+        <td>Display endpoint help</td>
+        <td>You just used this endpoint</td>
+      </tr>
+      <tr>
+        <td>/file_support</td>
+        <td>None</td>
+        <td>Display supported file types</td>
+        <td>Check homepage for source of truth</td>
+      </tr>
+      <tr>
+        <td>/welcome</td>
+        <td>None</td>
+        <td>Sanity/connection test</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>/list-books</td>
+        <td>None</td>
+        <td>Return a JSON list of all books and their folders</td>
+        <td>Used to populate management options and the library</td>
+      </tr>
+
+      <tr>
+        <th>Single book options</th>
+      </tr>
+      <tr>
+        <td>/post-book</td>
+        <td>book_name(str)</td>
+        <td>Upload the book at the chosen path to the server</td>
+        <td>Not implemented, using PHP</td>
+      </tr>
+      <tr>
+        <td>/delete-book</td>
+        <td>book_name(str), ext(str), folder(str)</td>
+        <td>Remove the selected book from the server</td>
+        <td>Non-reversible</td>
+      </tr>
+      <tr>
+        <td>/rename-book</td>
+        <td>book_name(str), ext(str), folder(str), new_name(str)</td>
+        <td>Rename the targeted book</td>
+        <td>
+          User selects via dropdown, ext is transparent to user (similar in many
+          managment functions)
+        </td>
+      </tr>
+
+      <tr>
+        <th>Folder options</th>
+      </tr>
+      <tr>
+        <td>/list-folders</td>
+        <td>None</td>
+        <td>Return a string of all book folders</td>
+        <td>Currently unused</td>
+      </tr>
+      <tr>
+        <td>/list-folder-content</td>
+        <td>folder_name(str)</td>
+        <td>Return a string of all books in the given folder</td>
+        <td>Currently unused</td>
+      </tr>
+      <tr>
+        <td>/post-folder</td>
+        <td>folder_name(str), content(str[])</td>
+        <td>
+          Create and upload a given folder, along with any books inside it
+        </td>
+        <td>Not implemented, using PHP</td>
+      </tr>
+      <tr>
+        <td>/delete-folder</td>
+        <td>folder_name(str), delete_content(bool)</td>
+        <td>Remove the target folder and handle it's content.</td>
+        <td>
+          If delete_content is false the books are moved to /Books/Misc with the
+          tag (DELETED)
+        </td>
+      </tr>
+      <tr>
+        <td>/rename-folder</td>
+        <td>folder_name(str), new_name(str)</td>
+        <td>Change the name of a given folder</td>
+        <td>Leaves the folder content intact</td>
+      </tr>
+
+      <tr>
+        <th>Library management</th>
+      </tr>
+      <tr>
+        <td>/create-folder</td>
+        <td>folder_name(str)</td>
+        <td>Create a new folder with the given name</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>/move-book-to-folder</td>
+        <td>
+          book_name(str), ext(str), old_folder_name(str), new_folder_name(str)
+        </td>
+        <td>
+          Move the given book from it's current folder to the target folder
+        </td>
+        <td>
+          Will stop if a book with the same name is already present in the
+          target folder
+        </td>
+      </tr>
+
+      <tr>
+        <th>Thumbnails</th>
+      </tr>
+      <tr>
+        <td>/list-thumbs</td>
+        <td>None</td>
+        <td>Returns JSON list of all thumbnails</td>
+        <td>Similar to list-books, unused(see below)</td>
+      </tr>
+      <tr>
+        <td>/thumb-map</td>
+        <td>None</td>
+        <td>Returns a json object of the thumbnail-book mapping</td>
+        <td>Reads Thumbnail_map.json, appends the thumb list</td>
+      </tr>
+      <tr>
+        <td>/generate-thumbs</td>
+        <td>None</td>
+        <td>Populate the Thumbnail cache with an image for each book</td>
+        <td>Not implemented, likely to use Google books api</td>
+      </tr>
+      <tr>
+        <td>/reassign-thumb</td>
+        <td>folder_name(str), book_name(str), thumb(str)</td>
+        <td>Assign the given thumbnail to the selected book</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>/upload-thumb</td>
+        <td>image(str/img)</td>
+        <td>Upload the provided thumbnail image</td>
+        <td>Not implemented, using PHP</td>
+      </tr>
+      <tr>
+        <td>/clear-thumb</td>
+        <td>regen(bool), rmManual(bool)</td>
+        <td>Empties the thumbnail_cache folder, runs generate_thumbs()(opt)</td>
+        <td>
+          If rmManual is true manualy uploaded files will be removed too
+          (default off)
+        </td>
+      </tr>
+      <tr>
+        <td>/rename-thumb</td>
+        <td>target(str), new_name(str)</td>
+        <td>Renames the selected thumbnail</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <th>Misc management</th>
+      </tr>
+      <tr>
+        <td>/toggle-dl</td>
+        <td>option(bool), code(pw)</td>
+        <td>Sets whether book downloads are allowed</td>
+        <td>Requires password</td>
+      </tr>
+      <tr>
+        <td>/toggle-readers</td>
+        <td>option(bool), code(pw)</td>
+        <td>Sets whether book reader are allowed</td>
+        <td>Requires password</td>
+      </tr>
+      <tr>
+        <td>/toggle-lists</td>
+        <td>option(str), code(pw)</td>
+        <td>Set IP filtering to use the blacklist, whitelist or neither.</td>
+        <td>Requires password</td>
+      </tr>
+      <tr>
+        <td>/manage-acls</td>
+        <td>address(str), list(str), option(str), code(pw)</td>
+        <td>Add/Remove IPs from the white/black lists</td>
+        <td>Requires password</td>
+      </tr>
+      <tr>
+        <td>/toggle-management</td>
+        <td>option(str), function(str), code(pw)</td>
+        <td>Sets the given function to on/off(determined by arg "option")</td>
+        <td>
+          Requires password, functions:MANAGEMENT, UPLOAD, DELETE, RENAME, MOVE
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

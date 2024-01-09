@@ -262,6 +262,7 @@ def show_thumb_map():
     return data
 
 
+@app.route("/generate-thumbs")
 def generate_thumbs():
     return "501"
 
@@ -320,15 +321,15 @@ def Clear_thumbs(regen, rmManual):
         return "404"
 
 
-@app.route("/rename-thumb/<target>&&<newName>")
-def rename_thumb(target, newName):
-    if (target == "" or newName == ""):
+@app.route("/rename-thumb/<target>&&<new_name>")
+def rename_thumb(target, new_name):
+    if (target == "" or new_name == ""):
         return "400"
     extension = os.path.splitext(target)[1]
     # Make sure the book exists and that a file with a matching name doesn't already exist
     image = "./Assets/Images/Thumbnail_cache/{0}".format(target)
     reNamed = "./Assets/Images/Thumbnail_cache/{0}{1}".format(
-        newName, extension)
+        new_name, extension)
     if os.path.exists(reNamed):
         return "409"
 
@@ -558,6 +559,14 @@ def Toggle_management(option, function, code):
         return write_settings(json_data, code)
     else:
         return "401"
+
+
+@app.route("/help")
+def help():
+    content = ''
+    with open("./Pages/API_Help.html") as file:
+        content = file.read()
+    return content
 
 
 @app.route("/file_support")

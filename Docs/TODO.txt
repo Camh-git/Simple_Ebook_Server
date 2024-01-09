@@ -21,7 +21,7 @@ Remaining:
 	
 	go through the js and add cammel case/ generaly tidy up
 	set constant vars(not just const) where appropriate, apply screaming snake case
-	see if it is possible to do without the extension paramaters on the api by using the basenames directly (complicated due to )
+	see if it is possible to do without the extension paramaters on the api by using the basenames directly (possibly like /rename-thumb)
 	Add a way to cache the settings so they dont have to be called every req, implement security and make sure they get updated on change and load
 	Find a way to make the address available project wide(prob settings), since it is hardcoded in a few places. (prob a seperate call api function, lots of opt args)
 	create a shared function for seperating filenames and extensions and comparing them in js
