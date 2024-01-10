@@ -108,21 +108,29 @@ async function Populate_library_entries() {
       //Add the file type display and colour it acording to support level
       const type_display = document.createElement("p");
       type_display.innerHTML = book.ext;
-      switch (book.ext.toUpperCase()) {
-        case ".PDF":
-          type_display.style.color = "green";
-          break;
-        case ".TXT":
-        case ".EPUB":
-        case ".MOBI":
-        case ".AZW3":
-          type_display.style.color = "yellow";
-          break;
-        case ".HTML":
-          type_display.style.color = "red";
-          break;
-        default:
-          type_display.style.color = "white";
+
+      //Fetch the file support table and check the book's extension against it
+      const table_data = await fetch("../Assets/File_type_support.json").then(
+        (res) => {
+          return res.json();
+        }
+      );
+      if (JSON.stringify(table_data).includes(book.ext) && book.ext != "") {
+        //^Is this check needed?
+        for (let format of table_data.fileTypes) {
+          if (format.extension == book.ext) {
+            //Add the appropriate colour based on the support level, not a switch because includes are needed
+            if (format.support.includes("Readable")) {
+              type_display.style.color = "green";
+            } else if (format.support.includes("Downloadable")) {
+              type_display.style.color = "yellow";
+            } else if (format.support.includes("Not supported")) {
+              type_display.style.color = "red";
+            } else {
+              type_display.style.color = "white";
+            }
+          }
+        }
       }
       details_div.appendChild(type_display);
 

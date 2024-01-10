@@ -82,56 +82,8 @@
 
       <section name="Format table">
         <h2>Currently supported formats</h2>
-        <table class="Format-support-table Desktop">
-          <tr>
-            <th>Format</th>
-            <td>.pdf</td>
-            <td>.txt</td>
-            <td>.epub</td>
-            <td>.mobi</td>
-            <td>.azw3</td>
-            <td>.html</td>
-          </tr>
-          <tr>
-            <th>Status</th>
-            <td>Readable</td>
-            <td>Downloadable</td>
-            <td>Downloadable, reader WIP</td>
-            <td>Downloadable</td>
-            <td>Downloadable</td>
-            <td>Not supported</td>
-          </tr>
-        </table>
-        <table class="Format-support-table Mobile">
-          <tr>
-            <th>Format</th>
-            <th>Status</th>
-          </tr>
-          <tr>
-            <td>.pdf</td>
-            <td>Readable</td>
-          </tr>
-          <tr>
-            <td>.txt</td>
-            <td>Downloadable</td>
-          </tr>
-          <tr>
-            <td>.epub</td>
-            <td>Downloadable, reader WIP</td>
-          </tr>
-          <tr>
-            <td>.mobi</td>
-            <td>Downloadable</td>
-          </tr>
-          <tr>
-            <td>.azw3</td>
-            <td>Downloadable</td>
-          </tr>
-          <tr>
-            <td>.html</td>
-            <td>Downloadable</td>
-          </tr>
-        </table>
+        <table class="Format-support-table Desktop"></table>
+        <table class="Format-support-table Mobile"></table>
       </section>
 
       <h2>
@@ -169,4 +121,8 @@
       pos++;
     }, 5000);
   </script>
+  <script
+    type="module"
+    src="../Assets/Scripts/Populate_support_table.js"
+  ></script>
 </html>

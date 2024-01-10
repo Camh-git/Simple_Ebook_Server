@@ -17,26 +17,25 @@ Remaining:
 	Change upload scripts from php to python
 	Make the reader and download button blocking work
 
-  Minor/ technical :	
-	
+  Minor/ technical:	
 	go through the js and add cammel case/ generaly tidy up
 	set constant vars(not just const) where appropriate, apply screaming snake case
-	see if it is possible to do without the extension paramaters on the api by using the basenames directly (possibly like /rename-thumb)
-	Add a way to cache the settings so they dont have to be called every req, implement security and make sure they get updated on change and load
 	Find a way to make the address available project wide(prob settings), since it is hardcoded in a few places. (prob a seperate call api function, lots of opt args)
 	create a shared function for seperating filenames and extensions and comparing them in js
-	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
 	Go through set_management listeners and set the relevant vars to use folder values so that the book dropdowns can drop the extensions, replace index based select
 	Find a method of breaking down the management page into less of a monalith (WIP)	- needs debugging with the event handlers not being set sometimes
-	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
 	Tidy up/ segment the css
-	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
 	add some proper testing
 	create a single general data call util, similar to call_and_display, but for endpoints returning json instead of http codes to interpret.
 	create server IP util/setting, add form to management, visible when the "api offline" message is showing, that lets you set the server IP.
-	add a table of endpoints at /help
 	add a site map at /map
-	
+
+  Not confirmed/Under consideration:
+	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
+	see if it is possible to do without the extension paramaters on the api by using the basenames directly (possibly like /rename-thumb)
+	Add a way to cache the settings so they dont have to be called every req, implement security and make sure they get updated on change and load
+	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
+
   Notes:
 	Thumbnails will probably use the google books api to get images
 	Example thumbnail map obj: {"Folder":"","Name":"","Thumb":""}
@@ -71,6 +70,8 @@ Completed:
 	figure out why Populate_management_selects errors when a folder select without a book select is changed(was checking the list which would always be typeof object, change to check the first value).
 	Invert the for stack in pop_manage_selects and add an event listener so that the thumb list gets updated like the book list
 	add a file support table at /support
+	add a table of endpoints at /help
+	add json single source of truth for file support info
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

@@ -1,0 +1,11 @@
+{
+  "fileTypes": [
+    { "extension": ".pdf", "support": "Readable" },
+    { "extension": ".txt", "support": "Downloadable" },
+    { "extension": ".epub", "support": "Downloadable, reader WIP" },
+    { "extension": ".mobi", "support": "Downloadable" },
+    { "extension": ".azw3", "support": "Downloadable" },
+    { "extension": ".html", "support": "Not supported" }
+  ],
+  "date": "10/1/24"
+}
