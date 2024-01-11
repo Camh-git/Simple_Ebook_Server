@@ -5,7 +5,6 @@ export async function Populate_support_table() {
       return res.json();
     }
   );
-  console.log(table_data);
   // Desktop table(s)
   try {
     const tables = document.getElementsByClassName(

@@ -11,15 +11,23 @@ async function get_map(url) {
 
 async function Populate_library_entries() {
   //Get the thumnail and book lists
-  const THUMB_MAP = await get_map(`http://192.168.1.110:5000/thumb-map`);
-  const BOOK_MAP = await get_map(`http://192.168.1.110:5000/list-books`);
+  const THUMB_MAP = await get_map(
+    `http://${document.cookie.split("=")[1]}:5000/thumb-map`
+  );
+  const BOOK_MAP = await get_map(
+    `http://${document.cookie.split("=")[1]}:5000/list-books`
+  );
   //Check that the books where found, display count if so, or notice if not
   try {
     console.log("Total number of folders found: " + BOOK_MAP.Books.length);
   } catch {
     const notice = document.createElement("h2");
-    notice.textContent =
-      "Sorry, the book list could not be found. Please make sure the book API is active and that you can contact the server.";
+    notice.textContent = `Sorry, the book list could not be found. Please make sure the book API is active and that you can contact the server.`;
+    const ip_check = document.createElement("h3");
+    ip_check.textContent = `Attempted to call the server at the address: ${
+      document.cookie.split("=")[1]
+    }, if this is incorrect please go to the mangement page and set the correct address.`;
+    notice.appendChild(ip_check);
     document.getElementById("Landing-segment").appendChild(notice);
     return;
   }

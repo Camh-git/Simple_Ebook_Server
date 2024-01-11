@@ -643,10 +643,10 @@
   </body>
 
   <div id="footer_container"></div>
-  <script>
+  <script type="module">
     //Placeholder copied from Append_management_rows.js used here until the bugs in that script are sorted out
-    Rows = document.getElementById("Row_list").children;
-    for (group of Rows) {
+    let Rows = document.getElementById("Row_list").children;
+    for (let group of Rows) {
       group
         .getElementsByTagName("img")[0]
         .addEventListener("click", function (e) {
@@ -672,9 +672,13 @@
     }
   </script>
   <script src="../Assets/Scripts/Append_H&F.js"></script>
-  <script src="../Assets/Scripts/Populate_management_selects.js"></script>
+  <script
+    type="module"
+    src="../Assets/Scripts/Populate_management_selects.js"
+  ></script>
   <script
     type="module"
     src="../Assets/Scripts/Set_management_listeners.js"
   ></script>
+  <script type="module" src="../Assets/Scripts/Server_IP.js"></script>
 </html>

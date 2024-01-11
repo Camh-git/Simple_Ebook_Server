@@ -259,7 +259,9 @@ function Assign_submit_actions() {
 }
 async function Update_thumb_list(select) {
   try {
-    const req = await fetch(`http://192.168.1.110:5000/thumb-map`);
+    const req = await fetch(
+      `http://${document.cookie.split("=")[1]}:5000/thumb-map`
+    );
     const data = await req.json();
     if (typeof select.innerHTML !== "undefined") {
       select.innerHTML = "<option>No selection</option>";
@@ -275,6 +277,6 @@ async function Update_thumb_list(select) {
   }
 }
 
-const ADDRESS = "http://192.168.1.110:5000/";
+const ADDRESS = `http://${document.cookie.split("=")[1]}:5000/`;
 const DISPLAY = document.getElementById("Req_status_modal");
 Assign_submit_actions();

@@ -27,8 +27,8 @@ Remaining:
 	Tidy up/ segment the css
 	add some proper testing
 	create a single general data call util, similar to call_and_display, but for endpoints returning json instead of http codes to interpret.
-	create server IP util/setting, add form to management, visible when the "api offline" message is showing, that lets you set the server IP.
 	add a site map at /map
+	Figure out why Populate_management_selects doesn't like being a module, remove copy of set_server_ip when done
 
   Not confirmed/Under consideration:
 	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
@@ -72,6 +72,7 @@ Completed:
 	add a file support table at /support
 	add a table of endpoints at /help
 	add json single source of truth for file support info
+	create server IP util, add server IP form when the "api offline" message is showing to set the server IP(check by calling sanity check endpoint).
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

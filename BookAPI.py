@@ -21,12 +21,15 @@ def check_ACLS():
     settings = json.loads(json_data)
 
     # Check if the caller meets ACL requirements
+    if (request.remote_addr[:8] != "192.168."):
+        return "421"
     if settings["EnableWhiteList"] == True:
         if request.remote_addr not in settings["WhiteList"]:
             return "401"
     elif settings["EnableBlackList"] == True:
         if request.remote_addr in settings["BlackList"]:
             return "401"
+    # print(request.remote_addr[:8])
 
     # Check that the requested endpoint is enabled
     if settings["EnableManagement"] != True:

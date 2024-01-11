@@ -4,7 +4,7 @@ export async function Call_and_display(
   show_ip_lists = false,
   code = ""
 ) {
-  const ADDRESS = "http://192.168.1.110:5000/";
+  const ADDRESS = `http://${document.cookie.split("=")[1]}:5000/`;
   const DISPLAY = document.getElementById("Req_status_modal");
   const result = await fetch(requestString);
   const data = await result.json();
@@ -52,6 +52,9 @@ export async function Call_and_display(
       response +=
         "Gone: The value you wish to remove is not in the targeted list.";
       break;
+    case 421:
+      response +=
+        "Misdirected Request: Unfortunatly this server cannot accept connections from your current IP address.";
     case 423:
       response +=
         "Locked: The selected Management function is currently disabled, contact an administrator.";
@@ -60,6 +63,9 @@ export async function Call_and_display(
         "Warning: One or more of the books moved to /Misc had the MOVED tag applied, meaning a book with an identical name was already present" +
         ", please resolve the conflict and remove the MOVED tag to avoid potential book loss in future merges.";
       break;
+    case 451:
+      response +=
+        "Unavailable For Legal Reasons: We don't know what you did, but apperntly we think it's illegal";
     case 500:
       response +=
         "Server error: please contact the developer with the following data:" +
