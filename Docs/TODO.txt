@@ -20,15 +20,12 @@ Remaining:
   Minor/ technical:	
 	go through the js and add cammel case/ generaly tidy up
 	set constant vars(not just const) where appropriate, apply screaming snake case
-	Find a way to make the address available project wide(prob settings), since it is hardcoded in a few places. (prob a seperate call api function, lots of opt args)
 	create a shared function for seperating filenames and extensions and comparing them in js
 	Go through set_management listeners and set the relevant vars to use folder values so that the book dropdowns can drop the extensions, replace index based select
 	Find a method of breaking down the management page into less of a monalith (WIP)	- needs debugging with the event handlers not being set sometimes
 	Tidy up/ segment the css
 	add some proper testing
-	create a single general data call util, similar to call_and_display, but for endpoints returning json instead of http codes to interpret.
 	add a site map at /map
-	Figure out why Populate_management_selects doesn't like being a module, remove copy of set_server_ip when done
 
   Not confirmed/Under consideration:
 	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
@@ -73,6 +70,9 @@ Completed:
 	add a table of endpoints at /help
 	add json single source of truth for file support info
 	create server IP util, add server IP form when the "api offline" message is showing to set the server IP(check by calling sanity check endpoint).
+	Find a way to make the address available project wide, since it is hardcoded in a few places. (Done using cookie, or local address on the API)
+	Fixed module issue in pop_manage_selects.js, made a similar script specificaly for updating the lists (removed setup and IP, clears listeners, options to skip call to list that wasn't updated)
+	create a single general data call util, similar to call_and_display, but for endpoints returning json instead of http codes to interpret.
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

@@ -18,3 +18,4 @@ try {
 } catch {
   Set_server_address();
 }
+export default Set_server_address();
