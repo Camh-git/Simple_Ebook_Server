@@ -25,7 +25,6 @@ Remaining:
 	Find a method of breaking down the management page into less of a monalith (WIP)	- needs debugging with the event handlers not being set sometimes
 	Tidy up/ segment the css
 	add some proper testing
-	add a site map at /map
 
   Not confirmed/Under consideration:
 	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
@@ -73,6 +72,7 @@ Completed:
 	Find a way to make the address available project wide, since it is hardcoded in a few places. (Done using cookie, or local address on the API)
 	Fixed module issue in pop_manage_selects.js, made a similar script specificaly for updating the lists (removed setup and IP, clears listeners, options to skip call to list that wasn't updated)
 	create a single general data call util, similar to call_and_display, but for endpoints returning json instead of http codes to interpret.
+	add a site map at /map
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

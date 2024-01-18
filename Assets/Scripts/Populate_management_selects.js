@@ -29,6 +29,7 @@ async function Pop_management_selects() {
         let ip = event.target.children[1].value;
         console.log(ip);
         Set_server_address(ip);
+        window.location.href = "./Management.html";
       });
     return;
   }

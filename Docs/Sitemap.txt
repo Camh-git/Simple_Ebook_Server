@@ -1,0 +1,8 @@
+Server_IP/Simple_Ebook_server/Pages/Home.html
+Server_IP/Simple_Ebook_server/Pages/Management.html
+Server_IP/Simple_Ebook_server/Pages/Dynamic_library.html
+Server_IP/Simple_Ebook_server/Pages/File_support_table.html
+Server_IP/Simple_Ebook_server/Pages/API_Help.html
+Server_IP/Simple_Ebook_server/Assets/Confirmation_messages/Upload_book_success.html
+Server_IP/Simple_Ebook_server/Assets/Confirmation_messages/Upload_folder_success.html
+Server_IP/Simple_Ebook_server/Assets/Confirmation_messages/Upload_thumb_success.html

@@ -580,6 +580,19 @@ def file_support():
     return content
 
 
+@app.route("/map")
+@app.route("/map/<format>")
+def show_site_map(format="XML"):
+    content = ''
+    if format.upper() == "XML":
+        with open("./Docs/Sitemap.xml") as file:
+            content = file.read()
+    else:
+        with open("./Docs/Sitemap.txt") as file:
+            content = file.read()
+    return content
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def Catch_all(path):

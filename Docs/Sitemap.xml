@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>Server_IP/Simple_Ebook_server/Pages/Home.html</loc>
+        <lastmod>2024-01-11</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>Server_IP/Simple_Ebook_server/Pages/Management.html</loc>
+        <lastmod>2024-01-17</lastmod>
+        <changefreq>never</changefreq>
+    </url>
+    <url>
+        <loc>Server_IP/Simple_Ebook_server/Pages/Dynamic_library.html</loc>
+        <lastmod>2024-01-11</lastmod>
+        <changefreq>yearly</changefreq>
+    </url>
+    <url>
+        <loc>Server_IP/Simple_Ebook_server/Pages/File_support_table.html</loc>
+        <lastmod>2024-01-10</lastmod>
+        <changefreq>yearly</changefreq>
+    </url>
+    <url>
+        <loc>Server_IP/Simple_Ebook_server/Pages/API_Help.html</loc>
+        <lastmod>2024-01-09</lastmod>
+        <changefreq>yearly</changefreq>
+    </url>
+    <url>
+        <!--Likely to be removed -->
+        <loc>Server_IP/Simple_Ebook_server/Assets/Confirmation_messages/Upload_book_success.html</loc>
+        <lastmod>2023-12-20</lastmod>
+        <changefreq>never</changefreq>
+    </url>
+    <url>
+        <!--Likely to be removed -->
+        <loc>Server_IP/Simple_Ebook_server/Assets/Confirmation_messages/Upload_folder_success.html</loc>
+        <lastmod>2023-12-20</lastmod>
+        <changefreq>never</changefreq>
+    </url>
+    <url>
+        <!--Likely to be removed -->
+        <loc>Server_IP/Simple_Ebook_server/Assets/Confirmation_messages/Upload_thumb_success.html</loc>
+        <lastmod>2023-12-20</lastmod>
+        <changefreq>never</changefreq>
+    </url>
+    
+</urlset>
