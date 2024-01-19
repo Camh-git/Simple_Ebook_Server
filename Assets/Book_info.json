@@ -1,0 +1,108 @@
+{
+  "Folders": [
+    {
+      "Title": "Included Public domain",
+      "Books": [
+        {
+          "Title": "A tale of two cities",
+          "Authors": ["Charles Dickens"],
+          "Date": "1859-10-31",
+          "Publisher": "Chapman & Hall",
+          "isbn": "0140430547",
+          "isbn13": "9798730371156",
+          "Thumbnail": "http://books.google.com/books/content?id=5CtizgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"
+        },
+        {
+          "Title": "The complete works of shakespeare",
+          "Authors": ["William Shakespeare"],
+          "Date": "1970-01-01",
+          "Publisher": "Various",
+          "isbn": "0600006042",
+          "isbn13": "9780600006046",
+          "Thumbnail": "http://books.google.com/books/content?id=92CZtAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"
+        },
+        {
+          "Title": "The murder of Roger Ackroyd",
+          "Authors": ["Agatha Christie"],
+          "Date": "1926-01-01",
+          "Publisher": "William Collins, Sons",
+          "isbn": "1504079094",
+          "isbn13": "9781504079099",
+          "Thumbnail": "https://books.google.co.uk/books/content?id=-advEAAAQBAJ&printsec=frontcover&img=1&zoom=5"
+        },
+        {
+          "Title": "The tale of Peter Rabbit",
+          "Authors": ["Beatrix Potter"],
+          "Date": "1902-10-01",
+          "Publisher": "Frederick Warne & Co.",
+          "isbn": "1925807436",
+          "isbn13": "9781925807431",
+          "Thumbnail": "http://books.google.com/books/content?id=tFqOuAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"
+        },
+        {
+          "Title": "Geneva convention I",
+          "Authors": ["The International Committee of the Red cross"],
+          "Date": "1949-08-12",
+          "Publisher": "The International Committee of the Red cross",
+          "isbn": "1014429927",
+          "isbn13": "978-1014429926",
+          "Thumbnail": "https://books.google.co.uk/books/content?id=7rqYCgAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        },
+        {
+          "Title": "Geneva convention II",
+          "Authors": ["The International Committee of the Red cross"],
+          "Date": "1949-08-12",
+          "Publisher": "The International Committee of the Red cross",
+          "isbn": "1014429927",
+          "isbn13": "978-1014429926",
+          "Thumbnail": "https://books.google.co.uk/books/content?id=_qD1swEACAAJ&printsec=frontcover&img=1&zoom=1"
+        },
+        {
+          "Title": "Geneva convention III",
+          "Authors": ["The International Committee of the Red cross"],
+          "Date": "1949-08-12",
+          "Publisher": "The International Committee of the Red cross",
+          "isbn": "1014429927",
+          "isbn13": "978-1014429926",
+          "Thumbnail": "https://books.google.co.uk/books/content?id=XxU_EAAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        },
+        {
+          "Title": "Geneva convention IV",
+          "Authors": ["The International Committee of the Red cross"],
+          "Date": "1949-08-12",
+          "Publisher": "The International Committee of the Red cross",
+          "isbn": "1014429927",
+          "isbn13": "978-1014429926",
+          "Thumbnail": "https://books.google.co.uk/books/content?id=abfFDwAAQBAJ&printsec=frontcover&img=1&zoom=1"
+        },
+        {
+          "Title": "Geneva convention V",
+          "Authors": ["The International Committee of the Red cross"],
+          "Date": "1977-07-08",
+          "Publisher": "The International Committee of the Red cross",
+          "isbn": "1014429927",
+          "isbn13": "978-1014429926",
+          "Thumbnail": "https://books.google.co.uk/books/content?id=9ny1Dv3VNPYC&printsec=frontcover&img=1&zoom=1"
+        },
+        {
+          "Title": "Geneva convention VI",
+          "Authors": ["The International Committee of the Red cross"],
+          "Date": "1977-07-08",
+          "Publisher": "The International Committee of the Red cross",
+          "isbn": "1014429927",
+          "isbn13": "978-1014429926",
+          "Thumbnail": "https://books.google.com/books/content?id=mymVctYCXjoC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"
+        },
+        {
+          "Title": "Geneva convention VII",
+          "Authors": ["The International Committee of the Red cross"],
+          "Date": "2005-12-08",
+          "Publisher": "The International Committee of the Red cross",
+          "isbn": "1014429927",
+          "isbn13": "978-1014429926",
+          "Thumbnail": "https://books.google.com/books/content?id=mymVctYCXjoC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"
+        }
+      ]
+    }
+  ]
+}

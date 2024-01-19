@@ -31,6 +31,7 @@ Remaining:
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly (possibly like /rename-thumb)
 	Add a way to cache the settings so they dont have to be called every req, implement security and make sure they get updated on change and load
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
+	Add a system to modify the stored book data
 
   Notes:
 	Thumbnails will probably use the google books api to get images

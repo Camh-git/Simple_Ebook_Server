@@ -268,10 +268,21 @@ def show_thumb_map():
 
 @app.route("/generate-thumbs")
 def generate_thumbs():
+    # set up book info json, with map for titles to isbns/authors/dates ect, have a seperate system to auto pop that(maybe do on upload)
+    # scan books for isbns, if found use those, if not use names for search, check either against returned title, reject and use placeholder if bad
+    # then search by isbn, dl img and set thumb map accordingly
     # search by name, only include those with a reasonable number of spaces
-    with urlopen('https://www.googleapis.com/books/v1/volumes?q=isbn:1035026227') as r:
+    with urlopen('https://www.googleapis.com/books/v1/volumes?q=title=Devestationofbaal'.format()) as r:
         text = r.read()
-        return text
+        data = json.loads(text)
+        title = data["items"][0]["volumeInfo"]["title"]
+        authors = data["items"][0]["volumeInfo"]["authors"]
+        date = data["items"][0]["volumeInfo"]["publishedDate"]
+        publisher = data["items"][0]["volumeInfo"]["publisher"]
+        isbn = isbn10 = data["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
+        isbn13 = data["items"][0]["volumeInfo"]["industryIdentifiers"][1]["identifier"]
+        thumbnail = data["items"][0]["volumeInfo"]["imageLinks"]["smallThumbnail"]
+        return "501"
 
 
 @app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>")
@@ -609,6 +620,23 @@ def show_site_map(format="XML"):
         with open("./Docs/Sitemap.txt") as file:
             content = file.read()
     return content
+
+
+@app.route("/gen-book-data")
+def generate_book_data():
+    for folder in os.listdir(mainDir):
+        for book in os.listdir("{0}/{1}".format(mainDir, folder)):
+            with urlopen('https://www.googleapis.com/books/v1/volumes?q=title={0}'.format(book)) as r:
+                text = r.read()
+                data = json.loads(text)
+                title = data["items"][0]["volumeInfo"]["title"]
+                authors = data["items"][0]["volumeInfo"]["authors"]
+                date = data["items"][0]["volumeInfo"]["publishedDate"]
+                publisher = data["items"][0]["volumeInfo"]["publisher"]
+                isbn = isbn10 = data["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
+                isbn13 = data["items"][0]["volumeInfo"]["industryIdentifiers"][1]["identifier"]
+                thumbnail = data["items"][0]["volumeInfo"]["imageLinks"]["smallThumbnail"]
+    return 501
 
 
 @app.route('/', defaults={'path': ''})
