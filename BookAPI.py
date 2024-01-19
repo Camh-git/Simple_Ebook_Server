@@ -3,6 +3,7 @@ from flask_cors import CORS, cross_origin
 import os
 import shutil
 import json
+from urllib.request import urlopen
 
 app = Flask(__name__)
 mainDir = "./Books"
@@ -267,7 +268,10 @@ def show_thumb_map():
 
 @app.route("/generate-thumbs")
 def generate_thumbs():
-    return "501"
+    # search by name, only include those with a reasonable number of spaces
+    with urlopen('https://www.googleapis.com/books/v1/volumes?q=isbn:1035026227') as r:
+        text = r.read()
+        return text
 
 
 @app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>")
@@ -346,6 +350,20 @@ def rename_thumb(target, new_name):
         return "404"
     return "200"
 
+
+@app.route("/delete-thumb/<target>")
+def delete_thumb(target):
+    if (target == ""):
+        return "400"
+    target = "./Assets/Images/Thumbnail_cache/{0}".format(target)
+    if (os.path.exists(target)):
+        try:
+            os.remove(target)
+        except Exception as e:
+            return "500" + str(e)
+    else:
+        return "404"
+    return "200"
 
 # Misc option functions
 # TODO: implement the password check

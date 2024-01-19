@@ -139,6 +139,15 @@ function Assign_submit_actions() {
       }
       Call_and_display(`${ADDRESS}clear-thumbs/${regen}&&${rmManual}`);
     });
+  document.getElementById("TH_del_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    let target = event.target.children[3];
+    Call_and_display(
+      `${ADDRESS}delete-thumb/${target.options[target.selectedIndex].innerHTML}`
+    );
+    Update_thumb_list(target);
+    target.value = "";
+  });
 
   //Misc options
   document
