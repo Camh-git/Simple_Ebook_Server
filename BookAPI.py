@@ -623,20 +623,72 @@ def show_site_map(format="XML"):
 
 
 @app.route("/gen-book-data")
-def generate_book_data():
+def generate_book_data(useISBN=False):
+    lib_data = '{"Folders": ['
     for folder in os.listdir(mainDir):
+        folder_data = '{{"Title":"{0}","Books":['.format(folder)
         for book in os.listdir("{0}/{1}".format(mainDir, folder)):
-            with urlopen('https://www.googleapis.com/books/v1/volumes?q=title={0}'.format(book)) as r:
-                text = r.read()
-                data = json.loads(text)
-                title = data["items"][0]["volumeInfo"]["title"]
-                authors = data["items"][0]["volumeInfo"]["authors"]
-                date = data["items"][0]["volumeInfo"]["publishedDate"]
-                publisher = data["items"][0]["volumeInfo"]["publisher"]
-                isbn = isbn10 = data["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
-                isbn13 = data["items"][0]["volumeInfo"]["industryIdentifiers"][1]["identifier"]
-                thumbnail = data["items"][0]["volumeInfo"]["imageLinks"]["smallThumbnail"]
-    return 501
+            try:
+                with urlopen('https://www.googleapis.com/books/v1/volumes?q=title={0}'.format(book)) as r:
+                    text = r.read()
+                    data = json.loads(text)
+                    title = authors = date = publisher = isbn10 = isbn13 = thumbnail = authorlist = ""
+                    try:
+                        title = data["items"][0]["volumeInfo"]["title"]
+                    except:
+                        title = ""
+                    try:
+                        authors = data["items"][0]["volumeInfo"]["authors"]
+                    except:
+                        authors = ""
+                    try:
+                        date = data["items"][0]["volumeInfo"]["publishedDate"]
+                    except:
+                        date = ""
+                    try:
+                        publisher = data["items"][0]["volumeInfo"]["publisher"]
+                    except:
+                        publisher = ""
+                    try:
+                        isbn10 = data["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
+                    except:
+                        isbn10 = ""
+                    try:
+                        isbn13 = data["items"][0]["volumeInfo"]["industryIdentifiers"][1]["identifier"]
+                    except:
+                        isbn13 = ""
+                    try:
+                        thumbnail = data["items"][0]["volumeInfo"]["imageLinks"]["smallThumbnail"]
+                    except:
+                        thumbnail = ""
+
+                    for author in authors:
+                        authorlist += '"{0}",'.format(author)
+                    authorlist = authorlist[:-1]
+
+                    book_data = '{{"Title":"{0}","Authors":[{1}],"Date":"{2}","Publisher":"{3}","isbn":"{4}","isbn13":"{5}","Thumbnail":"{6}"}},'.format(title, authorlist, date, publisher, isbn10, isbn13, thumbnail
+                                                                                                                                                         )
+                    folder_data += book_data
+
+            except:
+                book_data = '{{"title":"{0}","Authors":["NA"],"Date":"NA","Publisher":"NA","isbn":"NA","isbn13":"NA","Thumbnail":"NA"}},'.format(
+                    book)
+                folder_data += book_data
+        if folder_data[len(folder_data)-1] != "[":
+            folder_data = folder_data[:-1]
+        folder_data += "]},"
+        lib_data += folder_data
+    lib_data = lib_data[:-1]
+    lib_data += "]}"
+    return lib_data
+
+
+def save_book_data(book_data):
+    for folder in book_data["Folders"]:
+        for book in book_data["Folders"][folder]:
+            # skip saving this file if book is already in book data
+            return
+    return "501"
 
 
 @app.route('/', defaults={'path': ''})

@@ -32,6 +32,8 @@ Remaining:
 	Add a way to cache the settings so they dont have to be called every req, implement security and make sure they get updated on change and load
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
 	Add a system to modify the stored book data
+	incorportate the book's extension into the book data
+	add option to check book data by isbn so the user can enter it then get the data automatically
 
   Notes:
 	Thumbnails will probably use the google books api to get images
