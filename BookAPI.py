@@ -622,12 +622,38 @@ def show_site_map(format="XML"):
     return content
 
 
-@app.route("/gen-book-data")
+def check_book_for_data(stored_json, book, folder):
+    book_data = ""
+    for jsonFolder in stored_json["Folders"]:
+        if folder in jsonFolder["Title"]:
+            for jsonBook in jsonFolder["Books"]:
+                if book in jsonBook["Title"]:
+                    if jsonBook["isbn"].upper() != "NA" and jsonBook["isbn"] != "" and jsonBook["Thumbnail"] != "NA" and jsonBook["Thumbnail"] != "":
+                        book_data = jsonBook
+                        return True, book_data
+    return False, "NA"
+
+
+@app.route("/gen-book-data/<useISBN>")
 def generate_book_data(useISBN=False):
+    stored_data = read_json_no_code("./Assets/Book_info.json")
+    stored_json = json.loads(stored_data)
+
     lib_data = '{"Folders": ['
     for folder in os.listdir(mainDir):
         folder_data = '{{"Title":"{0}","Books":['.format(folder)
         for book in os.listdir("{0}/{1}".format(mainDir, folder)):
+
+            # Check if we already have info on this book and skip it if so
+            if os.path.splitext(book)[0] in stored_data:
+                have_data, data = check_book_for_data(
+                    stored_json, os.path.splitext(book)[0], folder)
+                if have_data:
+                    # print("already had: " + book + " with data")
+                    folder_data += str(data) + ","
+                    continue
+
+            # Get book info and parse the result
             try:
                 with urlopen('https://www.googleapis.com/books/v1/volumes?q=title={0}'.format(book)) as r:
                     text = r.read()
@@ -674,21 +700,16 @@ def generate_book_data(useISBN=False):
                 book_data = '{{"title":"{0}","Authors":["NA"],"Date":"NA","Publisher":"NA","isbn":"NA","isbn13":"NA","Thumbnail":"NA"}},'.format(
                     book)
                 folder_data += book_data
+
+        # Format the folder data and add it to the library
         if folder_data[len(folder_data)-1] != "[":
             folder_data = folder_data[:-1]
         folder_data += "]},"
         lib_data += folder_data
+
     lib_data = lib_data[:-1]
     lib_data += "]}"
     return lib_data
-
-
-def save_book_data(book_data):
-    for folder in book_data["Folders"]:
-        for book in book_data["Folders"][folder]:
-            # skip saving this file if book is already in book data
-            return
-    return "501"
 
 
 @app.route('/', defaults={'path': ''})
