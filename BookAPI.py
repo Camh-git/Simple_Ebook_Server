@@ -4,6 +4,8 @@ import os
 import shutil
 import json
 from urllib.request import urlopen
+from Assets.Scripts.API_segments.Help_pages import help, file_support, show_site_map
+from Assets.Scripts.API_segments.Folder_methods import list_folders, list_folder_content, Delete_folder, Rename_folder
 
 app = Flask(__name__)
 mainDir = "./Books"
@@ -126,19 +128,13 @@ def Rename_book(book_name, ext, folder, new_name):
 # Folder methods
 
 @app.route("/list-folders", methods=["GET"])
-def list_folders():
-    response = ""
-    for folder in os.listdir(mainDir):
-        response += "->" + folder
-    return response
+def list_folders_endpoint():
+    return list_folders(mainDir)
 
 
 @app.route("/list-folder-content/<folder_name>")
-def list_folder_content(folder_name):
-    response = ""
-    for book in os.listdir("{0}/{1}".format(mainDir, folder_name)):
-        response += ">>" + book
-    return response
+def list_folder_content_endpoint(folder_name):
+    return list_folder_content(folder_name, mainDir)
 
 
 @app.route("/post-folder/<folder_name>&&<content>", methods=["POST"])
@@ -147,60 +143,13 @@ def Upload_folder(folder_name, contents):
 
 
 @app.route("/delete-folder/<folder_name>&&<delete_content>")
-def Delete_folder(folder_name, delete_content):
-    if (folder_name == "" or delete_content == ""):
-        return "400"
-    if (folder_name.upper() == "MISC" or folder_name.upper() == "UPLOADS"):
-        return "403"
-
-    target = "{0}/{1}".format(mainDir, folder_name)
-    notifyChange = False
-    if os.path.exists(target):
-        try:
-            if delete_content.upper() != "TRUE":
-                # If we are saving the books go through each and move them to misc folder,
-                # add a "MOVED:" prefix if misc already contains a book of the same name
-                for book in os.listdir(target):
-                    start = "{0}/{1}".format(target, book)
-                    destination = "{0}/Misc/{1}".format(mainDir, book)
-
-                    if os.path.exists(destination):
-                        os.rename(
-                            start, "{0}/Misc/MOVED:{1}".format(mainDir, book))
-                        notifyChange = True
-                    else:
-                        os.rename(start, destination)
-
-            shutil.rmtree(target)
-        except Exception as e:
-            return "500: " + str(e)
-    else:
-        return "404"
-    if (notifyChange):
-        return "428"
-    return "200"
+def Delete_folder_endpoint(folder_name, delete_content):
+    return Delete_folder(folder_name, delete_content, mainDir)
 
 
 @app.route("/rename-folder/<folder_name>&&<new_name>", methods=["GET"])
-def Rename_folder(folder_name, new_name):
-    if (folder_name == "" or new_name == ""):
-        return "400"
-    if (folder_name.upper() == "MISC" or folder_name.upper() == "UPLOADS"):
-        return "403"
-
-    # Make sure the folder exists, and stop if a folder with the new name already exists
-    target = "{0}/{1}".format(mainDir, folder_name)
-    reNamed = "{0}/{1}".format(mainDir, new_name)
-    if os.path.exists(reNamed):
-        return "409"
-    if os.path.exists(target):
-        try:
-            os.rename(target, reNamed)
-        except Exception as e:
-            return "500: " + str(e)
-    else:
-        return "404"
-    return "200"
+def Rename_folder_endpoint(folder_name, new_name):
+    return Rename_folder(folder_name, new_name, mainDir)
 
 
 # Library management functions
@@ -594,32 +543,19 @@ def Toggle_management(option, function, code):
 
 
 @app.route("/help")
-def help():
-    content = ''
-    with open("./Pages/API_Help.html") as file:
-        content = file.read()
-    return content
+def help_endpoint():
+    return help()
 
 
 @app.route("/file_support")
-def file_support():
-    content = ''
-    with open("./Pages/File_support_table.html") as file:
-        content = file.read()
-    return content
+def file_support_endpoint():
+    return file_support()
 
 
 @app.route("/map")
 @app.route("/map/<format>")
-def show_site_map(format="XML"):
-    content = ''
-    if format.upper() == "XML":
-        with open("./Docs/Sitemap.xml") as file:
-            content = file.read()
-    else:
-        with open("./Docs/Sitemap.txt") as file:
-            content = file.read()
-    return content
+def show_site_map_endpoint(format="XML"):
+    return show_site_map(format)
 
 
 def check_book_for_data(stored_json, book, folder):
@@ -634,12 +570,12 @@ def check_book_for_data(stored_json, book, folder):
     return False, "NA"
 
 
-@app.route("/gen-book-data/<useISBN>")
-def generate_book_data(useISBN=False):
+@app.route("/gen-book-data")
+def generate_book_data():
     stored_data = read_json_no_code("./Assets/Book_info.json")
     stored_json = json.loads(stored_data)
 
-    lib_data = '{"Folders": ['
+    lib_data = "{\"Folders\": ["
     for folder in os.listdir(mainDir):
         folder_data = '{{"Title":"{0}","Books":['.format(folder)
         for book in os.listdir("{0}/{1}".format(mainDir, folder)):
@@ -650,12 +586,15 @@ def generate_book_data(useISBN=False):
                     stored_json, os.path.splitext(book)[0], folder)
                 if have_data:
                     # print("already had: " + book + " with data")
-                    folder_data += str(data) + ","
+                    folder_data += str(data).replace("'",
+                                                     "\"").replace("'", "\"").replace("'", "\"") + ","
                     continue
 
             # Get book info and parse the result
+            # 'https://www.googleapis.com/books/v1/volumes?q=isbn:{0}'.format(ISBN)  #ISBN approach
             try:
-                with urlopen('https://www.googleapis.com/books/v1/volumes?q=title={0}'.format(book)) as r:
+                with urlopen('https://www.googleapis.com/books/v1/volumes?q=title={0}'.format(
+                        book)) as r:
                     text = r.read()
                     data = json.loads(text)
                     title = authors = date = publisher = isbn10 = isbn13 = thumbnail = authorlist = ""
@@ -709,6 +648,10 @@ def generate_book_data(useISBN=False):
 
     lib_data = lib_data[:-1]
     lib_data += "]}"
+    # Convert the libdata to json and save
+    lib_data = lib_data.replace("/", "").replace("\\", "")
+    # json_Data = json.dumps(lib_data)
+    # write_json_no_code("./Assets/Book_info.json", lib_data)
     return lib_data
 
 

@@ -39,3 +39,5 @@ To run the server and website you will need to take the following steps:
 <li>With the API now running, naviagte to: Device IP/Simple_Ebook_Server/Home.html</li>
 <li>Enjoy looking around and reading the supplied public domain books.</li>
 </ul>
+
+<h4>Note: this is a node.js project so it will require npm install to get dependencies</h4>
