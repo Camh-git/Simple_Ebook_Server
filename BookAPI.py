@@ -6,6 +6,12 @@ import json
 from urllib.request import urlopen
 from Assets.Scripts.API_segments.Help_pages import help, file_support, show_site_map
 from Assets.Scripts.API_segments.Folder_methods import list_folders, list_folder_content, Delete_folder, Rename_folder
+from Assets.Scripts.API_segments.Book_methods import list_books, allowed_file, Remove_book, Rename_book
+from Assets.Scripts.API_segments.Lib_management import Create_folder, Move_book_to_folder
+from Assets.Scripts.API_segments.Management_control import Toggle_management
+from Assets.Scripts.API_segments.API_utils import check_password, fetch_settings, write_settings, read_json_no_code, write_json_no_code
+from Assets.Scripts.API_segments.Misc_management import Show_settings, Toggle_dls, Toggle_readers, Toggle_lists, Manage_acls
+from Assets.Scripts.API_segments.Thumb_management import List_Thumbs, show_thumb_map, generate_thumbs, Reasign_thumb, Clear_thumbs, rename_thumb, delete_thumb
 
 app = Flask(__name__)
 mainDir = "./Books"
@@ -60,22 +66,8 @@ def check_ACLS():
 # Book methods
 
 @app.route("/list-books")
-def list_books():
-    data = '{"Books":['
-    for folder in os.listdir(mainDir):
-        data += '{"Folder":"'+folder + '","Content":['
-        emptyDir = True
-        for book in os.listdir("{0}/{1}".format(mainDir, folder)):
-            emptyDir = False
-            components = os.path.splitext(book)
-            data += '{"Name":"' + components[0] + \
-                '","ext":"' + components[1]+'"},'
-        if not emptyDir:
-            data = data[:-1]
-        data += "]},"
-    data = data[:-1]
-    data += ']}'
-    return data
+def list_books_endpoint():
+    return list_books(mainDir)
 
 
 @app.route("/post-book/<book_name>", methods=["POST"])
@@ -83,46 +75,15 @@ def Upload_book(book_name):
     return 501
 
 
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in {
-            'pdf', 'txt', 'epub', 'mobi', 'azw3'}
-
-
 @app.route("/delete-book/<book_name>&&<ext>&&<folder>", methods=["GET"])
 @cross_origin()
-def Remove_book(book_name, ext, folder):
-    if (book_name == "" or ext == "" or folder == ""):
-        return "400"
-    target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
-    if os.path.exists(target):
-        try:
-            os.remove(target)
-        except Exception as e:
-            return "500: " + str(e)
-    else:
-        return "404"
-    return "200"
+def Remove_book_endpoint(book_name, ext, folder):
+    return Remove_book(book_name, ext, folder, mainDir)
 
 
 @app.route("/rename-book/<book_name>&&<ext>&&<folder>&&<new_name>")
-def Rename_book(book_name, ext, folder, new_name):
-    if (book_name == "" or ext == "" or folder == "" or new_name == ""):
-        return "400"
-    # Make sure the book exists and that a file with a matching name doesn't already exist
-    target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
-    renamed = "{0}/{1}/{2}.{3}".format(mainDir, folder, new_name, ext)
-    if os.path.exists(renamed):
-        return "409"
-    if os.path.exists(target):
-        try:
-            os.rename(
-                target, renamed)
-        except Exception as e:
-            return "500: " + str(e)
-    else:
-        return "404"
-    return "200"
+def Rename_book_endpoint(book_name, ext, folder, new_name):
+    return Rename_book(book_name, ext, folder, new_name, mainDir)
 
 
 # Folder methods
@@ -155,107 +116,36 @@ def Rename_folder_endpoint(folder_name, new_name):
 # Library management functions
 
 @app.route("/create-folder/<folder_name>", methods=["GET"])
-def Create_folder(folder_name):
-    if (folder_name == ""):
-        return "400"
-    target = "{0}/{1}".format(mainDir, folder_name)
-    if not os.path.exists(target):
-        try:
-            os.makedirs(target)
-            return "200"
-        except Exception as e:
-            return "500: " + str(e)
-    else:
-        return "409"
+def Create_folder_endpoint(folder_name):
+    return Create_folder(folder_name, mainDir)
 
 
 @app.route("/move-book-to-folder/<book_name>&&<ext>&&<old_folder_name>&&<new_folder_name>", methods=["GET"])
-# example: http://192.168.1.110:5000/move-book-to-folder/MoveTest&&pdf&&TestFolder&&Misc
-def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, ):
-    if (book_name == "" or ext == "" or old_folder_name == "" or new_folder_name == ""):
-        return "400"
-    oldPath = "{0}/{1}/{2}.{3}".format(mainDir,
-                                       old_folder_name, book_name, ext)
-    newPath = "{0}/{1}/{2}.{3}".format(mainDir,
-                                       new_folder_name, book_name, ext)
-    if os.path.exists(oldPath):
-        if not os.path.exists(newPath):
-            try:
-                os.rename(oldPath, newPath)
-            except Exception as e:
-                return "500: " + str(e)
-        else:
-            return "409"
-    else:
-        return "404"
-    return "200"
+def Move_book_to_folder_endpoint(book_name, ext, old_folder_name, new_folder_name):
+    return Move_book_to_folder(book_name, ext, old_folder_name,
+                               new_folder_name, mainDir)
 
 # Thumbnail management functions
 
 
 @app.route("/list-thumbs")
-def List_Thumbs():
-    list = '{"Images":['
-    empty_cache = True
-    for image in os.listdir("./Assets/Images/Thumbnail_cache/"):
-        empty_cache = False
-        components = os.path.splitext(image)
-        list += '{"Name":"' + components[0] + '","ext":"'+components[1]+'" },'
-    if not empty_cache:
-        list = list[:-1]
-    list += "]}"
-    return list
+def List_Thumbs_endpoint():
+    return List_Thumbs()
 
 
 @app.route("/thumb-map")
-def show_thumb_map():
-    data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
-    data = data[:-2]
-    data += "," + List_Thumbs()[1:]
-    return data
+def show_thumb_map_endpoint():
+    return show_thumb_map()
 
 
 @app.route("/generate-thumbs")
-def generate_thumbs():
-    # set up book info json, with map for titles to isbns/authors/dates ect, have a seperate system to auto pop that(maybe do on upload)
-    # scan books for isbns, if found use those, if not use names for search, check either against returned title, reject and use placeholder if bad
-    # then search by isbn, dl img and set thumb map accordingly
-    # search by name, only include those with a reasonable number of spaces
-    with urlopen('https://www.googleapis.com/books/v1/volumes?q=title=Devestationofbaal'.format()) as r:
-        text = r.read()
-        data = json.loads(text)
-        title = data["items"][0]["volumeInfo"]["title"]
-        authors = data["items"][0]["volumeInfo"]["authors"]
-        date = data["items"][0]["volumeInfo"]["publishedDate"]
-        publisher = data["items"][0]["volumeInfo"]["publisher"]
-        isbn = isbn10 = data["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
-        isbn13 = data["items"][0]["volumeInfo"]["industryIdentifiers"][1]["identifier"]
-        thumbnail = data["items"][0]["volumeInfo"]["imageLinks"]["smallThumbnail"]
-        return "501"
+def generate_thumbs_endpoint():
+    return generate_thumbs()
 
 
 @app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>")
-def Reasign_thumb(folder_name, book_name, thumb):
-    if os.path.exists("./Assets/Images/Thumbnail_map.json"):
-        json_data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
-        map = json.loads(json_data)
-
-        # Manipulate the map
-        bookFound = False
-        for book in map["Books"]:
-            if book["Folder"] == folder_name and book["Name"] == book_name:
-                bookFound = True
-                book.update({"Thumb": thumb.replace(" ", "")})
-        if not bookFound:
-            # Add the book to the map if it doesn't already have an entry
-            map["Books"].append(
-                {"Folder": folder_name, "Name": book_name, "Thumb": thumb.replace(" ", "")})
-
-        # return str(map["Books"][0]["Name"] in os.listdir("./Books/"+map["Books"][0]["Folder"]))
-        return write_json_no_code("./Assets/Images/Thumbnail_map.json", map)
-
-    else:
-        return "404"
+def Reasign_thumb_endpoint(folder_name, book_name, thumb):
+    return Reasign_thumb(folder_name, book_name, thumb)
 
 
 @app.route("/upload-thumb/<image>")
@@ -264,282 +154,53 @@ def Upload_thumb(image):
 
 
 @app.route("/clear-thumbs/<regen>&&<rmManual>")
-def Clear_thumbs(regen, rmManual):
-    path = "./Assets/Images/Thumbnail_cache/"
-
-    if os.path.exists(path):
-        # Clear the existing cache, execept for manual uploads (unless instructed)
-        if (rmManual == "true"):
-            for file in os.listdir(path):
-                os.remove(path+file)
-        else:
-            for file in os.listdir(path):
-                if not file.startswith("MAN-"):
-                    os.remove(path+file)
-
-        if (regen == "true"):
-            try:
-                generate_thumbs()
-            except Exception as e:
-                return "500"
-
-        return "200"
-    else:
-        return "404"
+def Clear_thumbs_endpoint(regen, rmManual):
+    return Clear_thumbs(regen, rmManual)
 
 
 @app.route("/rename-thumb/<target>&&<new_name>")
-def rename_thumb(target, new_name):
-    if (target == "" or new_name == ""):
-        return "400"
-    extension = os.path.splitext(target)[1]
-    # Make sure the book exists and that a file with a matching name doesn't already exist
-    image = "./Assets/Images/Thumbnail_cache/{0}".format(target)
-    reNamed = "./Assets/Images/Thumbnail_cache/{0}{1}".format(
-        new_name, extension)
-    if os.path.exists(reNamed):
-        return "409"
-
-    if os.path.exists(image):
-        try:
-            os.rename(
-                image, reNamed)
-        except Exception as e:
-            return "500: " + str(e)
-    else:
-        return "404"
-    return "200"
+def rename_thumb_endpoint(target, new_name):
+    return rename_thumb(target, new_name)
 
 
 @app.route("/delete-thumb/<target>")
-def delete_thumb(target):
-    if (target == ""):
-        return "400"
-    target = "./Assets/Images/Thumbnail_cache/{0}".format(target)
-    if (os.path.exists(target)):
-        try:
-            os.remove(target)
-        except Exception as e:
-            return "500" + str(e)
-    else:
-        return "404"
-    return "200"
+def delete_thumb_endpoint(target):
+    return delete_thumb(target)
 
 # Misc option functions
 # TODO: implement the password check
 
 
-def read_json_no_code(file):
-    try:
-        with open(file, "r") as json_file:
-            data = json_file.read()
-            return data
-    except Exception as e:
-        return "500: " + str(e)
-
-
-def write_json_no_code(file, data):
-    try:
-        with open(file, "w") as json_file:
-            json.dump(data, json_file, indent=4)
-            return "200"
-    except Exception as e:
-        return "500: " + str(e)
-
-
-def fetch_settings(password):
-    if check_password(password):
-        try:
-            with open("settings.json", "r") as json_file:
-                data = json_file.read()
-                return data
-        except Exception as e:
-            return "500: " + str(e)
-    else:
-        return "401"
-
-
-def write_settings(data, password):
-    if check_password(password):
-        try:
-            with open("settings.json", "w") as json_file:
-                json.dump(data, json_file, indent=4)
-                return "200"
-        except Exception as e:
-            return "500: " + str(e)
-    else:
-        return "401"
-
-
-def check_password(password):
-    return True
-
-
 @app.route("/fetch-settings/<code>")
-def Show_settings(code):
-    if os.path.exists("./settings.json"):
-        settings = fetch_settings(code)
-        json_data = json.loads(settings)
-
-        response = app.response_class(
-            response=json.dumps(json_data), status=200, mimetype='application/json')
-        return response
-    else:
-        return "404"
+def Show_settings_endpoint(code):
+    return Show_settings(code, app)
 
 
 @app.route("/toggle-dl/<option>&&<code>")
-def Toggle_dls(option, code):
-    if (option == "" or code == ""):
-        return "400"
-    if check_password(code):
-        if os.path.exists("./settings.json"):
-            settings = fetch_settings(code)
-            json_data = json.loads(settings)
-            if option.upper() == "TRUE":
-                json_data["EnableDownloads"] = True
-            else:
-                json_data["EnableDownloads"] = False
-            return write_settings(json_data, code)
-        return "404"
-    else:
-        return "401"
+def Toggle_dls_endpoint(option, code):
+    return Toggle_dls(option, code)
 
 
 @app.route("/toggle-readers/<option>&&<code>")
-def Toggle_readers(option, code):
-    if (option == "" or code == ""):
-        return "400"
-    if check_password(code):
-        if os.path.exists("./settings.json"):
-            settings = fetch_settings(code)
-            json_data = json.loads(settings)
-            if option.upper() == "TRUE":
-                json_data["EnableReaders"] = True
-            else:
-                json_data["EnableReaders"] = False
-            return write_settings(json_data, code)
-        else:
-            return "404"
-    else:
-        return "401"
+def Toggle_readers_endpoint(option, code):
+    return Toggle_readers(option, code)
 
 
 @app.route("/toggle-lists/<option>&&<code>")
-def Toggle_lists(option, code):
-    if (option == "" or code == ""):
-        return "400"
-    if check_password(code):
-        if os.path.exists("./settings.json"):
-            settings = fetch_settings(code)
-            json_data = json.loads(settings)
-            if option.upper() == "WHITELIST":
-                json_data["EnableWhiteList"] = True
-                json_data["EnableBlackList"] = False
-            elif option.upper() == "BLACKLIST":
-                json_data["EnableWhiteList"] = False
-                json_data["EnableBlackList"] = True
-            elif option.upper() == "NONE":
-                json_data["EnableWhiteList"] = False
-                json_data["EnableBlackList"] = False
-            else:
-                return "406"
-            return write_settings(json_data, code)
-        else:
-            return "404"
-    else:
-        return "401"
-
-# http://127.0.0.1:5000/lists?address=1.1.1.1&list=whitelist&option=add
+def Toggle_lists_endpoint(option, code):
+    return Toggle_lists(option, code)
 
 
 @app.route("/manage-acls/<address>&&<list>&&<option>&&<code>")
-def Manage_acls(address, list, option, code):
-    if (address == "" or list == "" or option == "" or code == ""):
-        return "400"
-    status = "0"
-    if check_password(code):
-        if os.path.exists("./settings.json"):
-            settings = fetch_settings(code)
-            json_data = json.loads(settings)
+def Manage_acls_endpoint(address, list, option, code):
+    return Manage_acls(address, list, option, code)
 
-            # Manage whitelist
-            if list.upper() in ("WHITELIST"):
-                if option.upper() == "ADD":
-                    if address not in json_data["WhiteList"] and address not in json_data["BlackList"]:
-                        json_data["WhiteList"].append(address)
-                    else:
-                        status = "409"
-                elif option.upper() == "REMOVE":
-                    if address in json_data["WhiteList"]:
-                        json_data["WhiteList"].remove(address)
-                    else:
-                        status = "410"
-                else:
-                    status = "406"
+# Management control and help options
 
-            # Manage blacklist
-            elif list.upper() in ("BLACKLIST"):
-                if option.upper() == "ADD":
-                    if address not in json_data["BlackList"] and address not in json_data["WhiteList"]:
-                        json_data["BlackList"].append(address)
-                    else:
-                        status = "409"
-                elif option.upper() == "REMOVE":
-                    if address in json_data["BlackList"]:
-                        json_data["BlackList"].remove(address)
-                    else:
-                        status = "410"
-                else:
-                    status = "406"
-            else:
-                status = "406"
-
-            # Write to settings
-            if status != "0":
-                return status
-            return write_settings(json_data, code)
-        else:
-            return "404"
-    else:
-        return "401"
-
-
-# Management control options
 
 @app.route("/toggle-management/<option>&&<function>&&<code>")
-def Toggle_management(option, function, code):
-    if (option == "" or code == ""):
-        return "400"
-    # Check if the function is valid, and select the correct json option to change
-    setting = ""
-    if not (function.upper() == "MANAGEMENT" or function.upper() == "UPLOAD" or function.upper() == "DELETE" or function.upper() == "RENAME" or function.upper() == "MOVE"):
-        return "406"
-    elif function.upper() == "MANAGEMENT":
-        setting = "EnableManagement"
-    elif function.upper() == "UPLOAD":
-        setting = "EnableUpload"
-    elif function.upper() == "DELETE":
-        setting = "EnableDelete"
-    elif function.upper() == "RENAME":
-        setting = "EnableRename"
-    elif function.upper() == "MOVE":
-        setting = "EnableReAssign"
-
-    if check_password(code):
-        settings = fetch_settings(code)
-        json_data = json.loads(settings)
-
-        if option.upper() == "TRUE":
-            json_data[setting] = True
-        elif option.upper() == "FALSE":
-            json_data[setting] = False
-        else:
-            return "406"
-
-        return write_settings(json_data, code)
-    else:
-        return "401"
+def Toggle_management_endpoint(option, function, code):
+    return Toggle_management(option, function, code)
 
 
 @app.route("/help")
