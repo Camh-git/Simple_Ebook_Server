@@ -47,3 +47,16 @@ def write_json_no_code(file, data):
             return "200"
     except Exception as e:
         return "500: " + str(e)
+
+
+def write_file_no_code(file, data):
+    try:
+        with open(file, "w") as json_file:
+            json_file.write(json_file, data)
+            return "200"
+    except Exception as e:
+        return "500: " + str(e)
+
+
+def format_for_json(input):
+    return input.replace("/", "").replace("\\", "").replace("'", "").replace(",", "").replace("\"", "").replace("'", "\"").replace("'", "\"")

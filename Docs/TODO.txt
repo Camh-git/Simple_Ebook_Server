@@ -25,6 +25,7 @@ Remaining:
 	Find a method of breaking down the management page into less of a monalith (WIP)	- needs debugging with the event handlers not being set sometimes
 	Tidy up/ segment the css
 	add some proper testing
+	check if book name is close enough on book data
 
   Not confirmed/Under consideration:
 	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
@@ -33,7 +34,6 @@ Remaining:
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
 	Add a system to modify the stored book data
 	incorportate the book's extension into the book data
-	add option to check book data by isbn so the user can enter it then get the data automatically
 
   Notes:
 	Thumbnails will probably use the google books api to get images
