@@ -1,16 +1,15 @@
 from flask import Flask, abort, request
 from flask_cors import CORS, cross_origin
-import os
 import json
-from urllib.request import urlopen
 from Assets.Scripts.API_segments.Help_pages import help, file_support, show_site_map
 from Assets.Scripts.API_segments.Folder_methods import list_folders, list_folder_content, Delete_folder, Rename_folder
 from Assets.Scripts.API_segments.Book_methods import list_books, Remove_book, Rename_book
 from Assets.Scripts.API_segments.Lib_management import Create_folder, Move_book_to_folder
 from Assets.Scripts.API_segments.Management_control import Toggle_management
-from Assets.Scripts.API_segments.API_utils import read_json_no_code, write_file_no_code, format_for_json
+from Assets.Scripts.API_segments.API_utils import read_json_no_code
 from Assets.Scripts.API_segments.Misc_management import Show_settings, Toggle_dls, Toggle_readers, Toggle_lists, Manage_acls
 from Assets.Scripts.API_segments.Thumb_management import List_Thumbs, show_thumb_map, generate_thumbs, Reasign_thumb, Clear_thumbs, rename_thumb, delete_thumb
+from Assets.Scripts.API_segments.Book_data_methods import generate_book_data
 
 app = Flask(__name__)
 mainDir = "./Books"
@@ -203,11 +202,13 @@ def Toggle_management_endpoint(option, function, code):
 
 
 @app.route("/help")
+@app.route("/api-help")
 def help_endpoint():
     return help()
 
 
 @app.route("/file_support")
+@app.route("/file-support")
 def file_support_endpoint():
     return file_support()
 
@@ -219,101 +220,8 @@ def show_site_map_endpoint(format="XML"):
 
 
 @app.route("/gen-book-data")
-def generate_book_data():
-    stored_data = read_json_no_code("./Assets/Book_info.json")
-    stored_json = json.loads(stored_data)
-
-    lib_data = "{\"Folders\": ["
-    for folder in os.listdir(mainDir):
-        folder_data = '{{"Folder_name":"{0}","Books":['.format(folder)
-        for book in os.listdir("{0}/{1}".format(mainDir, folder)):
-            # print("had: " + book + ", checking")
-            # Check if we already have info on this book and skip it if so
-            if os.path.splitext(book)[0] in stored_data:
-                for folder in stored_json["Folders"]:
-                    if folder["Folder_name"] != "Included Public domain" or folder["Folder_name"]:
-                        for json_book in folder["Books"]:
-                            try:
-                                if json_book['Title'] == book:
-                                    if json_book["Validated"] or (json_book["isbn"].upper() != "NA" and json_book["isbn"] != "" and json_book["Thumbnail"].upper != "NA" and json_book["Thumbnail"] != ""):
-                                        # print("already had: " +
-                                        #     json_book["Title"] + " with data")
-                                        folder_data += str(json_book).replace("'", "\"").replace(
-                                            "'", "\"").replace("'", "\"") + ","
-                                        continue
-                            except:
-                                pass
-
-            # Get book info and parse the result
-            # 'https://www.googleapis.com/books/v1/volumes?q=isbn:{0}'.format(ISBN)  #ISBN approach
-            try:
-                with urlopen('https://www.googleapis.com/books/v1/volumes?q=title={0}'.format(
-                        book)) as r:
-                    text = r.read()
-                    data = json.loads(text)
-                    title = authors = date = publisher = isbn10 = isbn13 = thumbnail = authorlist = ""
-                    try:
-                        title = format_for_json(
-                            data["items"][0]["volumeInfo"]["title"])
-                    except:
-                        title = ""
-                    try:
-                        authors = format_for_json(
-                            data["items"][0]["volumeInfo"]["authors"])
-                    except:
-                        authors = ""
-                    try:
-                        date = format_for_json(
-                            data["items"][0]["volumeInfo"]["publishedDate"])
-                    except:
-                        date = ""
-                    try:
-                        publisher = format_for_json(
-                            data["items"][0]["volumeInfo"]["publisher"])
-                    except:
-                        publisher = ""
-                    try:
-                        isbn10 = format_for_json(
-                            data["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"])
-                    except:
-                        isbn10 = ""
-                    try:
-                        isbn13 = format_for_json(
-                            data["items"][0]["volumeInfo"]["industryIdentifiers"][1]["identifier"])
-                    except:
-                        isbn13 = ""
-                    try:
-                        thumbnail = format_for_json(
-                            data["items"][0]["volumeInfo"]["imageLinks"]["smallThumbnail"])
-                    except:
-                        thumbnail = ""
-
-                    for author in authors:
-                        authorlist += '"{0}",'.format(format_for_json(author))
-                    authorlist = authorlist[:-1]
-
-                    book_data = '{{"Title":"{0}","Authors":[{1}],"Date":"{2}","Publisher":"{3}","isbn":"{4}","isbn13":"{5}","Thumbnail":"{6}","Validated":"False"}},'.format(title, authorlist, date, publisher, isbn10, isbn13, thumbnail
-                                                                                                                                                                             )
-                    folder_data += book_data
-
-            except:
-                book_data = '{{"title":"{0}","Authors":["NA"],"Date":"NA","Publisher":"NA","isbn":"NA","isbn13":"NA","Thumbnail":"NA","Validated":"False"}},'.format(
-                    book)
-                folder_data += book_data
-
-        # Format the folder data and add it to the library
-        if folder_data[len(folder_data)-1] != "[":
-            folder_data = folder_data[:-1]
-        folder_data += "]},"
-        lib_data += folder_data
-
-    lib_data = lib_data[:-1]
-    lib_data += "]}"
-    # Convert the libdata to json and save
-    lib_data = lib_data.replace("/", "").replace("\\", "")
-    # json_Data = json.dumps(lib_data)
-    write_file_no_code("../../Book_info.json", lib_data)
-    return lib_data
+def generate_book_data_endpoint():
+    return generate_book_data(mainDir)
 
 
 @app.route('/', defaults={'path': ''})

@@ -220,6 +220,21 @@
           Requires password, functions:MANAGEMENT, UPLOAD, DELETE, RENAME, MOVE
         </td>
       </tr>
+
+      <tr>
+        <th>Book data mangaement</th>
+      </tr>
+      <tr>
+        <td>/gen-book-data</td>
+        <td>None</td>
+        <td>
+          Gets data on a book by sending it's title to the google books API
+        </td>
+        <td>
+          Slow, should be checked by user since bad title matching results in
+          the wrong data being fetched
+        </td>
+      </tr>
     </table>
   </body>
 </html>
