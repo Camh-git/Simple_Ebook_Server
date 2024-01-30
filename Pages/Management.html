@@ -328,12 +328,119 @@
           </section>
         </li>
 
+        <!--Manage book data-->
+        <li>
+          <h2>Manage book data</h2>
+          <image
+            src="../Assets/Images/expand_more_white_24dp.svg"
+            alt="Toggle book data management"
+          />
+          <section class="Management-row">
+            <!--Re-generate book data-->
+            <form method="POST" enctype="multipart/form-data" id="GBD_form">
+              <h3>Generate book data</h3>
+              <p>
+                Use the bellow button to re-generate book data (This will take
+                some time)This function will not update data that has been
+                flagged as verified.
+              </p>
+              <p>
+                This function will go through all the folders in the library and
+                add data for each book using the google books api.
+              </p>
+
+              <h3>Data format</h3>
+              <table>
+                <tr>
+                  <th>Entry</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td>Title</td>
+                  <td>To edit this use the rename book form</td>
+                </tr>
+                <tr>
+                  <td>Authors</td>
+                  <td>Add one by one, seperated by a comma</td>
+                </tr>
+                <tr>
+                  <td>Date</td>
+                  <td>The publication date, formatted: yyyy-mm-dd</td>
+                </tr>
+                <tr>
+                  <td>ISBN 10</td>
+                  <td>The book's 10 digit ISBN code</td>
+                </tr>
+                <tr>
+                  <td>ISBN 13</td>
+                  <td>The book's 13 digit ISBN code</td>
+                </tr>
+                <tr>
+                  <td>Thumbnail URL</td>
+                  <td>The web URL the thumbnail came from</td>
+                </tr>
+              </table>
+
+              <h3 class="Warning">
+                Note: This funtion may take up to 30 seconds and will edit data
+              </h3>
+              <input type="submit" value="Apply" />
+            </form>
+            <!-- Edit book data-->
+            <form method="POST" enctype="multipart/form-data" id="EBD_form">
+              <h3>Edit book data</h3>
+              <p>
+                Please select a book and update it as needed. seperate each
+                author with a comma.
+              </p>
+              <!--Select books-->
+              <label for="BD_folder_select">Select folder</label>
+              <select name="BD_folder_select" id="BD_folder_select">
+                <option value="None">No selection</option>
+              </select>
+              <br />
+              <label for="BD_book_select">Select book</label>
+              <select name="BD_book_select" id="BD_book_select">
+                <option value="None">No selection</option>
+              </select>
+              <br />
+
+              <!--Book data-->
+              <label for="EDB_Authors">Authors, seprated by ,:</label>
+              <input type="text" name="EDB_Authors" placeholder="Authors" />
+              <label for="EDB_date">Publication date:</label>
+              <input type="text" name="EDB_date" placeholder="Release date" />
+              <br />
+              <label for="EDB_ISBN">ISBN 10:</label>
+              <input type="text" name="EDB_ISNB" placeholder="ISBN 10" />
+              <br />
+              <label for="EDB_ISBN13">ISBN 13:</label>
+              <input type="text" name="EDB_ISNB13" placeholder="ISBN 13" />
+              <br />
+              <label for="EDB_thumb">Thumnail url:</label>
+              <input type="text" name="EDB_thumb" placeholder="Thumbnail" />
+              <br />
+              <label for="EDB_valid"
+                >Validated (will ignore data generator):</label
+              >
+              <input
+                type="checkbox"
+                name="EDB_valid"
+                id="EDB_valid"
+                value="EDB_valid"
+              />
+              <br /><br />
+              <input type="submit" value="Apply" />
+            </form>
+          </section>
+        </li>
+
         <!--Misc options-->
         <li>
           <h2>Misc options</h2>
           <image
             src="../Assets/Images/expand_more_white_24dp.svg"
-            alt="Toggle book management"
+            alt="Toggle misc options"
           />
           <section class="Management-row">
             <!--Enable or disable downloads-->

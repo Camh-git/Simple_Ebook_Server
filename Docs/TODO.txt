@@ -16,6 +16,7 @@ Remaining:
   	Add a script to populate the thumbnail cache (probably calling google books)
 	Change upload scripts from php to python
 	Make the reader and download button blocking work
+	replace thumb_map with book_data updates/ thumnb return
 
   Minor/ technical:	
 	go through the js and add cammel case/ generaly tidy up
@@ -26,13 +27,14 @@ Remaining:
 	Tidy up/ segment the css
 	add some proper testing
 	check if book name is close enough on book data
+	Add a system to modify the stored book data (WIP)
+	Have the thumbnail fetching service download the image and set the local path as the url
 
   Not confirmed/Under consideration:
 	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly (possibly like /rename-thumb)
 	Add a way to cache the settings so they dont have to be called every req, implement security and make sure they get updated on change and load
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
-	Add a system to modify the stored book data
 	incorportate the book's extension into the book data
 
   Notes:

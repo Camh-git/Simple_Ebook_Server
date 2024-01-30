@@ -9,7 +9,7 @@ from Assets.Scripts.API_segments.Management_control import Toggle_management
 from Assets.Scripts.API_segments.API_utils import read_json_no_code
 from Assets.Scripts.API_segments.Misc_management import Show_settings, Toggle_dls, Toggle_readers, Toggle_lists, Manage_acls
 from Assets.Scripts.API_segments.Thumb_management import List_Thumbs, show_thumb_map, generate_thumbs, Reasign_thumb, Clear_thumbs, rename_thumb, delete_thumb
-from Assets.Scripts.API_segments.Book_data_methods import generate_book_data
+from Assets.Scripts.API_segments.Book_data_methods import generate_book_data, edit_book_data
 
 app = Flask(__name__)
 mainDir = "./Books"
@@ -222,6 +222,16 @@ def show_site_map_endpoint(format="XML"):
 @app.route("/gen-book-data")
 def generate_book_data_endpoint():
     return generate_book_data(mainDir)
+
+
+@app.route("/edit-book-data/<folder>&&<book>&&<authors>&&<date>&&<publisher>&&<isbn>&&<isbn13>&&<thumbnail>&&<validated>")
+def edit_book_data_endpoint(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, validated):
+    return edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, validated)
+
+
+@app.route("/get-book-data")
+def show_book_data():
+    return read_json_no_code("./Assets/Book_info.json")
 
 
 @app.route('/', defaults={'path': ''})

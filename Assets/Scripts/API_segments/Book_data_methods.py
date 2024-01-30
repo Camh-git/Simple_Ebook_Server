@@ -1,7 +1,30 @@
-from .API_utils import read_json_no_code, format_for_json, write_file_no_code
+from .API_utils import read_json_no_code, format_for_json, write_file_no_code, write_json_no_code
 from urllib.request import urlopen
 import json
 import os
+
+
+def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, validated):
+    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+    # Note: the thumb path should be local, use a , to substitute /, cut off the :// part of https from a web url for safety (should be done in handler)
+    #   example url: test&&New&&[a,b]&&1-2-3&&hi&&987&&654&&httpsfake&&True
+    # Find the book
+    for json_folder in stored_json["Folders"]:
+        if json_folder["Folder_name"] == folder:
+            for json_book in json_folder["Books"]:
+                if json_book["Title"] == book:
+                    # Use the jsonString to update the books info
+                    json_book["Authors"] = authors
+                    json_book["Date"] = date
+                    json_book["Publisher"] = publisher
+                    json_book["isbn"] = isbn
+                    json_book["isbn13"] = isbn13
+                    json_book["Thumbnail"] = thumbnail
+                    json_book["Validated"] = validated
+
+    # Save the updated data
+    write_json_no_code("./Assets/Book_info.json", stored_json)
+    return "200"
 
 
 def generate_book_data(mainDir):

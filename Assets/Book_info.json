@@ -5,12 +5,12 @@
       "Books": [
         {
           "Title": "New",
-          "Authors": [],
-          "Date": "",
-          "Publisher": "Imaginary",
-          "isbn": "123",
-          "isbn13": "123",
-          "Thumbnail": "",
+          "Authors": "[a,b]",
+          "Date": "1-2-3",
+          "Publisher": "hi",
+          "isbn": "987",
+          "isbn13": "654",
+          "Thumbnail": "httpsfake",
           "Validated": "True"
         },
         {

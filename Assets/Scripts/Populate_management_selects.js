@@ -58,7 +58,7 @@ async function Pop_management_selects() {
             if (this.options[this.selectedIndex].text == folder.Folder) {
               for (let book of folder.Content) {
                 const option = document.createElement("option");
-                option.value = option.textContent = book.Name + book.ext; //TODO: drop the ext from the displayed text once the handlers are re- configured
+                option.value = option.textContent = book.Name + book.ext;
                 targetBookSelect[0].appendChild(option);
               }
             }
