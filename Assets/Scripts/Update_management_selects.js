@@ -1,4 +1,5 @@
-async function get_map(url) {
+async function get_data(url) {
+  //For when the book data is updated, new single source of truth for book info and thumbnails
   const req = await fetch(url);
   const data = await req.json();
   return data;
@@ -8,7 +9,7 @@ async function Pop_management_selects(regen_books = true, regen_thumbs = true) {
   //Reset the selects and handle the folder selects
   const SELECT_LIST = document.querySelectorAll("select");
   if (regen_books) {
-    const BOOK_MAP = await get_map(
+    const BOOK_MAP = await get_data(
       `http://${document.cookie.split("=")[1]}:5000/list-books`
     );
     for (let select of SELECT_LIST) {
@@ -45,7 +46,7 @@ async function Pop_management_selects(regen_books = true, regen_thumbs = true) {
   }
   //Case by case handling for the misc selects
   if (regen_thumbs) {
-    const THUMB_MAP = await get_map(
+    const THUMB_MAP = await get_data(
       `http://${document.cookie.split("=")[1]}:5000/thumb-map`
     );
     const Thumb_selects = document.getElementsByName("TH_select");

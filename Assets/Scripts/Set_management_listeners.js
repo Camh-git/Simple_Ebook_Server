@@ -139,6 +139,7 @@ function Assign_submit_actions() {
       }
       Call_and_display(`${ADDRESS}clear-thumbs/${regen}&&${rmManual}`);
     });
+
   document.getElementById("TH_del_form").addEventListener("submit", (event) => {
     event.preventDefault();
     let target = event.target.children[3];
@@ -147,6 +148,55 @@ function Assign_submit_actions() {
     );
     Update_thumb_list(target);
     target.value = "";
+  });
+
+  //Manage book data
+  document.getElementById("EBD_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const folder = event.target.children[3];
+    const book = event.target.children[6];
+    const authors = event.target.children[9];
+    const date = event.target.children[11];
+    const publisher = event.target.children[14];
+    const isbn = event.target.children[17];
+    const isbn13 = event.target.children[20];
+    const thumbnail = event.target.children[23];
+    const validated_box = event.target.children[26];
+    let valid = "";
+    if (validated_box.checked) {
+      valid = true;
+    } else {
+      valid = false;
+    }
+    const authorlist = "[" + authors.value + "]";
+
+    Call_and_display(
+      `${ADDRESS}edit-book-data/${
+        folder.options[folder.selectedIndex].innerHTML
+      }&&${book.options[book.selectedIndex].innerHTML.replace(
+        /\.[^/.]+$/,
+        ""
+      )}&&${authorlist}&&${date.value.replace("/", "-")}&&${publisher.value}&&${
+        isbn.value
+      }&&${isbn13.value}&&${thumbnail.value}&&${valid}`
+    );
+
+    /*
+    authors.value =
+      date.value =
+      publisher.value =
+      isbn.value =
+      isbn13.value =
+      thumbnail.value =
+        "";
+    validated_box.checked = false;
+    */
+    //call the book info update
+  });
+
+  document.getElementById("GBD_form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    Call_and_display(`${ADDRESS}gen-book-data`);
   });
 
   //Misc options

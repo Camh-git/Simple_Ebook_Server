@@ -5,7 +5,24 @@ import os
 
 
 def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, validated):
+    # Input validation
+    if (folder == "" or book == "" or authors == "" or date == "" or publisher == "" or isbn == "" or thumbnail == "" or validated == ""):
+        return "400"
+    if not date.replace("-", "").isdigit() or not "-" in date:
+        return "406"
+    if not isbn.isdigit():
+        return "406"
+    print(len(isbn13))
+    if not isbn13.isdigit() and len(isbn13) > 0:
+        return "406"
+    thumbnail.replace("http://", "WEB-").replace("https://", "WEB-")
+
+    if validated.upper() != "TRUE" and validated.upper() != "FALSE":
+        return "406"
+
     stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+    if stored_json == "":
+        return "404"
     # Note: the thumb path should be local, use a , to substitute /, cut off the :// part of https from a web url for safety (should be done in handler)
     #   example url: test&&New&&[a,b]&&1-2-3&&hi&&987&&654&&httpsfake&&True
     # Find the book
@@ -21,9 +38,12 @@ def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbna
                     json_book["isbn13"] = isbn13
                     json_book["Thumbnail"] = thumbnail
                     json_book["Validated"] = validated
-
+                    break
     # Save the updated data
-    write_json_no_code("./Assets/Book_info.json", stored_json)
+    try:
+        write_json_no_code("./Assets/Book_info.json", stored_json)
+    except:
+        return "404"
     return "200"
 
 
