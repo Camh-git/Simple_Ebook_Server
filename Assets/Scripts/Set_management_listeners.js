@@ -1,4 +1,24 @@
 import { Call_and_display } from "./Call_and_display.js";
+let BOOK_INFO = await get_data(
+  `http://${document.cookie.split("=")[1]}:5000/get-book-data`
+);
+
+async function get_data(url) {
+  const req = await fetch(url);
+  const data = await req.json();
+  return data;
+}
+
+function search_format(string) {
+  try {
+    return string
+      .replace(/\.[^/.]+$/, "")
+      .replace(" ", "")
+      .toUpperCase();
+  } catch {
+    return string;
+  }
+}
 function Assign_submit_actions() {
   //Get the submit btns/forms and assign their actions to the functions
   //Manage books
@@ -180,19 +200,53 @@ function Assign_submit_actions() {
         isbn.value
       }&&${isbn13.value}&&${thumbnail.value}&&${valid}`
     );
-
-    /*
-    authors.value =
-      date.value =
-      publisher.value =
-      isbn.value =
-      isbn13.value =
-      thumbnail.value =
-        "";
-    validated_box.checked = false;
-    */
     //call the book info update
+    BOOK_INFO = get_data(
+      `http://${document.cookie.split("=")[1]}:5000/get-book-data`
+    );
   });
+
+  document
+    .getElementById("BD_book_select")
+    .addEventListener("change", (event) => {
+      //Fill in the inputs with the book's existing data
+      const folder = event.target.parentElement.children[3];
+      const book = event.target.parentElement.children[6];
+      const authors = event.target.parentElement.children[9];
+      const date = event.target.parentElement.children[11];
+      const publisher = event.target.parentElement.children[14];
+      const isbn = event.target.parentElement.children[17];
+      const isbn13 = event.target.parentElement.children[20];
+      const thumbnail = event.target.parentElement.children[23];
+      const validated_box = event.target.parentElement.children[26];
+      //Find the right book
+      for (let info_folder of BOOK_INFO.Folders) {
+        if (folder.value == info_folder.Folder_name) {
+          for (let info_book of info_folder.Books) {
+            if (search_format(info_book.Title) == search_format(book.value)) {
+              //fill in the data
+              authors.value = info_book.Authors.toString()
+                .replace("[", "")
+                .replace("]", "");
+              date.value = info_book.Date;
+              publisher.value = info_book.Publisher;
+              isbn.value = info_book.isbn;
+              if (info_book.isbn13.length > 0) {
+                isbn13.value = info_book.isbn13;
+              } else {
+                isbn13.value = "0";
+              }
+              thumbnail.value = info_book.Thumbnail;
+              if (info_book.Validated.toUpperCase() == "TRUE") {
+                validated_box.checked = true;
+              } else {
+                validated_box.checked = false;
+              }
+            }
+          }
+        }
+      }
+    });
 
   document.getElementById("GBD_form").addEventListener("submit", (event) => {
     event.preventDefault();
