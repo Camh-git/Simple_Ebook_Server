@@ -4,7 +4,7 @@ import json
 import os
 
 
-def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, validated):
+def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, validated, newFolder="", newTitle=""):
     # Input validation
     if (folder == "" or book == "" or authors == "" or date == "" or publisher == "" or isbn == "" or thumbnail == "" or validated == ""):
         return "400"

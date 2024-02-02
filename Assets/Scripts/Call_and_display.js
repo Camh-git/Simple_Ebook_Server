@@ -23,6 +23,8 @@ export async function Call_and_display(
         " Accepted, your request is being processed, be sure to check back soon.";
     case 205:
       response += "Success, please reload the page to see your changes.";
+    case 218:
+      response += "Success, but some errors occured, see error list";
     case 400:
       response +=
         "Request error: Please make sure all required fields are filled in.";

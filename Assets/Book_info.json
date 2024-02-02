@@ -10,7 +10,7 @@
           "Publisher": "hi",
           "isbn": "987",
           "isbn13": "654",
-          "Thumbnail": "httpsfake",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/test/New.png",
           "Validated": "True"
         },
         {
@@ -20,7 +20,7 @@
           "Publisher": "Imaginary",
           "isbn": "123",
           "isbn13": "123",
-          "Thumbnail": "",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/test/Move.png",
           "Validated": "True"
         }
       ]
@@ -29,7 +29,7 @@
       "Folder_name": "Misc",
       "Books": [
         {
-          "title": "1 at a time.txt",
+          "Title": "1 at a time.txt",
           "Authors": ["NA"],
           "Date": "NA",
           "Publisher": "NA",
@@ -45,17 +45,17 @@
           "Publisher": "Simon and Schuster",
           "isbn": "9780689830242",
           "isbn13": "0689830246",
-          "Thumbnail": "http:books.google.combookscontent?id=fElY916RRbAC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/Apples.png",
           "Validated": "False"
         },
         {
-          "title": "Constitution of the United States as ammended.pdf",
+          "Title": "Constitution of the United States as ammended.pdf",
           "Authors": ["NA"],
           "Date": "NA",
           "Publisher": "NA",
           "isbn": "NA",
           "isbn13": "NA",
-          "Thumbnail": "NA",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/Constitution of the United States as ammended.pdf.png",
           "Validated": "False"
         },
         {
@@ -65,22 +65,25 @@
           "Publisher": "",
           "isbn": "8488832087",
           "isbn13": "9788488832085",
-          "Thumbnail": "",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/Universal Declaration.png",
           "Validated": "False"
         },
         {
-          "title": "US declaration of independance.pdf",
+          "Title": "US declaration of independance.pdf",
           "Authors": ["NA"],
           "Date": "NA",
           "Publisher": "NA",
           "isbn": "NA",
           "isbn13": "NA",
-          "Thumbnail": "NA",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/US declaration of independance.pdf.png",
           "Validated": "False"
         }
       ]
     },
-    { "Folder_name": "Uploads", "Books": [] },
+    {
+      "Folder_name": "Uploads",
+      "Books": []
+    },
     {
       "Folder_name": "Included Public domain",
       "Books": [
@@ -91,7 +94,7 @@
           "Publisher": "Chapman & Hall",
           "isbn": "0140430547",
           "isbn13": "9798730371156",
-          "Thumbnail": "http:books.google.combookscontent?id=5CtizgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "Thumbnail": "https://books.google.com/books/content?id=5CtizgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
           "Validated": "True"
         },
         {
@@ -131,7 +134,7 @@
           "Publisher": "The International Committee of the Red cross",
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
-          "Thumbnail": "https:books.google.co.ukbookscontent?id=7rqYCgAAQBAJ&printsec=frontcover&img=1&zoom=1",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
           "Validated": "True"
         },
         {
@@ -141,7 +144,7 @@
           "Publisher": "The International Committee of the Red cross",
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
-          "Thumbnail": "https:books.google.co.ukbookscontent?id=_qD1swEACAAJ&printsec=frontcover&img=1&zoom=1",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
           "Validated": "True"
         },
         {
@@ -151,7 +154,7 @@
           "Publisher": "The International Committee of the Red cross",
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
-          "Thumbnail": "https:books.google.co.ukbookscontent?id=XxU_EAAAQBAJ&printsec=frontcover&img=1&zoom=1",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
           "Validated": "True"
         },
         {
@@ -161,7 +164,7 @@
           "Publisher": "The International Committee of the Red cross",
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
-          "Thumbnail": "https:books.google.co.ukbookscontent?id=abfFDwAAQBAJ&printsec=frontcover&img=1&zoom=1",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
           "Validated": "True"
         },
         {
@@ -171,7 +174,7 @@
           "Publisher": "The International Committee of the Red cross",
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
-          "Thumbnail": "https:books.google.co.ukbookscontent?id=9ny1Dv3VNPYC&printsec=frontcover&img=1&zoom=1",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
           "Validated": "True"
         },
         {
@@ -181,7 +184,7 @@
           "Publisher": "The International Committee of the Red cross",
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
-          "Thumbnail": "https:books.google.combookscontent?id=mymVctYCXjoC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
           "Validated": "True"
         },
         {
@@ -191,7 +194,7 @@
           "Publisher": "The International Committee of the Red cross",
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
-          "Thumbnail": "https:books.google.combookscontent?id=mymVctYCXjoC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
           "Validated": "True"
         }
       ]

@@ -1,7 +1,9 @@
 from .API_utils import read_json_no_code, write_json_no_code
-from urllib.request import urlopen
+from urllib.request import urlopen, urlretrieve
 import os
 import json
+import shutil
+import requests
 
 
 def List_Thumbs():
@@ -25,21 +27,57 @@ def show_thumb_map():
 
 
 def generate_thumbs():
-    # set up book info json, with map for titles to isbns/authors/dates ect, have a seperate system to auto pop that(maybe do on upload)
-    # scan books for isbns, if found use those, if not use names for search, check either against returned title, reject and use placeholder if bad
-    # then search by isbn, dl img and set thumb map accordingly
-    # search by name, only include those with a reasonable number of spaces
-    with urlopen('https://www.googleapis.com/books/v1/volumes?q=title=Devestationofbaal'.format()) as r:
-        text = r.read()
-        data = json.loads(text)
-        title = data["items"][0]["volumeInfo"]["title"]
-        authors = data["items"][0]["volumeInfo"]["authors"]
-        date = data["items"][0]["volumeInfo"]["publishedDate"]
-        publisher = data["items"][0]["volumeInfo"]["publisher"]
-        isbn = isbn10 = data["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
-        isbn13 = data["items"][0]["volumeInfo"]["industryIdentifiers"][1]["identifier"]
-        thumbnail = data["items"][0]["volumeInfo"]["imageLinks"]["smallThumbnail"]
-        return "501"
+    book_data = json.loads(read_json_no_code("./Assets/Book_info.json"))
+    book_data_changed = False
+    error_list = "Complete with the following errors:\n"
+
+    for json_folder in book_data["Folders"]:
+        # Create a folder for the thumbnails if one does not exist
+        folder_name = "./Assets/Images/Thumbnail_cache/" + \
+            json_folder["Folder_name"]
+        if not os.path.isdir(folder_name):
+            os.makedirs(folder_name)
+            print("Created thumbnail folder: " + folder_name)
+
+        # Get each books thumbnail and download it
+        for json_book in json_folder["Books"]:
+            if json_book["Thumbnail"][0:4].upper() == "HTTP":
+                try:
+                    filename = folder_name+"/"+json_book["Title"]+".png"
+                    book_data_changed = True
+                    response = requests.get(
+                        json_book["Thumbnail"], stream=True)
+                    with open(filename, "wb") as file:
+                        shutil.copyfileobj(response.raw, file)
+                        json_book["Thumbnail"] = filename
+                    del response
+                except:
+                    error_list += "Error retrieving url for: " + \
+                        json_book["Title"] + "\n"
+
+            elif json_book["Thumbnail"][0:2] == "./" or json_book["Thumbnail"][0:1] == ".":
+                # Thumbnail is already local or a placeholder
+                continue
+            elif json_book["Thumbnail"][0:2] == "NA" or "Thumbnail"[0:1] == "":
+                # Thumbnail has no thumbnail url
+                error_list += "Book: " + \
+                    json_book["Title"] + " has no thumnail url\n"
+                continue
+            else:
+                error_list += "Book: " + \
+                    json_book["Title"] + " has an invalid thumbnail format: " + \
+                    json_book["Thumbnail"] + "\n"
+
+    # Update the book data if any info was changed
+    if book_data_changed:
+        write_json_no_code("./Assets/Book_info.json", book_data)
+
+    # Return any errors that occured
+    if len(error_list) > 40:
+        with open("./Assets/Images/Thumbnail_cache/Generator_errors.txt", "w") as file:
+            file.write(error_list)
+        return "218"
+    return "200"
 
 
 def Reasign_thumb(folder_name, book_name, thumb):
