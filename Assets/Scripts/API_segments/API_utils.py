@@ -51,8 +51,8 @@ def write_json_no_code(file, data):
 
 def write_file_no_code(file, data):
     try:
-        with open(file, "w") as json_file:
-            json_file.write(json_file, data)
+        with open(file, "w") as target_file:
+            target_file.write(target_file, data)
             return "200"
     except Exception as e:
         return "500: " + str(e)

@@ -11,6 +11,9 @@ async function get_map(url) {
 
 async function Populate_library_entries() {
   //Get the thumnail and book lists
+  const BOOK_DATA = await get_map(
+    `http://${document.cookie.split("=")[1]}:5000/get-book-data`
+  );
   const THUMB_MAP = await get_map(
     `http://${document.cookie.split("=")[1]}:5000/thumb-map`
   );
