@@ -34,6 +34,8 @@ Remaining:
 	Add a way to cache the settings so they dont have to be called every req, implement security and make sure they get updated on change and load
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
 	incorportate the book's extension into the book data
+	add a filter to requests to block any that have <script , <?php, or any other suspicous xss style content
+	general input sanitsiation
 
   Notes:
 	Thumbnails will probably use the google books api to get images

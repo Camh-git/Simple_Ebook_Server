@@ -36,7 +36,7 @@
           "isbn": "NA",
           "isbn13": "NA",
           "Thumbnail": "NA",
-          "Validated": "False"
+          "Validated": "True"
         },
         {
           "Title": "Apples",
@@ -46,37 +46,37 @@
           "isbn": "9780689830242",
           "isbn13": "0689830246",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/Apples.png",
-          "Validated": "False"
+          "Validated": "True"
         },
         {
           "Title": "Constitution of the United States as ammended.pdf",
-          "Authors": ["NA"],
-          "Date": "NA",
-          "Publisher": "NA",
+          "Authors": ["Congress of the Confederation"],
+          "Date": "1778-06-21",
+          "Publisher": "Congress of the Confederation",
           "isbn": "NA",
           "isbn13": "NA",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/Constitution of the United States as ammended.pdf.png",
-          "Validated": "False"
+          "Validated": "True"
         },
         {
           "Title": "Universal Declaration",
-          "Authors": [],
-          "Date": "1994",
-          "Publisher": "",
+          "Authors": ["UN commission on Human rights"],
+          "Date": "1948-12-10",
+          "Publisher": "UN commission on Human rights",
           "isbn": "8488832087",
           "isbn13": "9788488832085",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/Universal Declaration.png",
-          "Validated": "False"
+          "Validated": "True"
         },
         {
           "Title": "US declaration of independance.pdf",
-          "Authors": ["NA"],
-          "Date": "NA",
-          "Publisher": "NA",
+          "Authors": ["Thomas Jefferson, Committee of Five"],
+          "Date": "1776-07-04",
+          "Publisher": "Second Continental Congress",
           "isbn": "NA",
           "isbn13": "NA",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/US declaration of independance.pdf.png",
-          "Validated": "False"
+          "Validated": "True"
         }
       ]
     },
@@ -94,7 +94,7 @@
           "Publisher": "Chapman & Hall",
           "isbn": "0140430547",
           "isbn13": "9798730371156",
-          "Thumbnail": "https://books.google.com/books/content?id=5CtizgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/A tale of two cities.png",
           "Validated": "True"
         },
         {
@@ -104,7 +104,7 @@
           "Publisher": "Various",
           "isbn": "0600006042",
           "isbn13": "9780600006046",
-          "Thumbnail": "http:books.google.combookscontent?id=92CZtAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/The complete works of shakespeare.png",
           "Validated": "True"
         },
         {
@@ -114,7 +114,7 @@
           "Publisher": "William Collins, Sons",
           "isbn": "1504079094",
           "isbn13": "9781504079099",
-          "Thumbnail": "https:books.google.co.ukbookscontent?id=-advEAAAQBAJ&printsec=frontcover&img=1&zoom=5",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/The murder of Roger Ackroyd.png",
           "Validated": "True"
         },
         {
@@ -124,7 +124,7 @@
           "Publisher": "Frederick Warne & Co.",
           "isbn": "1925807436",
           "isbn13": "9781925807431",
-          "Thumbnail": "http:books.google.combookscontent?id=tFqOuAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/The tale of Peter Rabbit.png",
           "Validated": "True"
         },
         {
