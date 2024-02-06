@@ -181,13 +181,6 @@ function Assign_submit_actions() {
     const isbn = event.target.children[17];
     const isbn13 = event.target.children[20];
     const thumbnail = event.target.children[23];
-    const validated_box = event.target.children[26];
-    let valid = "";
-    if (validated_box.checked) {
-      valid = true;
-    } else {
-      valid = false;
-    }
     const authorlist = "[" + authors.value + "]";
 
     Call_and_display(
@@ -198,7 +191,7 @@ function Assign_submit_actions() {
         ""
       )}&&${authorlist}&&${date.value.replace("/", "-")}&&${publisher.value}&&${
         isbn.value
-      }&&${isbn13.value}&&${thumbnail.value}&&${valid}`
+      }&&${isbn13.value}&&${thumbnail.value.replaceAll("/", "-@")}&&True`
     );
     //call the book info update
     BOOK_INFO = get_data(

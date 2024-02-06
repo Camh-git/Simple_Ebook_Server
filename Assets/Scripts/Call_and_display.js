@@ -54,6 +54,9 @@ export async function Call_and_display(
       response +=
         "Gone: The value you wish to remove is not in the targeted list.";
       break;
+    case 418:
+      response +=
+        "We hope the tea is tasty, just don't leave the lid off next to your books";
     case 421:
       response +=
         "Misdirected Request: Unfortunatly this server cannot accept connections from your current IP address.";

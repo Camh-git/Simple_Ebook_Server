@@ -15,7 +15,8 @@ def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbna
     print(len(isbn13))
     if not isbn13.isdigit() and len(isbn13) > 0:
         return "406"
-    thumbnail.replace("http://", "WEB-").replace("https://", "WEB-")
+    thumbnail = thumbnail.replace(
+        "http://", "WEB-").replace("https://", "WEB-").replace("-@", "/")
 
     if validated.upper() != "TRUE" and validated.upper() != "FALSE":
         return "406"
@@ -48,9 +49,14 @@ def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbna
 
 
 def generate_book_data(mainDir):
+    stored_json = ""
+    stored_data = ""  # See if the scope on this can be reduced
+    try:
+        stored_data = read_json_no_code("./Assets/Book_info.json")
+        stored_json = json.loads(stored_data)
+    except:
+        return "404"
 
-    stored_data = read_json_no_code("./Assets/Book_info.json")
-    stored_json = json.loads(stored_data)
     lib_data = "{\"Folders\": ["
     for folder in os.listdir(mainDir):
         folder_data = '{{"Folder_name":"{0}","Books":['.format(folder)
@@ -63,8 +69,7 @@ def generate_book_data(mainDir):
                         try:
                             if json_book['Title'] == book or json_book['Title'] == os.path.splitext(book)[0]:
                                 if json_book["Validated"] or (json_book["isbn"].upper() != "NA" and json_book["isbn"] != "" and json_book["Thumbnail"].upper != "NA" and json_book["Thumbnail"] != ""):
-                                    print("already had: " +
-                                          json_book["Title"] + ", Thumb: ")
+                                    # print("already had: " + json_book["Title"])
                                     found_data = True
                                     folder_data += str(json_book).replace("'", "\"").replace(
                                         "'", "\"").replace("'", "\"") + ","
@@ -141,5 +146,5 @@ def generate_book_data(mainDir):
     lib_data += "]}"
     # Convert the libdata to json and save
     lib_data = lib_data.replace("/", "").replace("\\", "")
-    write_file_no_code("../../Book_info.json", lib_data)
-    return lib_data
+    status = write_file_no_code("./Assets/Book_info.json", lib_data)
+    return status
