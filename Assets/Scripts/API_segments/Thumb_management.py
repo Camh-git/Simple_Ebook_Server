@@ -1,4 +1,4 @@
-from .API_utils import read_json_no_code, write_json_no_code
+from .API_utils import read_json_no_code, write_json_no_code, write_file_no_code
 from urllib.request import urlopen, urlretrieve
 import os
 import json
@@ -149,15 +149,30 @@ def rename_thumb(target, new_name):
     return "200"
 
 
-def delete_thumb(target):
-    if (target == ""):
+def delete_thumb(target, folder):
+    if (target == "" or folder == ""):
         return "400"
-    target = "./Assets/Images/Thumbnail_cache/{0}".format(target)
+    target = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(folder, target)
     if (os.path.exists(target)):
-        try:
-            os.remove(target)
-        except Exception as e:
-            return "500" + str(e)
+
+        os.remove(target)
+        # Update book data
+        stored_json = json.loads(
+            read_json_no_code("./Assets/Book_info.json"))
+        if stored_json == "":
+            return "404"
+        for json_folder in stored_json["Folders"]:
+            if json_folder["Folder_name"] == folder:
+                for json_book in json_folder["Books"]:
+                    if json_book["Thumbnail"] == target:
+                        json_book["Thumbnail"] = "NA"
+
+        status = write_json_no_code(
+            "./Assets/Book_info.json", stored_json)
+        return status
+
+        # Deleteme.png
+
     else:
         return "404"
     return "200"

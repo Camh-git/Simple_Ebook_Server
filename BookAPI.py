@@ -161,9 +161,9 @@ def rename_thumb_endpoint(target, new_name):
     return rename_thumb(target, new_name)
 
 
-@app.route("/delete-thumb/<target>")
-def delete_thumb_endpoint(target):
-    return delete_thumb(target)
+@app.route("/delete-thumb/<target>&&<folder>")
+def delete_thumb_endpoint(target, folder):
+    return delete_thumb(target, folder)
 
 # Misc option functions
 # TODO: implement the password check

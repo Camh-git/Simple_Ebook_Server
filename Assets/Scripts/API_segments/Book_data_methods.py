@@ -12,7 +12,6 @@ def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbna
         return "406"
     if not isbn.isdigit():
         return "406"
-    print(len(isbn13))
     if not isbn13.isdigit() and len(isbn13) > 0:
         return "406"
     thumbnail = thumbnail.replace(
@@ -145,6 +144,6 @@ def generate_book_data(mainDir):
     lib_data = lib_data[:-1]
     lib_data += "]}"
     # Convert the libdata to json and save
-    lib_data = lib_data.replace("/", "").replace("\\", "")
+    lib_data = lib_data
     status = write_file_no_code("./Assets/Book_info.json", lib_data)
     return status

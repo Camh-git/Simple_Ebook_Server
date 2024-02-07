@@ -316,9 +316,15 @@
             <form method="POST" enctype="multipart/form-data" id="TH_del_form">
               <h3>Delete thumbnail</h3>
 
-              <label for="TH_rm_select">Select Tuhumb to delete.</label>
+              <label for="TH_folder_select">Select Thumb folder.</label>
               <br />
-              <select name="TH_select" id="TH_rm_select">
+              <select name="TH_rm_folder_select" id="TH_rm_folder_select">
+                <option value="None">No selection</option>
+              </select>
+              <br />
+              <label for="TH_select">Select Thumb to delete.</label>
+              <br />
+              <select name="TH_select" id="TH_select">
                 <option value="None">No selection</option>
               </select>
               <br />

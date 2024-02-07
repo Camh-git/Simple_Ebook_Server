@@ -162,7 +162,8 @@ function Assign_submit_actions() {
 
   document.getElementById("TH_del_form").addEventListener("submit", (event) => {
     event.preventDefault();
-    let target = event.target.children[3];
+    let folder = event.target.children[3];
+    let target = event.target.children[7];
     Call_and_display(
       `${ADDRESS}delete-thumb/${target.options[target.selectedIndex].innerHTML}`
     );
