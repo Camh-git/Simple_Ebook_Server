@@ -3,14 +3,14 @@ import { get_data } from "./Get_data.js";
 
 async function Pop_management_selects() {
   //Get the thumnail and book lists
-  const THUMB_MAP = await get_data(
-    `http://${document.cookie.split("=")[1]}:5000/thumb-map`
+  const BOOK_DATA = await get_data(
+    `http://${document.cookie.split("=")[1]}:5000/get-book-data`
   );
   const BOOK_MAP = await get_data(
     `http://${document.cookie.split("=")[1]}:5000/list-books`
   );
   try {
-    console.log("Total number of folders found: " + BOOK_MAP.Books.length);
+    console.log("Total number of folders found: " + BOOK_DATA.Folders.length);
   } catch {
     document.getElementById("Management_pannel").innerHTML =
       "<h1>Management</h1>" +
@@ -39,41 +39,60 @@ async function Pop_management_selects() {
 
   for (let select of SELECT_LIST) {
     select.innerHTML = "<option>No selection</option>";
-    //Populate the folder list
-    if (select.getAttribute("name").includes("folder")) {
-      for (let folder of BOOK_MAP.Books) {
+    //Populate the folder lists
+    if (
+      select.getAttribute("name").includes("folder") ||
+      select.getAttribute("name").includes("TH_fold")
+    ) {
+      for (const folder of BOOK_DATA.Folders) {
         const option = document.createElement("option");
-        option.value = option.textContent = folder.Folder;
+        option.value = option.textContent = folder.Folder_name;
         select.appendChild(option);
       }
-      //Add listener
-      select.addEventListener("change", function () {
-        let targetBookSelect = document.getElementsByName(
-          this.getAttribute("name").substring(0, 2) + "_book_select"
-        );
-        if (typeof targetBookSelect[0] !== "undefined") {
-          //Find the right folder and add the books
-          targetBookSelect[0].innerHTML = "<option>No selection</option>";
-          for (let folder of BOOK_MAP.Books) {
-            if (this.options[this.selectedIndex].text == folder.Folder) {
-              for (let book of folder.Content) {
-                const option = document.createElement("option");
-                option.value = option.textContent = book.Name + book.ext;
-                targetBookSelect[0].appendChild(option);
+      if (select.getAttribute("name").includes("folder")) {
+        //Add listener for book selects, and for thumb selects
+        select.addEventListener("change", function () {
+          let targetBookSelect = document.getElementsByName(
+            this.getAttribute("name").substring(0, 2) + "_book_select"
+          );
+          if (typeof targetBookSelect[0] !== "undefined") {
+            //Find the right folder and add the books
+            targetBookSelect[0].innerHTML = "<option>No selection</option>";
+            for (let folder of BOOK_MAP.Books) {
+              if (this.options[this.selectedIndex].text == folder.Folder) {
+                for (let book of folder.Content) {
+                  const option = document.createElement("option");
+                  option.value = option.textContent = book.Name + book.ext;
+                  targetBookSelect[0].appendChild(option);
+                }
               }
             }
           }
-        }
-      });
-    }
-  }
-  //Case by case handling for the misc selects
-  const Thumb_selects = document.getElementsByName("TH_select");
-  for (let select of Thumb_selects) {
-    for (let image of THUMB_MAP.Images) {
-      const option = document.createElement("option");
-      option.value = option.textContent = image.Name + image.ext;
-      select.appendChild(option);
+        });
+      } else if (select.getAttribute("name").includes("TH_fold")) {
+        select.addEventListener("change", function () {
+          let targetThumbSelect = document.getElementsByName(
+            "TH_img_select_" + this.getAttribute("name").slice(-2)
+          )[0];
+          targetThumbSelect.innerHTML = "";
+          for (const folder of BOOK_DATA.Folders) {
+            if (this.options[this.selectedIndex].text == folder.Folder_name) {
+              for (const book of folder.Books) {
+                if (
+                  book.Thumbnail != "NA" &&
+                  book.Thumbnail != "" &&
+                  !book.Thumbnail.includes("http")
+                ) {
+                  const option = document.createElement("option");
+                  option.value = option.textContent =
+                    book.Thumbnail.split(/[/]+/).pop();
+                  targetThumbSelect.appendChild(option);
+                }
+              }
+            }
+          }
+        });
+      }
     }
   }
 }

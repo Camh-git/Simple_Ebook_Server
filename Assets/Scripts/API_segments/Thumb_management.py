@@ -149,10 +149,11 @@ def rename_thumb(target, new_name):
     return "200"
 
 
-def delete_thumb(target, folder):
+def delete_thumb(folder, target):
     if (target == "" or folder == ""):
         return "400"
     target = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(folder, target)
+    print(target)
     if (os.path.exists(target)):
 
         os.remove(target)

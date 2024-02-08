@@ -165,7 +165,9 @@ function Assign_submit_actions() {
     let folder = event.target.children[3];
     let target = event.target.children[7];
     Call_and_display(
-      `${ADDRESS}delete-thumb/${target.options[target.selectedIndex].innerHTML}`
+      `${ADDRESS}delete-thumb/${
+        folder.options[folder.selectedIndex].innerHTML
+      }&&${target.options[target.selectedIndex].innerHTML}`
     );
     Update_thumb_list(target);
     target.value = "";
