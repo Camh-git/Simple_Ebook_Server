@@ -131,14 +131,16 @@ function Assign_submit_actions() {
     .getElementById("TH_rename_form")
     .addEventListener("submit", (event) => {
       event.preventDefault();
-      let target = event.target.children[2];
-      let New_name = event.target.children[5];
+      let folder = event.target.children[3];
+      let target = event.target.children[6];
+      let New_name = event.target.children[8];
+      console.log(folder);
       Call_and_display(
         `${ADDRESS}rename-thumb/${
-          target.options[target.selectedIndex].innerHTML
-        }&&${New_name.value}`
+          folder.options[folder.selectedIndex].innerHTML
+        }&&${target.options[target.selectedIndex].innerHTML}&&${New_name.value}`
       );
-      Update_thumb_list(target);
+      //Update_thumb_list(target);
       New_name.value = "";
     });
   document

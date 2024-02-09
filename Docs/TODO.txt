@@ -37,6 +37,9 @@ Remaining:
 	incorportate the book's extension into the book data
 	add a filter to requests to block any that have <script , <?php, or any other suspicous xss style content
 	general input sanitisation
+	add an api util to load the book info and replace the current approach with repeated code (currently in thumb_management)
+	add a seperate thumnbnails object/ structure to book_data, so that unasigned thumbs can be added to management dropdowns, use this as the main mechanism for thumb changes and update books acordingly
+
 
   Notes:
 	Thumbnails will probably use the google books api to get images

@@ -127,14 +127,17 @@ def Clear_thumbs(regen, rmManual):
         return "404"
 
 
-def rename_thumb(target, new_name):
-    if (target == "" or new_name == ""):
+def rename_thumb(folder, target, new_name):
+    if (folder == "" or target == "" or new_name == ""):
         return "400"
     extension = os.path.splitext(target)[1]
-    # Make sure the book exists and that a file with a matching name doesn't already exist
-    image = "./Assets/Images/Thumbnail_cache/{0}".format(target)
-    reNamed = "./Assets/Images/Thumbnail_cache/{0}{1}".format(
-        new_name, extension)
+    # Make sure the image exists and that a file with a matching name doesn't already exist
+
+    image = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(folder, target)
+    reNamed = "./Assets/Images/Thumbnail_cache/{0}/{1}{2}".format(
+        folder, new_name, extension)
+    print("looking for: " + image)
+    print("renaming to: " + reNamed)
     if os.path.exists(reNamed):
         return "409"
 
@@ -142,6 +145,25 @@ def rename_thumb(target, new_name):
         try:
             os.rename(
                 image, reNamed)
+            # Update book data with new name
+            stored_json = json.loads(
+                read_json_no_code("./Assets/Book_info.json"))
+            if stored_json == "":
+                return "404"
+            changedData = False
+            for json_folder in stored_json["Folders"]:
+                for json_book in json_folder["Books"]:
+                    if json_book["Thumbnail"] == image:
+                        print("found match:" + json_book["Title"])
+                        json_book["Thumbnail"] = reNamed
+                        changedData = True
+            if changedData:
+                status = write_json_no_code(
+                    "./Assets/Book_info.json", stored_json)
+                return status
+            else:
+                return "200"
+
         except Exception as e:
             return "500: " + str(e)
     else:

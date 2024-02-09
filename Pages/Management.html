@@ -17,6 +17,7 @@
       </section>
 
       <ul id="Row_list">
+        <!--Manage books-->
         <li>
           <h2>Manage individual books</h2>
           <image
@@ -82,6 +83,7 @@
           </section>
         </li>
 
+        <!--Mangage folders-->
         <li>
           <h2>Manage folders</h2>
           <image
@@ -199,6 +201,7 @@
           </section>
         </li>
 
+        <!--Manage thumbnails-->
         <li>
           <h2>Manage thumbnails</h2>
           <image
@@ -260,14 +263,21 @@
               id="TH_rename_form"
             >
               <h3>Rename Thumbnail</h3>
-
-              <label for="TH_rn_select">Select new image.</label>
-              <select name="TH_select" id="TH_rn_select">
+              <label for="TH_fold_select_rn">Select Thumb folder.</label>
+              <br />
+              <select name="TH_fold_select_rn" id="TH_fold_select_rn">
                 <option value="None">No selection</option>
               </select>
               <br />
+
+              <label for="TH_img_select_rn">Select image.</label>
+              <select name="TH_img_select_rn" id="TH_img_select_rn">
+                <option value="None">No selection</option>
+              </select>
               <br />
+
               <input type="text" name="TH_rn_new_name" placeholder="New name" />
+              <br />
 
               <input type="submit" value="Change" />
             </form>
@@ -601,6 +611,7 @@
           </section>
         </li>
 
+        <!--Management options-->
         <li>
           <h2>Management options</h2>
           <image

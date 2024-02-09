@@ -156,9 +156,9 @@ def Clear_thumbs_endpoint(regen, rmManual):
     return Clear_thumbs(regen, rmManual)
 
 
-@app.route("/rename-thumb/<target>&&<new_name>")
-def rename_thumb_endpoint(target, new_name):
-    return rename_thumb(target, new_name)
+@app.route("/rename-thumb/<folder>&&<target>&&<new_name>")
+def rename_thumb_endpoint(folder, target, new_name):
+    return rename_thumb(folder, target, new_name)
 
 
 @app.route("/delete-thumb/<folder>&&<target>")
