@@ -113,12 +113,13 @@ function Assign_submit_actions() {
     .getElementById("TH_select_form")
     .addEventListener("submit", (event) => {
       event.preventDefault();
-      let Folder = event.target.children[2];
+      let Book_folder = event.target.children[2];
       let Book = event.target.children[5];
-      let Image = event.target.children[8];
+      let Img_folder = event.target.children[8];
+      let Image = event.target.children[11];
       Call_and_display(
         `${ADDRESS}reassign-thumb/${
-          Folder.options[Folder.selectedIndex].innerHTML
+          Book_folder.options[Book_folder.selectedIndex].innerHTML
         }&&${Book.options[Book.selectedIndex].innerHTML}&&
         ${Image.options[Image.selectedIndex].innerHTML}`
       );
