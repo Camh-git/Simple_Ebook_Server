@@ -141,9 +141,9 @@ def generate_thumbs_endpoint():
     return generate_thumbs()
 
 
-@app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb>")
-def Reasign_thumb_endpoint(folder_name, book_name, thumb):
-    return Reasign_thumb(folder_name, book_name, thumb)
+@app.route("/reassign-thumb/<folder_name>&&<book_name>&&<thumb_folder>&&<thumb>")
+def Reasign_thumb_endpoint(folder_name, book_name, thumb_folder, thumb):
+    return Reasign_thumb(folder_name, book_name, thumb_folder, thumb)
 
 
 @app.route("/upload-thumb/<image>")

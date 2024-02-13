@@ -117,11 +117,16 @@ function Assign_submit_actions() {
       let Book = event.target.children[5];
       let Img_folder = event.target.children[8];
       let Image = event.target.children[11];
+      console.log(
+        "folder: " + Img_folder.options[Img_folder.selectedIndex].innerHTML
+      );
+      console.log("img: " + Image.options[Image.selectedIndex].innerHTML);
       Call_and_display(
         `${ADDRESS}reassign-thumb/${
           Book_folder.options[Book_folder.selectedIndex].innerHTML
-        }&&${Book.options[Book.selectedIndex].innerHTML}&&
-        ${Image.options[Image.selectedIndex].innerHTML}`
+        }&&${Book.options[Book.selectedIndex].innerHTML}&&${
+          Img_folder.options[Img_folder.selectedIndex].innerHTML
+        }&&${Image.options[Image.selectedIndex].innerHTML}`
       );
       Update_thumb_list(Image);
     });

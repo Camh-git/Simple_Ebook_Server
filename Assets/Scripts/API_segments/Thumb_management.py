@@ -80,21 +80,52 @@ def generate_thumbs():
     return "200"
 
 
-def Reasign_thumb(folder_name, book_name, thumb):
-    if os.path.exists("./Assets/Images/Thumbnail_map.json"):
-        json_data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
-        map = json.loads(json_data)
+def Reasign_thumb(book_folder, book_name, thumb_folder, thumb):
+    if (book_folder == "" or book_name == "" or thumb_folder == "" or thumb == ""):
+        return "400"
 
-        # Manipulate the map
+    # Update the book's data to use the new thumbnail
+    image = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(
+        thumb_folder, thumb)
+
+    if os.path.exists(image):
+        stored_json = json.loads(
+            read_json_no_code("./Assets/Book_info.json"))
+        if stored_json == "":
+            return "404"
+        changedData = False
+
+        for json_folder in stored_json["Folders"]:
+            if json_folder["Folder_name"] == book_folder:
+                for json_book in json_folder["Books"]:
+                    if json_book["Title"] == os.path.splitext(book_name)[0]:
+                        json_book["Thumbnail"] = image
+                        changedData = True
+
+        if changedData:
+            status = write_json_no_code(
+                "./Assets/Book_info.json", stored_json)
+            return status
+        else:
+            return "410"
+
+    else:
+        return "404"
+
+    # Manipulate the map - TODO: delete this section when the thumb map is retired.
+    if os.path.exists("./Assets/Images/Thumbnail_map.json"):
+        json_map_data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
+        map = json.loads(json_map_data)
+
         bookFound = False
         for book in map["Books"]:
-            if book["Folder"] == folder_name and book["Name"] == book_name:
+            if book["Folder"] == book_folder and book["Name"] == book_name:
                 bookFound = True
                 book.update({"Thumb": thumb.replace(" ", "")})
         if not bookFound:
             # Add the book to the map if it doesn't already have an entry
             map["Books"].append(
-                {"Folder": folder_name, "Name": book_name, "Thumb": thumb.replace(" ", "")})
+                {"Folder": book_folder, "Name": book_name, "Thumb": thumb.replace(" ", "")})
 
         # return str(map["Books"][0]["Name"] in os.listdir("./Books/"+map["Books"][0]["Folder"]))
         return write_json_no_code("./Assets/Images/Thumbnail_map.json", map)
@@ -136,8 +167,6 @@ def rename_thumb(folder, target, new_name):
     image = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(folder, target)
     reNamed = "./Assets/Images/Thumbnail_cache/{0}/{1}{2}".format(
         folder, new_name, extension)
-    print("looking for: " + image)
-    print("renaming to: " + reNamed)
     if os.path.exists(reNamed):
         return "409"
 
@@ -154,7 +183,6 @@ def rename_thumb(folder, target, new_name):
             for json_folder in stored_json["Folders"]:
                 for json_book in json_folder["Books"]:
                     if json_book["Thumbnail"] == image:
-                        print("found match:" + json_book["Title"])
                         json_book["Thumbnail"] = reNamed
                         changedData = True
             if changedData:
