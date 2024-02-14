@@ -8,7 +8,7 @@ from Assets.Scripts.API_segments.Lib_management import Create_folder, Move_book_
 from Assets.Scripts.API_segments.Management_control import Toggle_management
 from Assets.Scripts.API_segments.API_utils import read_json_no_code
 from Assets.Scripts.API_segments.Misc_management import Show_settings, Toggle_dls, Toggle_readers, Toggle_lists, Manage_acls
-from Assets.Scripts.API_segments.Thumb_management import List_Thumbs, show_thumb_map, generate_thumbs, Reasign_thumb, Clear_thumbs, rename_thumb, delete_thumb
+from Assets.Scripts.API_segments.Thumb_management import List_Thumbs, show_thumb_map, generate_thumbs, Reasign_thumb, Clear_thumbs, rename_thumb, delete_thumb, populate_thumb_data
 from Assets.Scripts.API_segments.Book_data_methods import generate_book_data, edit_book_data
 
 app = Flask(__name__)
@@ -219,9 +219,17 @@ def show_site_map_endpoint(format="XML"):
     return show_site_map(format)
 
 
+# Data methods
+
+
 @app.route("/gen-book-data")
 def generate_book_data_endpoint():
     return generate_book_data(mainDir)
+
+
+@app.route("/gen-thumb-data")
+def generate_thumb_data_endpoint():
+    return populate_thumb_data()
 
 
 @app.route("/edit-book-data/<folder>&&<book>&&<authors>&&<date>&&<publisher>&&<isbn>&&<isbn13>&&<thumbnail>&&<validated>")
@@ -232,6 +240,22 @@ def edit_book_data_endpoint(folder, book, authors, date, publisher, isbn, isbn13
 @app.route("/get-book-data")
 def show_book_data():
     return read_json_no_code("./Assets/Book_info.json")
+
+
+@app.route("/get-thumb-data")
+@app.route("/get-thumbnail-data")
+def show_thumb_data():
+    return read_json_no_code("./Assets/Thumbnail_info.json")
+
+
+@app.route("/get-book-and-thumb-data")
+def show_book_and_thumb_data():
+    book_info = "{" + read_json_no_code("./Assets/Book_info.json")
+    thumb_info = "{" + read_json_no_code("./Assets/Thumbnail_info.json") + "}"
+    data = '{{"Books": {0}, "Thumbs": {1}}}'.format(book_info, thumb_info)
+
+    data = str(data.replace("{{", "{").replace("}}", "}"))
+    return data
 
 
 @app.route('/', defaults={'path': ''})

@@ -227,3 +227,22 @@ def delete_thumb(folder, target):
     else:
         return "404"
     return "200"
+
+
+def populate_thumb_data():
+    cache = "./Assets/Images/Thumbnail_cache"
+    Thumb_data = '{{"Folders":['
+    for folder in os.listdir(cache):
+        if os.path.isdir("{0}/{1}".format(cache, folder)):
+            Thumb_data += '{{"Folder_name":"{0}","Images":['.format(folder)
+            for img in os.listdir("{0}/{1}".format(cache, folder)):
+                Thumb_data += '"{0}",'.format(img)
+            Thumb_data = Thumb_data[:-1]
+            Thumb_data += ']}},'
+
+    if Thumb_data[len(Thumb_data)-1] != "[":
+        Thumb_data = Thumb_data[:-1]
+    Thumb_data += ']}}'
+    Thumb_data = Thumb_data.replace("{{", "{").replace("}}", "}")
+    status = write_file_no_code("./Assets/Thumbnail_info.json", Thumb_data)
+    return status
