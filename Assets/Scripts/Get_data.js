@@ -3,8 +3,11 @@ export async function get_data(url) {
     const req = await fetch(url);
     const data = await req.json();
     return data;
-  } catch {
-    console.log(`Failed to call:${url}, will use placeholders if possible`);
+  } catch (e) {
+    console.log(
+      `Failed to call:${url}, will use placeholders if possible, error: ` +
+        e.message
+    );
     return 500;
   }
 }

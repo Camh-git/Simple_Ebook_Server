@@ -4,13 +4,18 @@ import { get_data } from "./Get_data.js";
 async function Pop_management_selects() {
   //Get the thumnail and book lists
   const BOOK_DATA = await get_data(
-    `http://${document.cookie.split("=")[1]}:5000/get-book-data`
+    `http://${document.cookie.split("=")[1]}:5000/get-book-and-thumb-data`
   );
   const BOOK_MAP = await get_data(
     `http://${document.cookie.split("=")[1]}:5000/list-books`
   );
   try {
-    console.log("Total number of folders found: " + BOOK_DATA.Folders.length);
+    console.log(
+      "Total number of folders found: " +
+        BOOK_DATA.Books.Folders.length +
+        ", thumbs: " +
+        BOOK_DATA.Thumbs.Folders.length
+    );
   } catch {
     document.getElementById("Management_pannel").innerHTML =
       "<h1>Management</h1>" +
@@ -44,7 +49,7 @@ async function Pop_management_selects() {
       select.getAttribute("name").includes("folder") ||
       select.getAttribute("name").includes("TH_fold")
     ) {
-      for (const folder of BOOK_DATA.Folders) {
+      for (const folder of BOOK_DATA.Books.Folders) {
         const option = document.createElement("option");
         option.value = option.textContent = folder.Folder_name;
         select.appendChild(option);
@@ -75,23 +80,24 @@ async function Pop_management_selects() {
             "TH_img_select_" + this.getAttribute("name").slice(-2)
           )[0];
           targetThumbSelect.innerHTML = "";
-          for (const folder of BOOK_DATA.Folders) {
+          for (const folder of BOOK_DATA.Thumbs.Folders) {
             if (this.options[this.selectedIndex].text == folder.Folder_name) {
-              for (const book of folder.Books) {
-                if (
-                  book.Thumbnail != "NA" &&
-                  book.Thumbnail != "" &&
-                  !book.Thumbnail.includes("http")
-                ) {
+              for (const img of folder.Images) {
+                if (img != "NA" && img != "" && !img.includes("http")) {
                   const option = document.createElement("option");
-                  option.value = option.textContent =
-                    book.Thumbnail.split(/[/]+/).pop();
+                  option.value = option.textContent = img.split(/[/]+/).pop();
                   targetThumbSelect.appendChild(option);
                 }
               }
             }
           }
         });
+      } else {
+        console.log(
+          "select: " +
+            select.getAttribute("name") +
+            " is not a thumb or book select"
+        );
       }
     }
   }

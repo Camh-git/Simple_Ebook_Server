@@ -40,33 +40,61 @@ def generate_thumbs():
             print("Created thumbnail folder: " + folder_name)
 
         # Get each books thumbnail and download it
+        book_num = 0
         for json_book in json_folder["Books"]:
+            book_num = book_num + 1
             if json_book["Thumbnail"][0:4].upper() == "HTTP":
                 try:
+                    # Add the slashes after the http and replace combookscontent with com/books/content for google books content, (shouldn't hurt anything else)
                     filename = folder_name+"/"+json_book["Title"]+".png"
+                    url = json_book["Thumbnail"][:4] + \
+                        "s://" + json_book["Thumbnail"][5:]
+                    if "books.google" in url and "combookscontent" in url:
+                        url = url.replace("combookscontent",
+                                          "com/books/content")
                     book_data_changed = True
+
                     response = requests.get(
-                        json_book["Thumbnail"], stream=True)
+                        url, stream=True)
                     with open(filename, "wb") as file:
                         shutil.copyfileobj(response.raw, file)
                         json_book["Thumbnail"] = filename
                     del response
-                except:
-                    error_list += "Error retrieving url for: " + \
-                        json_book["Title"] + "\n"
+                except Exception as e:
+                    try:
+                        error_list += "Error retrieving url for: " + \
+                            json_book["Title"] + ", url: " + \
+                            url + ", Error: " + str(e) + "\n"
+                    except Exception as e:
+                        error_list += "Error for book number: " + \
+                            str(book_num) + " in folder: " + \
+                            json_folder["Folder_name"] + \
+                            ", Error: " + str(e) + "\n"
 
             elif json_book["Thumbnail"][0:2] == "./" or json_book["Thumbnail"][0:1] == ".":
                 # Thumbnail is already local or a placeholder
                 continue
             elif json_book["Thumbnail"][0:2] == "NA" or "Thumbnail"[0:1] == "":
-                # Thumbnail has no thumbnail url
-                error_list += "Book: " + \
-                    json_book["Title"] + " has no thumnail url\n"
+                # Book has no thumbnail url
+                try:
+                    error_list += "Book: " + \
+                        json_book["Title"] + " has no thumnail url\n"
+                except:
+                    error_list += "Error for book number: " + \
+                        str(book_num) + " in folder: " + \
+                        json_folder["Folder_name"] + "\n"
                 continue
             else:
-                error_list += "Book: " + \
-                    json_book["Title"] + " has an invalid thumbnail format: " + \
-                    json_book["Thumbnail"] + "\n"
+                try:
+                    if len(json_book["Title"]) < 1:
+                        raise Exception("missing title")
+                    error_list += "Book: " + \
+                        json_book["Title"] + " has an invalid thumbnail format: " + \
+                        json_book["Thumbnail"] + "\n"
+                except:
+                    error_list += "Error for book number: " + \
+                        str(book_num) + " in folder: " + \
+                        json_folder["Folder_name"] + "\n"
 
     # Update the book data if any info was changed
     if book_data_changed:
@@ -207,6 +235,7 @@ def delete_thumb(folder, target):
     if (os.path.exists(target)):
 
         os.remove(target)
+
         # Update book data
         stored_json = json.loads(
             read_json_no_code("./Assets/Book_info.json"))
@@ -237,7 +266,9 @@ def populate_thumb_data():
             Thumb_data += '{{"Folder_name":"{0}","Images":['.format(folder)
             for img in os.listdir("{0}/{1}".format(cache, folder)):
                 Thumb_data += '"{0}",'.format(img)
-            Thumb_data = Thumb_data[:-1]
+
+            if Thumb_data[len(Thumb_data)-1] != "[":
+                Thumb_data = Thumb_data[:-1]
             Thumb_data += ']}},'
 
     if Thumb_data[len(Thumb_data)-1] != "[":
