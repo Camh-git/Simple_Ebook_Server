@@ -232,9 +232,9 @@ def generate_thumb_data_endpoint():
     return populate_thumb_data()
 
 
-@app.route("/edit-book-data/<folder>&&<book>&&<authors>&&<date>&&<publisher>&&<isbn>&&<isbn13>&&<thumbnail>&&<validated>")
-def edit_book_data_endpoint(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, validated):
-    return edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, validated)
+@app.route("/edit-book-data/<folder>&&<book>&&<authors>&&<date>&&<publisher>&&<isbn>&&<isbn13>&&<thumbnail>&&<extension>&&<validated>")
+def edit_book_data_endpoint(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, extension, validated):
+    return edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, extension, validated)
 
 
 @app.route("/get-book-data")

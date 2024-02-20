@@ -4,7 +4,7 @@ import json
 import os
 
 
-def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, validated, newFolder="", newTitle=""):
+def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbnail, extension, validated, newFolder="", newTitle=""):
     # Input validation
     if (folder == "" or book == "" or authors == "" or date == "" or publisher == "" or isbn == "" or thumbnail == "" or validated == ""):
         return "400"
@@ -37,6 +37,7 @@ def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbna
                     json_book["isbn"] = isbn
                     json_book["isbn13"] = isbn13
                     json_book["Thumbnail"] = thumbnail
+                    json_book["Extension"] = extension
                     json_book["Validated"] = validated
                     break
     # Save the updated data
@@ -85,6 +86,7 @@ def generate_book_data(mainDir):
                         text = r.read()
                         data = json.loads(text)
                         title = authors = date = publisher = isbn10 = isbn13 = thumbnail = authorlist = ""
+                        extension = os.path.splitext(book)[1]
                         try:
                             title = format_for_json(
                                 data["items"][0]["volumeInfo"]["title"])
@@ -126,13 +128,13 @@ def generate_book_data(mainDir):
                                 format_for_json(author))
                         authorlist = authorlist[:-1]
 
-                        book_data = '{{"Title":"{0}","Authors":[{1}],"Date":"{2}","Publisher":"{3}","isbn":"{4}","isbn13":"{5}","Thumbnail":"{6}","Validated":"False"}},'.format(title, authorlist, date, publisher, isbn10, isbn13, thumbnail
-                                                                                                                                                                                 )
+                        book_data = '{{"Title":"{0}","Authors":[{1}],"Date":"{2}","Publisher":"{3}","isbn":"{4}","isbn13":"{5}","Thumbnail":"{6}","Extension":"{7}","Validated":"False"}},'.format(
+                            title, authorlist, date, publisher, isbn10, isbn13, thumbnail, extension)
                         folder_data += book_data
 
             except:
-                book_data = '{{"title":"{0}","Authors":["NA"],"Date":"NA","Publisher":"NA","isbn":"NA","isbn13":"NA","Thumbnail":"NA","Validated":"False"}},'.format(
-                    book)
+                book_data = '{{"title":"{0}","Authors":["NA"],"Date":"NA","Publisher":"NA","isbn":"NA","isbn13":"NA","Thumbnail":"NA","Extension":"{1}","Validated":"False"}},'.format(
+                    book, extension)
                 folder_data += book_data
 
         # Format the folder data and add it to the library

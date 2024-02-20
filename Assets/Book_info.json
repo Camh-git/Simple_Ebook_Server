@@ -11,6 +11,7 @@
           "isbn": "987",
           "isbn13": "654",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/test/New.png",
+          "Extension": ".txt",
           "Validated": "True"
         },
         {
@@ -21,6 +22,7 @@
           "isbn": "123",
           "isbn13": "123",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/test/Move.png",
+          "Extension": ".txt",
           "Validated": "True"
         },
         {
@@ -31,6 +33,7 @@
           "isbn": "123",
           "isbn13": "123",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/test/Deleteme.png",
+          "Extension": ".txt",
           "Validated": "True"
         }
       ]
@@ -46,6 +49,7 @@
           "isbn": "NA",
           "isbn13": "NA",
           "Thumbnail": "NA",
+          "Extension": ".txt",
           "Validated": "True"
         },
         {
@@ -56,6 +60,7 @@
           "isbn": "9780689830242",
           "isbn13": "0689830246",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/Apples.png",
+          "Extension": ".txt",
           "Validated": "True"
         },
         {
@@ -66,6 +71,7 @@
           "isbn": "NA",
           "isbn13": "NA",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/Constitution of the United States as ammended.pdf.png",
+          "Extension": ".pdf",
           "Validated": "True"
         },
         {
@@ -76,6 +82,7 @@
           "isbn": "8488832087",
           "isbn13": "9788488832085",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/Universal Declaration.png",
+          "Extension": ".pdf",
           "Validated": "True"
         },
         {
@@ -86,6 +93,7 @@
           "isbn": "NA",
           "isbn13": "NA",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Misc/US declaration of independance.pdf.png",
+          "Extension": ".pdf",
           "Validated": "True"
         }
       ]
@@ -105,6 +113,7 @@
           "isbn": "0140430547",
           "isbn13": "9798730371156",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/A tale of two cities.png",
+          "Extension": ".epub",
           "Validated": "True"
         },
         {
@@ -115,6 +124,7 @@
           "isbn": "0600006042",
           "isbn13": "9780600006046",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/The complete works of shakespeare.png",
+          "Extension": ".epub",
           "Validated": "True"
         },
         {
@@ -125,6 +135,7 @@
           "isbn": "1504079094",
           "isbn13": "9781504079099",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/The murder of Roger Ackroyd.png",
+          "Extension": ".epub",
           "Validated": "True"
         },
         {
@@ -135,6 +146,7 @@
           "isbn": "1925807436",
           "isbn13": "9781925807431",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/The tale of Peter Rabbit.png",
+          "Extension": ".epub",
           "Validated": "True"
         },
         {
@@ -145,6 +157,7 @@
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
+          "Extension": ".pdf",
           "Validated": "True"
         },
         {
@@ -155,6 +168,7 @@
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
+          "Extension": ".pdf",
           "Validated": "True"
         },
         {
@@ -165,6 +179,7 @@
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
+          "Extension": ".pdf",
           "Validated": "True"
         },
         {
@@ -175,6 +190,7 @@
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
+          "Extension": ".pdf",
           "Validated": "True"
         },
         {
@@ -185,6 +201,7 @@
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
+          "Extension": ".pdf",
           "Validated": "True"
         },
         {
@@ -195,6 +212,7 @@
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
+          "Extension": ".pdf",
           "Validated": "True"
         },
         {
@@ -205,6 +223,7 @@
           "isbn": "1014429927",
           "isbn13": "978-1014429926",
           "Thumbnail": "./Assets/Images/Thumbnail_cache/Included Public domain/Geneva convention I.png",
+          "Extension": ".pdf",
           "Validated": "True"
         }
       ]

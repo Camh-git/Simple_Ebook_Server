@@ -192,6 +192,7 @@ function Assign_submit_actions() {
     const isbn = event.target.children[17];
     const isbn13 = event.target.children[20];
     const thumbnail = event.target.children[23];
+    const ext = event.target.children[26];
     const authorlist = "[" + authors.value + "]";
 
     Call_and_display(
@@ -202,7 +203,9 @@ function Assign_submit_actions() {
         ""
       )}&&${authorlist}&&${date.value.replace("/", "-")}&&${publisher.value}&&${
         isbn.value
-      }&&${isbn13.value}&&${thumbnail.value.replaceAll("/", "-@")}&&True`
+      }&&${isbn13.value}&&${thumbnail.value.replaceAll("/", "-@")}&&${
+        ext.value
+      }&&True`
     );
     //call the book info update
     BOOK_INFO = get_data(
