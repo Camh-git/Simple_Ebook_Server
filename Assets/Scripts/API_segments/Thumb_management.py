@@ -74,7 +74,7 @@ def generate_thumbs():
             elif json_book["Thumbnail"][0:2] == "./" or json_book["Thumbnail"][0:1] == ".":
                 # Thumbnail is already local or a placeholder
                 continue
-            elif json_book["Thumbnail"][0:2] == "NA" or "Thumbnail"[0:1] == "":
+            elif json_book["Thumbnail"][0:2] == "NA" or json_book["Thumbnail"] == "":
                 # Book has no thumbnail url
                 try:
                     error_list += "Book: " + \
@@ -99,6 +99,7 @@ def generate_thumbs():
     # Update the book data if any info was changed
     if book_data_changed:
         write_json_no_code("./Assets/Book_info.json", book_data)
+        populate_thumb_data()
 
     # Return any errors that occured
     if len(error_list) > 40:

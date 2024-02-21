@@ -80,18 +80,14 @@ def generate_book_data(mainDir):
             # Get book info and parse the result
             # 'https://www.googleapis.com/books/v1/volumes?q=isbn:{0}'.format(ISBN)  #ISBN approach
             try:
-                if not found_data:
+                if len(os.path.splitext(book)[0]) > 1 and not found_data:
                     with urlopen('https://www.googleapis.com/books/v1/volumes?q=title={0}'.format(
                             book)) as r:
                         text = r.read()
                         data = json.loads(text)
                         title = authors = date = publisher = isbn10 = isbn13 = thumbnail = authorlist = ""
+                        title = os.path.splitext(book)[0]
                         extension = os.path.splitext(book)[1]
-                        try:
-                            title = format_for_json(
-                                data["items"][0]["volumeInfo"]["title"])
-                        except:
-                            title = ""
                         try:
                             authors = format_for_json(
                                 data["items"][0]["volumeInfo"]["authors"])

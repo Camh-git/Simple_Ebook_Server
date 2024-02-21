@@ -137,6 +137,8 @@ def show_thumb_map_endpoint():
 
 
 @app.route("/generate-thumbs")
+@app.route("/generate-thumbnails")
+@app.route("/gen-thumbs")
 def generate_thumbs_endpoint():
     return generate_thumbs()
 

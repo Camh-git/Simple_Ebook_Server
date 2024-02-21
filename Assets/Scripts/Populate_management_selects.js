@@ -63,12 +63,21 @@ async function Pop_management_selects() {
           if (typeof targetBookSelect[0] !== "undefined") {
             //Find the right folder and add the books
             targetBookSelect[0].innerHTML = "<option>No selection</option>";
-            for (let folder of BOOK_MAP.Books) {
-              if (this.options[this.selectedIndex].text == folder.Folder) {
-                for (let book of folder.Content) {
-                  const option = document.createElement("option");
-                  option.value = option.textContent = book.Name + book.ext;
-                  targetBookSelect[0].appendChild(option);
+            for (let folder of BOOK_DATA.Books.Folders) {
+              if (this.options[this.selectedIndex].text == folder.Folder_name) {
+                for (let book of folder.Books) {
+                  try {
+                    if (book.Title.length > 1) {
+                      const option = document.createElement("option");
+                      option.value = option.textContent =
+                        book.Title + book.Extension;
+                      targetBookSelect[0].appendChild(option);
+                    }
+                  } catch {
+                    console.log(
+                      "Tried to read invalid title for book: " + book.Title
+                    );
+                  }
                 }
               }
             }
