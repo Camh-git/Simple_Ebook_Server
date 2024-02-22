@@ -6,9 +6,6 @@ async function Pop_management_selects() {
   const BOOK_DATA = await get_data(
     `http://${document.cookie.split("=")[1]}:5000/get-book-and-thumb-data`
   );
-  const BOOK_MAP = await get_data(
-    `http://${document.cookie.split("=")[1]}:5000/list-books`
-  );
   try {
     console.log(
       "Total number of folders found: " +
@@ -63,9 +60,9 @@ async function Pop_management_selects() {
           if (typeof targetBookSelect[0] !== "undefined") {
             //Find the right folder and add the books
             targetBookSelect[0].innerHTML = "<option>No selection</option>";
-            for (let folder of BOOK_DATA.Books.Folders) {
+            for (const folder of BOOK_DATA.Books.Folders) {
               if (this.options[this.selectedIndex].text == folder.Folder_name) {
-                for (let book of folder.Books) {
+                for (const book of folder.Books) {
                   try {
                     if (book.Title.length > 1) {
                       const option = document.createElement("option");

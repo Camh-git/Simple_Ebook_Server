@@ -1,4 +1,5 @@
 import os
+from .Book_data_methods import edit_book_data, get_specific_book_data, remove_book_data
 
 
 def list_books(mainDir):
@@ -31,12 +32,16 @@ def Remove_book(book_name, ext, folder, mainDir):
     target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
     if os.path.exists(target):
         try:
-            os.remove(target)
+            result = remove_book_data(folder, book_name)
+            if result == "200":
+                os.remove(target)
+                return result
+            else:
+                raise Exception('Failed to remove book')
         except Exception as e:
             return "500: " + str(e)
     else:
         return "404"
-    return "200"
 
 
 def Rename_book(book_name, ext, folder, new_name, mainDir):
@@ -49,10 +54,20 @@ def Rename_book(book_name, ext, folder, new_name, mainDir):
         return "409"
     if os.path.exists(target):
         try:
-            os.rename(
-                target, renamed)
+            # try and update the book data, rename if successfull, revert if not
+            data = get_specific_book_data(folder, book_name)
+            result = edit_book_data(folder, book_name, data["Authors"], data["Date"], data["Publisher"],
+                                    data["isbn"], data["isbn13"], data["Thumbnail"], data["Extension"], "True", "", new_name)
+            if result == "200":
+                os.rename(
+                    target, renamed)
+            else:
+                edit_book_data(folder, book_name, data["Authors"], data["Date"], data["Publisher"],
+                               data["isbn"], data["isbn13"], data["Thumbnail"], data["Extension"], "True")
+                return "400"
+
+            return result
         except Exception as e:
             return "500: " + str(e)
     else:
         return "404"
-    return "200"

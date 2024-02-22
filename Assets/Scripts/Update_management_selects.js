@@ -8,17 +8,17 @@ async function get_data(url) {
 async function Pop_management_selects(regen_books = true, regen_thumbs = true) {
   //Reset the selects and handle the folder selects
   const SELECT_LIST = document.querySelectorAll("select");
+  const BOOK_DATA = await get_data(
+    `http://${document.cookie.split("=")[1]}:5000/get-book-and-thumb-data`
+  );
   if (regen_books) {
-    const BOOK_MAP = await get_data(
-      `http://${document.cookie.split("=")[1]}:5000/list-books`
-    );
     for (let select of SELECT_LIST) {
       select.innerHTML = "<option>No selection</option>";
       //Populate the folder list
       if (select.getAttribute("name").includes("folder")) {
-        for (let folder of BOOK_MAP.Books) {
+        for (const folder of BOOK_DATA.Books.Folders) {
           const option = document.createElement("option");
-          option.value = option.textContent = folder.Folder;
+          option.value = option.textContent = folder.Folder_name;
           select.appendChild(option);
         }
         //Replace the old listener, this makes sure the latest list/ map is used
@@ -30,12 +30,21 @@ async function Pop_management_selects(regen_books = true, regen_thumbs = true) {
           if (typeof targetBookSelect[0] !== "undefined") {
             //Find the right folder and add the books
             targetBookSelect[0].innerHTML = "<option>No selection</option>";
-            for (folder of BOOK_MAP.Books) {
-              if (this.options[this.selectedIndex].text == folder.Folder) {
-                for (book of folder.Content) {
-                  const option = document.createElement("option");
-                  option.value = option.textContent = book.Name + book.ext;
-                  targetBookSelect[0].appendChild(option);
+            for (const folder of BOOK_DATA.Books.Folders) {
+              if (this.options[this.selectedIndex].text == folder.Folder_name) {
+                for (const book of folder.Books) {
+                  try {
+                    if (book.Title.length > 1) {
+                      const option = document.createElement("option");
+                      option.value = option.textContent =
+                        book.Title + book.Extension;
+                      targetBookSelect[0].appendChild(option);
+                    }
+                  } catch {
+                    console.log(
+                      "Tried to read invalid title for book: " + book.Title
+                    );
+                  }
                 }
               }
             }
@@ -46,15 +55,27 @@ async function Pop_management_selects(regen_books = true, regen_thumbs = true) {
   }
   //Case by case handling for the misc selects
   if (regen_thumbs) {
-    const THUMB_MAP = await get_data(
-      `http://${document.cookie.split("=")[1]}:5000/thumb-map`
-    );
-    const Thumb_selects = document.getElementsByName("TH_select");
-    for (let select of Thumb_selects) {
-      for (let image of THUMB_MAP.Images) {
-        const option = document.createElement("option");
-        option.value = option.textContent = image.Name + image.ext;
-        select.appendChild(option);
+    for (let select of SELECT_LIST) {
+      if (select.getAttribute("name").includes("TH_fold")) {
+        select.innerHTML = "<option>No selection</option>";
+        select.removeEventListener("change", function () {});
+        select.addEventListener("change", function () {
+          let targetThumbSelect = document.getElementsByName(
+            "TH_img_select_" + this.getAttribute("name").slice(-2)
+          )[0];
+          targetThumbSelect.innerHTML = "";
+          for (const folder of BOOK_DATA.Thumbs.Folders) {
+            if (this.options[this.selectedIndex].text == folder.Folder_name) {
+              for (const img of folder.Images) {
+                if (img != "NA" && img != "" && !img.includes("http")) {
+                  const option = document.createElement("option");
+                  option.value = option.textContent = img.split(/[/]+/).pop();
+                  targetThumbSelect.appendChild(option);
+                }
+              }
+            }
+          }
+        });
       }
     }
   }
