@@ -25,9 +25,6 @@ def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbna
     # Note: the thumb path should be local, use a , to substitute /, cut off the :// part of https from a web url for safety (should be done in handler)
     #   example url: test&&New&&[a,b]&&1-2-3&&hi&&987&&654&&httpsfake&&True
     # Find the book
-    if newFolder != "":
-        result = move_book_to_folder(folder, newFolder, book)
-        return result
 
     for json_folder in stored_json["Folders"]:
         if json_folder["Folder_name"] == folder:
@@ -51,43 +48,6 @@ def edit_book_data(folder, book, authors, date, publisher, isbn, isbn13, thumbna
     except:
         return "404"
     return "200"
-
-
-def move_book_to_folder(old_folder, new_folder, book_name):
-    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
-    if stored_json == "":
-        return "404"
-
-    # get the book data
-    book_data = ""
-    for json_folder in stored_json["Folders"]:
-        if json_folder["Folder_name"] == old_folder:
-            for json_book in json_folder["Books"]:
-                if json_book["Title"] == book_name:
-                    book_data = json_book
-
-    # Copy the book data into the new folder
-    for json_folder in stored_json["Folders"]:
-        if json_folder["Folder_name"] == new_folder:
-            pass
-
-    remove_book_data(old_folder, book_name)
-
-    return "501"
-
-
-def remove_book_data(folder, book):
-    return "200"
-    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
-    if stored_json == "":
-        return "404"
-    for json_folder in stored_json["Folders"]:
-        if json_folder["Folder_name"] == folder:
-            for json_book in json_folder["Books"]:
-                if json_book["Title"] == book:
-                    pass
-                    # remove the book data
-    return "501"
 
 
 def get_specific_book_data(folder, book_name):

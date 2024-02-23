@@ -1,5 +1,6 @@
 import os
-from .Book_data_methods import edit_book_data, get_specific_book_data, remove_book_data
+from .Book_data_methods import edit_book_data, get_specific_book_data
+from .Book_data_endpoint_methods import BD_delete_book
 
 
 def list_books(mainDir):
@@ -29,15 +30,16 @@ def allowed_file(filename):
 def Remove_book(book_name, ext, folder, mainDir):
     if (book_name == "" or ext == "" or folder == ""):
         return "400"
+
     target = "{0}/{1}/{2}.{3}".format(mainDir, folder, book_name, ext)
     if os.path.exists(target):
         try:
-            result = remove_book_data(folder, book_name)
+            result = BD_delete_book(folder, book_name)
             if result == "200":
                 os.remove(target)
                 return result
             else:
-                raise Exception('Failed to remove book')
+                raise Exception(result)
         except Exception as e:
             return "500: " + str(e)
     else:

@@ -1,4 +1,5 @@
 import os
+from .Book_data_endpoint_methods import BD_move_book
 
 
 def Create_folder(folder_name, mainDir):
@@ -25,11 +26,16 @@ def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, mainDi
     if os.path.exists(oldPath):
         if not os.path.exists(newPath):
             try:
-                os.rename(oldPath, newPath)
+                result = BD_move_book(
+                    old_folder_name, new_folder_name, book_name)
+                if result == "200":
+                    os.rename(oldPath, newPath)
+                    return result
+                else:
+                    raise Exception(result)
             except Exception as e:
                 return "500: " + str(e)
         else:
             return "409"
     else:
         return "404"
-    return "200"
