@@ -3,8 +3,12 @@ from .API_utils import read_json_no_code, write_json_no_code
 from .Book_data_methods import get_specific_book_data
 
 
-def BD_delete_book(folder, book):
-    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+def BD_delete_book(folder, book, book_data=""):
+    stored_json = ""
+    if book_data != "":
+        stored_json = book_data
+    else:
+        stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
     if stored_json == "":
         return "404"
     for json_folder in stored_json["Folders"]:
@@ -42,7 +46,6 @@ def BD_move_book(old_folder, new_folder, book_name):
         return "404"
 
     book_data = get_specific_book_data(old_folder, book_name)
-    print("got data")
 
     # Copy the book data into the new folder
     for json_folder in stored_json["Folders"]:
@@ -51,8 +54,7 @@ def BD_move_book(old_folder, new_folder, book_name):
                 json_folder["Books"].append(book_data)
             else:
                 json_folder["Books"].append(book_data)
-
-    BD_delete_book(old_folder, book_name)
+    BD_delete_book(old_folder, book_name, stored_json)
 
     status = write_json_no_code("./Assets/Book_info.json", stored_json)
     return status
