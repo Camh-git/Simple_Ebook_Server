@@ -2,6 +2,8 @@ import json
 from .API_utils import read_json_no_code, write_json_no_code
 from .Book_data_methods import get_specific_book_data
 
+# Note: These dont have much in the way of validation, since this is handled in the endpoint functions that call these ones.
+
 
 def BD_delete_book(folder, book, book_data=""):
     stored_json = ""
@@ -28,16 +30,34 @@ def BD_rename_book():
     return "501"
 
 
-def BD_delete_folder():
+def BD_delete_folder(target_folder, move=True):
     return "501"
 
 
-def BD_rename_folder():
-    return "501"
+def BD_rename_folder(old_folder, new_name):  # TODO:test
+    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+    if stored_json == "":
+        return "404"
+
+    for json_folder in stored_json["Folders"]:
+        if json_folder["Folder_name"] == old_folder:
+            json_folder["Folder_name"] = new_name
+
+    status = write_json_no_code("./Assets/Book_info.json", stored_json)
+    return status
 
 
-def BD_create_folder():
-    return "501"
+def BD_create_folder(folder_name):
+    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+    if stored_json == "":
+        return "404"
+    new_folder = json.loads('{"Folder_name":"' + folder_name + '","Books":[]}')
+
+    stored_json["Folders"].append(new_folder)
+
+    status = write_json_no_code("./Assets/Book_info.json", stored_json)
+    print(status)
+    return status
 
 
 def BD_move_book(old_folder, new_folder, book_name):

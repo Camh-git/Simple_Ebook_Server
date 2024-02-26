@@ -1,5 +1,5 @@
 import os
-from .Book_data_endpoint_methods import BD_move_book
+from .Book_data_endpoint_methods import BD_move_book, BD_create_folder
 
 
 def Create_folder(folder_name, mainDir):
@@ -8,10 +8,14 @@ def Create_folder(folder_name, mainDir):
     target = "{0}/{1}".format(mainDir, folder_name)
     if not os.path.exists(target):
         try:
-            os.makedirs(target)
-            return "200"
+            result = BD_create_folder(folder_name)
+            if result == "200":
+                os.makedirs(target)
+                return result
+            else:
+                raise Exception(result)
         except Exception as e:
-            return "500: " + str(e)
+            return "500:" + str(e)
     else:
         return "409"
 
@@ -34,7 +38,7 @@ def Move_book_to_folder(book_name, ext, old_folder_name, new_folder_name, mainDi
                 else:
                     raise Exception(result)
             except Exception as e:
-                return "500: " + str(e)
+                return "500:" + str(e)
         else:
             return "409"
     else:

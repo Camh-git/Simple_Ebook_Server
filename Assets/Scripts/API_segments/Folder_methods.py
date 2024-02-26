@@ -1,5 +1,6 @@
 import os
 import shutil
+from .Book_data_endpoint_methods import BD_rename_folder
 
 
 def list_folders(mainDir):
@@ -68,7 +69,12 @@ def Rename_folder(folder_name, new_name, mainDir):
         return "409"
     if os.path.exists(target):
         try:
-            os.rename(target, reNamed)
+            result = BD_rename_folder(folder_name, new_name)
+            if result == "200":
+                os.rename(target, reNamed)
+                return result
+            else:
+                raise Exception(result)
         except Exception as e:
             return "500: " + str(e)
     else:
