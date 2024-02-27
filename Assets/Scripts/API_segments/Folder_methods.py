@@ -1,6 +1,6 @@
 import os
 import shutil
-from .Book_data_endpoint_methods import BD_rename_folder
+from .Book_data_endpoint_methods import BD_rename_folder, BD_delete_folder
 
 
 def list_folders(mainDir):
@@ -46,14 +46,20 @@ def Delete_folder(folder_name, delete_content, mainDir):
                     else:
                         os.rename(start, destination)
 
-            shutil.rmtree(target)
+            # Update the book data
+            result = BD_delete_folder(folder_name, delete_content)
+            if result == "200":
+                shutil.rmtree(target)
+                if (notifyChange):
+                    return "428"
+                return result
+            else:
+                raise Exception(result)
+
         except Exception as e:
             return "500: " + str(e)
     else:
         return "404"
-    if (notifyChange):
-        return "428"
-    return "200"
 
 
 def Rename_folder(folder_name, new_name, mainDir):

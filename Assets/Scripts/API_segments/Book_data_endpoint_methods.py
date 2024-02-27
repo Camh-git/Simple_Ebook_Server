@@ -6,6 +6,7 @@ from .Book_data_methods import get_specific_book_data
 
 
 def BD_delete_book(folder, book, book_data=""):
+    # Load the book data, or accept the provided data
     stored_json = ""
     if book_data != "":
         stored_json = book_data
@@ -13,6 +14,8 @@ def BD_delete_book(folder, book, book_data=""):
         stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
     if stored_json == "":
         return "404"
+
+    # Find and remove the book's entry
     for json_folder in stored_json["Folders"]:
         if json_folder["Folder_name"] == folder:
             bookIndex = 0
@@ -30,11 +33,35 @@ def BD_rename_book():
     return "501"
 
 
-def BD_delete_folder(target_folder, move=True):
-    return "501"
+def BD_delete_folder(target_folder, delete_content="False", book_data=""):
+    # Load the book data, or accept the provided data
+    stored_json = ""
+    if book_data != "":
+        stored_json = book_data
+    else:
+        stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+    if stored_json == "":
+        return "404"
+
+    # Find and remove the folder, move books to misc if move = true
+    folder_index = 0
+    for json_folder in stored_json["Folders"]:
+        if json_folder["Folder_name"] == target_folder:
+            if str(delete_content).upper() != "TRUE":
+                print("Moving books from deleted folder to Misc")
+                for json_book in json_folder["Books"]:
+                    BD_move_book(target_folder, "Misc",
+                                 json_book["Title"], stored_json)
+            del stored_json["Folders"][folder_index]
+            break
+        else:
+            folder_index += 1
+
+    status = write_json_no_code("./Assets/Book_info.json", stored_json)
+    return status
 
 
-def BD_rename_folder(old_folder, new_name):  # TODO:test
+def BD_rename_folder(old_folder, new_name):
     stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
     if stored_json == "":
         return "404"
@@ -56,12 +83,16 @@ def BD_create_folder(folder_name):
     stored_json["Folders"].append(new_folder)
 
     status = write_json_no_code("./Assets/Book_info.json", stored_json)
-    print(status)
     return status
 
 
-def BD_move_book(old_folder, new_folder, book_name):
-    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+def BD_move_book(old_folder, new_folder, book_name, provided_data):
+    # Load the book data, or accept the provided data
+    stored_json = ""
+    if provided_data != "":
+        stored_json = provided_data
+    else:
+        stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
     if stored_json == "":
         return "404"
 
@@ -74,6 +105,7 @@ def BD_move_book(old_folder, new_folder, book_name):
                 json_folder["Books"].append(book_data)
             else:
                 json_folder["Books"].append(book_data)
+
     BD_delete_book(old_folder, book_name, stored_json)
 
     status = write_json_no_code("./Assets/Book_info.json", stored_json)
