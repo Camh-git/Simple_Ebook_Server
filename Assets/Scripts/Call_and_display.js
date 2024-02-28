@@ -48,7 +48,10 @@ export async function Call_and_display(
       break;
     case 409:
       response +=
-        "Conflict: Please make sure there isn't a book or folder that already has that name.<br> If you saw this while editing the ACLs then this ip is probably already on a list.";
+        "Conflict: Please make sure there isn't a book or folder that already has that name." +
+        "<br> If you saw this while editing the ACLs then this ip is probably already on a list." +
+        "<br> If you were deleting a folder then there was a book name conflict in the misc and uploads folders." +
+        "Please resovle this conflict before deleting the folder, or select the 'delete content' option, no data has been deleted.";
       break;
     case 410:
       response +=

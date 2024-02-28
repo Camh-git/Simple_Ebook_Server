@@ -29,25 +29,37 @@ def Delete_folder(folder_name, delete_content, mainDir):
         return "403"
 
     target = "{0}/{1}".format(mainDir, folder_name)
+    changed_dirs = []
     notifyChange = False
     if os.path.exists(target):
         try:
             if delete_content.upper() != "TRUE":
-                # If we are saving the books go through each and move them to misc folder,
-                # add a "MOVED:" prefix if misc already contains a book of the same name
+                # If we are saving the books go through each and move them to misc folder, or the uploads folder if there is a conflict, warn user if so.
+                # Safety check, before moving any books check there is a space in one of the two available folders
+                for book in os.listdir(target):
+                    destination = "{0}/Misc/MOVED:{1}".format(mainDir, book)
+                    if os.path.exists(destination):
+                        destination = "{0}/Uploads/MOVED:{1}".format(
+                            mainDir, book)
+                        if os.path.exists(destination):
+                            return "409"
+
                 for book in os.listdir(target):
                     start = "{0}/{1}".format(target, book)
-                    destination = "{0}/Misc/{1}".format(mainDir, book)
-
+                    destination = "{0}/Misc/MOVED:{1}".format(mainDir, book)
                     if os.path.exists(destination):
-                        os.rename(
-                            start, "{0}/Misc/MOVED:{1}".format(mainDir, book))
+                        destination = "{0}/Uploads/MOVED:{1}".format(
+                            mainDir, book)
+                        os.rename(start, destination)
+                        changed_dirs.append(os.path.splitext(book)[0])
                         notifyChange = True
+
                     else:
                         os.rename(start, destination)
 
             # Update the book data
-            result = BD_delete_folder(folder_name, delete_content)
+            result = BD_delete_folder(
+                folder_name, delete_content, "", changed_dirs)
             if result == "200":
                 shutil.rmtree(target)
                 if (notifyChange):

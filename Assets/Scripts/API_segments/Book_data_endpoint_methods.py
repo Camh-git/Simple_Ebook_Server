@@ -33,7 +33,7 @@ def BD_rename_book():
     return "501"
 
 
-def BD_delete_folder(target_folder, delete_content="False", book_data=""):
+def BD_delete_folder(target_folder, delete_content="False", book_data="", changed_dirs=[]):
     # Load the book data, or accept the provided data
     stored_json = ""
     if book_data != "":
@@ -48,10 +48,17 @@ def BD_delete_folder(target_folder, delete_content="False", book_data=""):
     for json_folder in stored_json["Folders"]:
         if json_folder["Folder_name"] == target_folder:
             if str(delete_content).upper() != "TRUE":
-                print("Moving books from deleted folder to Misc")
+
+                print("Moving books from deleted folder to Misc/ Uploads")
                 for json_book in json_folder["Books"]:
-                    BD_move_book(target_folder, "Misc",
-                                 json_book["Title"], stored_json)
+                    # Determin the correct DIR
+                    if json_book["Title"] in changed_dirs:
+                        BD_move_book(target_folder, "Uploads",
+                                     json_book["Title"], stored_json, "True")
+                    else:
+                        BD_move_book(target_folder, "Misc",
+                                     json_book["Title"], stored_json, "True")
+
             del stored_json["Folders"][folder_index]
             break
         else:
@@ -86,7 +93,7 @@ def BD_create_folder(folder_name):
     return status
 
 
-def BD_move_book(old_folder, new_folder, book_name, provided_data):
+def BD_move_book(old_folder, new_folder, book_name, provided_data="", tag="False"):
     # Load the book data, or accept the provided data
     stored_json = ""
     if provided_data != "":
@@ -97,6 +104,10 @@ def BD_move_book(old_folder, new_folder, book_name, provided_data):
         return "404"
 
     book_data = get_specific_book_data(old_folder, book_name)
+
+    # Add the "MOVED" tag if requested:
+    if str(tag).upper() == "TRUE":
+        book_data["Title"] = str("MOVED:" + book_data["Title"])
 
     # Copy the book data into the new folder
     for json_folder in stored_json["Folders"]:
@@ -112,7 +123,11 @@ def BD_move_book(old_folder, new_folder, book_name, provided_data):
     return status
 
 
+# Thumb data
 def BD_reassign_thumb():
+    stored_json = json.loads(read_json_no_code("./Assets/Thumbnail_info.json"))
+    if stored_json == "":
+        return "404"
     return "501"
 
 
@@ -121,7 +136,16 @@ def BD_rename_thumb():
 
 
 def BD_delete_thumb_cache():
-    return "501"
+
+    data = {"Folders": [{"Folder_name": "Uploads", "Images": []}, {
+        "Folder_name": "Misc", "Images": []}]}
+
+    print(type(data))
+    print(data)
+    return "200"
+
+    status = write_json_no_code("./Assets/Thumbnail_info.json", data)
+    return status
 
 
 def BD_delete_thumb():
