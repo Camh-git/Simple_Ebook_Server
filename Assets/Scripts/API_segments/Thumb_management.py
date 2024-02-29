@@ -1,9 +1,9 @@
 from .API_utils import read_json_no_code, write_json_no_code, write_file_no_code
-from urllib.request import urlopen, urlretrieve
 import os
 import json
 import shutil
 import requests
+from .Book_data_endpoint_methods import BD_rename_thumb, BD_delete_thumb
 
 
 def List_Thumbs():
@@ -191,8 +191,8 @@ def rename_thumb(folder, target, new_name):
     if (folder == "" or target == "" or new_name == ""):
         return "400"
     extension = os.path.splitext(target)[1]
-    # Make sure the image exists and that a file with a matching name doesn't already exist
 
+    # Make sure the image exists and that a file with a matching name doesn't already exist
     image = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(folder, target)
     reNamed = "./Assets/Images/Thumbnail_cache/{0}/{1}{2}".format(
         folder, new_name, extension)
@@ -201,31 +201,19 @@ def rename_thumb(folder, target, new_name):
 
     if os.path.exists(image):
         try:
-            os.rename(
-                image, reNamed)
-            # Update book data with new name
-            stored_json = json.loads(
-                read_json_no_code("./Assets/Book_info.json"))
-            if stored_json == "":
-                return "404"
-            changedData = False
-            for json_folder in stored_json["Folders"]:
-                for json_book in json_folder["Books"]:
-                    if json_book["Thumbnail"] == image:
-                        json_book["Thumbnail"] = reNamed
-                        changedData = True
-            if changedData:
-                status = write_json_no_code(
-                    "./Assets/Book_info.json", stored_json)
-                return status
+            result = BD_rename_thumb(
+                folder, target, str(new_name+extension))
+            if result == "200":
+                os.rename(
+                    image, reNamed)
+                return result
             else:
-                return "200"
+                raise Exception(result)
 
         except Exception as e:
             return "500: " + str(e)
     else:
         return "404"
-    return "200"
 
 
 def delete_thumb(folder, target):
@@ -233,30 +221,22 @@ def delete_thumb(folder, target):
         return "400"
     target = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(folder, target)
     print(target)
+
     if (os.path.exists(target)):
+        try:
+            result = BD_delete_thumb(folder, target)
+            print("passed delete")
+            if result == "200":
+                os.remove(target)
+                return result
+            else:
+                raise Exception(result)
 
-        os.remove(target)
-
-        # Update book data
-        stored_json = json.loads(
-            read_json_no_code("./Assets/Book_info.json"))
-        if stored_json == "":
-            return "404"
-        for json_folder in stored_json["Folders"]:
-            if json_folder["Folder_name"] == folder:
-                for json_book in json_folder["Books"]:
-                    if json_book["Thumbnail"] == target:
-                        json_book["Thumbnail"] = "NA"
-
-        status = write_json_no_code(
-            "./Assets/Book_info.json", stored_json)
-        return status
-
-        # Deleteme.png
+        except Exception as e:
+            return "500: " + str(e)
 
     else:
         return "404"
-    return "200"
 
 
 def populate_thumb_data():

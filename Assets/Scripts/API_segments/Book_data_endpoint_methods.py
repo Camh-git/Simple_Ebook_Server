@@ -1,6 +1,7 @@
 import json
 from .API_utils import read_json_no_code, write_json_no_code
 from .Book_data_methods import get_specific_book_data
+import os
 
 # Note: These dont have much in the way of validation, since this is handled in the endpoint functions that call these ones.
 
@@ -124,15 +125,79 @@ def BD_move_book(old_folder, new_folder, book_name, provided_data="", tag="False
 
 
 # Thumb data
-def BD_reassign_thumb():
+def BD_reassign_thumb(thumb_folder, thumb, book_folder, book):  # TODO: test
+    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+    if stored_json == "":
+        return "404"
+    target = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(
+        thumb_folder, thumb)
+
+    if os.path.exists(target):
+        # find the book
+        for json_folder in stored_json["Folders"]:
+            if json_folder["Folder_name"] == book_folder:
+                for json_book in json_folder["Books"]:
+                    if json_book["Title"] == book:
+                        json_book["Thumbnail"] = target
+
+        status = write_json_no_code("./Assets/Book_info.json", stored_json)
+        return status
+    else:
+        return "404"
+
+
+def BD_rename_thumb(folder, current_name, new_name):
+    # Step 1 - rename the thumb
     stored_json = json.loads(read_json_no_code("./Assets/Thumbnail_info.json"))
     if stored_json == "":
         return "404"
-    return "501"
+
+    # find the thumb and update it
+    found_thumb = False
+    for json_folder in stored_json["Folders"]:
+        if json_folder["Folder_name"] == folder:
+            for image in json_folder["Images"]:
+                if image == current_name:
+                    json_folder["Images"][json_folder["Images"].index(
+                        image)] = new_name
+                    found_thumb = True
+
+    if found_thumb:
+        status = write_json_no_code(
+            "./Assets/Thumbnail_info.json", stored_json)
+        if status == "200":
+            status = BD_rename_thumb_refrences(folder, current_name, new_name)
+            return status
+        else:
+            return status
+    else:
+        return "404"
 
 
-def BD_rename_thumb():
-    return "501"
+def BD_rename_thumb_refrences(folder, old_name, new_name):
+    # Step 2 - Update book data to update any book with a renamed thumbnail
+    stored_json = json.loads(
+        read_json_no_code("./Assets/Book_info.json"))
+    if stored_json == "":
+        return "404"
+
+    old_path = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(
+        folder, old_name)
+    new_path = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(
+        folder, new_name)
+
+    changedData = False
+    for json_folder in stored_json["Folders"]:
+        for json_book in json_folder["Books"]:
+            if json_book["Thumbnail"] == old_path:
+                json_book["Thumbnail"] = new_path
+                changedData = True
+    if changedData:
+        status = write_json_no_code(
+            "./Assets/Book_info.json", stored_json)
+        return status
+    else:
+        return "200"
 
 
 def BD_delete_thumb_cache():
@@ -140,13 +205,58 @@ def BD_delete_thumb_cache():
     data = {"Folders": [{"Folder_name": "Uploads", "Images": []}, {
         "Folder_name": "Misc", "Images": []}]}
 
-    print(type(data))
-    print(data)
     return "200"
-
     status = write_json_no_code("./Assets/Thumbnail_info.json", data)
     return status
 
 
-def BD_delete_thumb():
-    return "501"
+def BD_delete_thumb(folder, thumb):  # TODO:test
+    # Setp 1 - Remove the thumbnail from thumbnail info
+    stored_json = json.loads(read_json_no_code("./Assets/Thumbnail_info.json"))
+    if stored_json == "":
+        return "404"
+    print("got thumb data")
+    # Find and remove the thumb
+    found_thumb = False
+    for json_folder in stored_json["Folders"]:
+        if json_folder["Folder_name"] == folder:
+            for image in json_folder["Images"]:
+                if image == thumb:
+                    json_folder["Images"].remove(image)
+                    found_thumb = True
+
+    if found_thumb:
+        status = write_json_no_code(
+            "./Assets/Thumbnail_info.json", stored_json)
+        if status == "200":
+            status = BD_delete_thumb_refrences(folder, thumb)
+            return status
+        else:
+            return status
+    else:
+        return "404"
+
+
+def BD_delete_thumb_refrences(folder, name):
+    # Step 2 - Set any books with the given thumbnail to "NA"
+    stored_json = json.loads(
+        read_json_no_code("./Assets/Book_info.json"))
+    if stored_json == "":
+        return "404"
+
+    path = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(
+        folder, name)
+
+    changedData = False
+    for json_folder in stored_json["Folders"]:
+        for json_book in json_folder["Books"]:
+            if json_book["Thumbnail"] == path:
+                json_book["Thumbnail"] = "NA"
+                changedData = True
+
+    if changedData:
+        status = write_json_no_code(
+            "./Assets/Book_info.json", stored_json)
+        return status
+    else:
+        return "200"
