@@ -40,7 +40,10 @@
         <td>/list-books</td>
         <td>None</td>
         <td>Return a JSON list of all books and their folders</td>
-        <td>Used to populate management options and the library</td>
+        <td>
+          Used to populate management options and the library(will be replaced
+          by book_data.json, see /get-book-data)
+        </td>
       </tr>
 
       <tr>
@@ -50,7 +53,7 @@
         <td>/post-book</td>
         <td>book_name(str)</td>
         <td>Upload the book at the chosen path to the server</td>
-        <td>Not implemented, using PHP</td>
+        <td>Not implemented, placeholder using PHP</td>
       </tr>
       <tr>
         <td>/delete-book</td>
@@ -75,13 +78,13 @@
         <td>/list-folders</td>
         <td>None</td>
         <td>Return a string of all book folders</td>
-        <td>Currently unused</td>
+        <td>Currently unused, see /get-book-data</td>
       </tr>
       <tr>
         <td>/list-folder-content</td>
         <td>folder_name(str)</td>
         <td>Return a string of all books in the given folder</td>
-        <td>Currently unused</td>
+        <td>Currently unused, see /get-book-data</td>
       </tr>
       <tr>
         <td>/post-folder</td>
@@ -89,15 +92,15 @@
         <td>
           Create and upload a given folder, along with any books inside it
         </td>
-        <td>Not implemented, using PHP</td>
+        <td>Not implemented, placeholder using PHP</td>
       </tr>
       <tr>
         <td>/delete-folder</td>
         <td>folder_name(str), delete_content(bool)</td>
         <td>Remove the target folder and handle it's content.</td>
         <td>
-          If delete_content is false the books are moved to /Books/Misc with the
-          tag (DELETED)
+          If the delete_content option is false the books are moved to
+          /Books/Misc with the tag (MOVED)
         </td>
       </tr>
       <tr>
@@ -136,20 +139,25 @@
       <tr>
         <td>/list-thumbs</td>
         <td>None</td>
-        <td>Returns JSON list of all thumbnails</td>
-        <td>Similar to list-books, unused(see below)</td>
+        <td>Returns JSON list of the thumbnail_cache folder's contents</td>
+        <td>
+          <b>Outdated, likely to depreciate, use:/get-thumb-data instead</b>
+        </td>
       </tr>
       <tr>
         <td>/thumb-map</td>
         <td>None</td>
         <td>Returns a json object of the thumbnail-book mapping</td>
-        <td>Reads Thumbnail_map.json, appends the thumb list</td>
+        <td><b>Will be depreciated, use: /get-thumb-data</b></td>
       </tr>
       <tr>
         <td>/generate-thumbs</td>
         <td>None</td>
         <td>Populate the Thumbnail cache with an image for each book</td>
-        <td>Not implemented, likely to use Google books api</td>
+        <td>
+          Uses the Google books api to download thumbnails for each book(if one
+          doesn't exist)
+        </td>
       </tr>
       <tr>
         <td>/reassign-thumb</td>
@@ -161,7 +169,7 @@
         <td>/upload-thumb</td>
         <td>image(str/img)</td>
         <td>Upload the provided thumbnail image</td>
-        <td>Not implemented, using PHP</td>
+        <td>Not implemented, placeholder using PHP</td>
       </tr>
       <tr>
         <td>/clear-thumbs</td>
@@ -169,7 +177,7 @@
         <td>Empties the thumbnail_cache folder, runs generate_thumbs()(opt)</td>
         <td>
           If rmManual is true manualy uploaded files will be removed too
-          (default off)
+          (default off)<b> Will likely be depreciated</b>
         </td>
       </tr>
       <tr>
@@ -228,12 +236,61 @@
         <td>/gen-book-data</td>
         <td>None</td>
         <td>
-          Gets data on a book by sending it's title to the google books API
+          Gets data on all books by sending their titles to the google books API
         </td>
         <td>
           Slow, should be checked by user since bad title matching results in
           the wrong data being fetched
         </td>
+      </tr>
+
+      <tr>
+        <td>/gen-thumb-data</td>
+        <td>None</td>
+        <td>
+          Uses the thumbnail_cache folder's contents to populate
+          Thumbnail_info.json
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>/edit-book-data</td>
+        <td>
+          folder,title,publisher,ext,thumb(str),authors(str[]),date,ibsn,isbn13(int),valid(bool)
+        </td>
+        <td>
+          Updates a book to use the supplied info (helps fix google books
+          errors)
+        </td>
+        <td>
+          param order:
+          folder,title,authors,date,publisher,isbn,isbn13,thumb,ext,valid
+        </td>
+      </tr>
+
+      <tr>
+        <td>/get-book-data</td>
+        <td>None</td>
+        <td>Returns the contents of Book_info.json</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>/get-thumb-data</td>
+        <td>None</td>
+        <td>Returns the contents of Thumb_info.json</td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>/get-book-and-thumb-data</td>
+        <td>None</td>
+        <td>
+          Returns the contents of Book_info.json, followed by the contents of
+          Thumb_info.json
+        </td>
+        <td></td>
       </tr>
     </table>
   </body>

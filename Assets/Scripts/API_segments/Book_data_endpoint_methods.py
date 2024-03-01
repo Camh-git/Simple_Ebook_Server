@@ -125,7 +125,7 @@ def BD_move_book(old_folder, new_folder, book_name, provided_data="", tag="False
 
 
 # Thumb data
-def BD_reassign_thumb(thumb_folder, thumb, book_folder, book):  # TODO: test
+def BD_reassign_thumb(thumb_folder, thumb, book_folder, book):
     stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
     if stored_json == "":
         return "404"
@@ -211,17 +211,17 @@ def BD_delete_thumb_cache():
 
 
 def BD_delete_thumb(folder, thumb):  # TODO:test
-    # Setp 1 - Remove the thumbnail from thumbnail info
+    # Step 1 - Remove the thumbnail from thumbnail info
     stored_json = json.loads(read_json_no_code("./Assets/Thumbnail_info.json"))
     if stored_json == "":
         return "404"
-    print("got thumb data")
+
     # Find and remove the thumb
     found_thumb = False
     for json_folder in stored_json["Folders"]:
         if json_folder["Folder_name"] == folder:
             for image in json_folder["Images"]:
-                if image == thumb:
+                if "./Assets/Images/Thumbnail_cache/{0}/{1}".format(folder, image) == thumb:
                     json_folder["Images"].remove(image)
                     found_thumb = True
 
@@ -229,7 +229,7 @@ def BD_delete_thumb(folder, thumb):  # TODO:test
         status = write_json_no_code(
             "./Assets/Thumbnail_info.json", stored_json)
         if status == "200":
-            status = BD_delete_thumb_refrences(folder, thumb)
+            status = BD_delete_thumb_refrences(thumb)
             return status
         else:
             return status
@@ -237,20 +237,17 @@ def BD_delete_thumb(folder, thumb):  # TODO:test
         return "404"
 
 
-def BD_delete_thumb_refrences(folder, name):
+def BD_delete_thumb_refrences(name):
     # Step 2 - Set any books with the given thumbnail to "NA"
     stored_json = json.loads(
         read_json_no_code("./Assets/Book_info.json"))
     if stored_json == "":
         return "404"
 
-    path = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(
-        folder, name)
-
     changedData = False
     for json_folder in stored_json["Folders"]:
         for json_book in json_folder["Books"]:
-            if json_book["Thumbnail"] == path:
+            if json_book["Thumbnail"] == name:
                 json_book["Thumbnail"] = "NA"
                 changedData = True
 

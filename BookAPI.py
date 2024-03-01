@@ -195,13 +195,13 @@ def Toggle_lists_endpoint(option, code):
 def Manage_acls_endpoint(address, list, option, code):
     return Manage_acls(address, list, option, code)
 
-# Management control and help options
-
 
 @app.route("/toggle-management/<option>&&<function>&&<code>")
 def Toggle_management_endpoint(option, function, code):
     return Toggle_management(option, function, code)
 
+
+# Help options
 
 @app.route("/help")
 @app.route("/api-help")

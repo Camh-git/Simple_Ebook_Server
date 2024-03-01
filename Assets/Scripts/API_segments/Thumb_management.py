@@ -20,7 +20,7 @@ def List_Thumbs():
 
 
 def show_thumb_map():
-    data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
+    data = read_json_no_code("./Assets/Images/Thumbnail_info.json")
     data = data[:-2]
     data += "," + List_Thumbs()[1:]
     return data
@@ -220,12 +220,10 @@ def delete_thumb(folder, target):
     if (target == "" or folder == ""):
         return "400"
     target = "./Assets/Images/Thumbnail_cache/{0}/{1}".format(folder, target)
-    print(target)
 
     if (os.path.exists(target)):
         try:
             result = BD_delete_thumb(folder, target)
-            print("passed delete")
             if result == "200":
                 os.remove(target)
                 return result
