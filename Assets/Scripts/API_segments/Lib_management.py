@@ -11,6 +11,10 @@ def Create_folder(folder_name, mainDir):
             result = BD_create_folder(folder_name)
             if result == "200":
                 os.makedirs(target)
+                # Make thumbnail folder
+                thumb_folder = "./Assets/Images/Thumbnail_cache/"+folder_name
+                if not os.path.isdir(thumb_folder):
+                    os.makedirs(thumb_folder)
                 return result
             else:
                 raise Exception(result)

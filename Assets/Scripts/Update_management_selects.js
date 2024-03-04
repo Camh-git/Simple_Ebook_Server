@@ -53,7 +53,7 @@ async function Pop_management_selects(regen_books = true, regen_thumbs = true) {
       }
     }
   }
-  //Case by case handling for the misc selects
+  //Case by case handling for the misc selects              Note: this seems to work now, but need to clear the input<<<<<<<<<<<<<<<!!!!!!!!!!
   if (regen_thumbs) {
     for (let select of SELECT_LIST) {
       if (select.getAttribute("name").includes("TH_fold")) {
@@ -63,14 +63,14 @@ async function Pop_management_selects(regen_books = true, regen_thumbs = true) {
           let targetThumbSelect = document.getElementsByName(
             "TH_img_select_" + this.getAttribute("name").slice(-2)
           )[0];
-          targetThumbSelect.innerHTML = "";
+          targetThumbSelect[0].innerHTML = "";
           for (const folder of BOOK_DATA.Thumbs.Folders) {
             if (this.options[this.selectedIndex].text == folder.Folder_name) {
               for (const img of folder.Images) {
                 if (img != "NA" && img != "" && !img.includes("http")) {
                   const option = document.createElement("option");
                   option.value = option.textContent = img.split(/[/]+/).pop();
-                  targetThumbSelect.appendChild(option);
+                  targetThumbSelect[0].appendChild(option);
                 }
               }
             }

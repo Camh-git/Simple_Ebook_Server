@@ -210,7 +210,7 @@ def BD_delete_thumb_cache():
     return status
 
 
-def BD_delete_thumb(folder, thumb):  # TODO:test
+def BD_delete_thumb(folder, thumb):
     # Step 1 - Remove the thumbnail from thumbnail info
     stored_json = json.loads(read_json_no_code("./Assets/Thumbnail_info.json"))
     if stored_json == "":

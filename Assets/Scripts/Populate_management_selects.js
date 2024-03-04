@@ -1,9 +1,24 @@
 import { Set_server_address } from "./Server_IP.js";
 import { get_data } from "./Get_data.js";
 
+let BOOK_DATA = "";
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+async function set_form_update_listeners() {
+  const FORM_LIST = document.querySelectorAll("form");
+  for (const form of FORM_LIST) {
+    form.addEventListener("change", async function () {
+      await delay(2000);
+      BOOK_DATA = await get_data(
+        `http://${document.cookie.split("=")[1]}:5000/get-book-and-thumb-data`
+      );
+    });
+  }
+}
+
 async function Pop_management_selects() {
   //Get the thumnail and book lists
-  const BOOK_DATA = await get_data(
+  BOOK_DATA = await get_data(
     `http://${document.cookie.split("=")[1]}:5000/get-book-and-thumb-data`
   );
   try {
@@ -35,6 +50,8 @@ async function Pop_management_selects() {
       });
     return;
   }
+  //Set the update watchers
+  set_form_update_listeners();
 
   //Set the selects and handle the folder selects
   const SELECT_LIST = document.querySelectorAll("select");

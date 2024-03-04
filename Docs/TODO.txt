@@ -16,7 +16,6 @@ Remaining:
   	Add a script to populate the thumbnail cache (probably calling google books)
 	Change upload scripts from php to python
 	Make the reader and download button blocking work
-	replace thumb_map with book_data updates/ thumnb return
 
   Minor/ technical:	
 	go through the js and add cammel case/ generaly tidy up
@@ -28,13 +27,13 @@ Remaining:
 	add some proper testing
 	modify book data.json when a book/folder is uploaded or changed
 	investigate why the continue in gen_book_data is being ignored
+	simplify the book/folder management select update process
 
   Not confirmed/Under consideration:
 	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
 	see if it is possible to do without the extension paramaters on the api by using the basenames directly (possibly like /rename-thumb)
 	Add a way to cache the settings so they dont have to be called every req, implement security and make sure they get updated on change and load
 	Look into implementing folders for the thumbnail cache, would improve organisation and reduce risk of conflicts
-	incorportate the book's extension into the book data
 	add a filter to requests to block any that have <script , <?php, or any other suspicous xss style content
 	general input sanitisation
 	add an api util to load the book info and replace the current approach with repeated code (currently in thumb_management)
@@ -43,7 +42,6 @@ Remaining:
 
 
   Notes:
-	Thumbnails will probably use the google books api to get images
 	Example thumbnail map obj: {"Folder":"","Name":"","Thumb":""}
 
 Completed:
@@ -84,7 +82,10 @@ Completed:
 	create a single general data call util, similar to call_and_display, but for endpoints returning json instead of http codes to interpret.
 	add a site map at /map
 	Add a system to modify the stored book data
-	Have the thumbnail fetching service download the image and set the local path as the url
+	Add a script to populate the thumbnail cache (probably calling google books)
+	Have the thumbnail fetching service download the images and set the local path as the url
+	replace thumb_map with book_data updates/ thumb return
+	incorportate the book's extension into the book data
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books
