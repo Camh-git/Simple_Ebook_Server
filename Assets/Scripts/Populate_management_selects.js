@@ -1,24 +1,11 @@
 import { Set_server_address } from "./Server_IP.js";
 import { get_data } from "./Get_data.js";
 
-let BOOK_DATA = "";
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
-async function set_form_update_listeners() {
-  const FORM_LIST = document.querySelectorAll("form");
-  for (const form of FORM_LIST) {
-    form.addEventListener("change", async function () {
-      await delay(2000);
-      BOOK_DATA = await get_data(
-        `http://${document.cookie.split("=")[1]}:5000/get-book-and-thumb-data`
-      );
-    });
-  }
-}
+//const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function Pop_management_selects() {
   //Get the thumnail and book lists
-  BOOK_DATA = await get_data(
+  const BOOK_DATA = await get_data(
     `http://${document.cookie.split("=")[1]}:5000/get-book-and-thumb-data`
   );
   try {
@@ -51,7 +38,7 @@ async function Pop_management_selects() {
     return;
   }
   //Set the update watchers
-  set_form_update_listeners();
+  //set_form_update_listeners();
 
   //Set the selects and handle the folder selects
   const SELECT_LIST = document.querySelectorAll("select");
@@ -102,7 +89,7 @@ async function Pop_management_selects() {
           let targetThumbSelect = document.getElementsByName(
             "TH_img_select_" + this.getAttribute("name").slice(-2)
           )[0];
-          targetThumbSelect.innerHTML = "";
+          targetThumbSelect.innerHTML = "<option>No selection</option>";
           for (const folder of BOOK_DATA.Thumbs.Folders) {
             if (this.options[this.selectedIndex].text == folder.Folder_name) {
               for (const img of folder.Images) {

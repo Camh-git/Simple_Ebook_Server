@@ -117,18 +117,18 @@ function Assign_submit_actions() {
       let Book = event.target.children[5];
       let Img_folder = event.target.children[8];
       let Image = event.target.children[11];
-      console.log(
+      /*console.log(
         "folder: " + Img_folder.options[Img_folder.selectedIndex].innerHTML
       );
-      console.log("img: " + Image.options[Image.selectedIndex].innerHTML);
+      console.log("img: " + Image.options[Image.selectedIndex].innerHTML);*/
       Call_and_display(
         `${ADDRESS}reassign-thumb/${
           Book_folder.options[Book_folder.selectedIndex].innerHTML
         }&&${Book.options[Book.selectedIndex].innerHTML}&&${
           Img_folder.options[Img_folder.selectedIndex].innerHTML
-        }&&${Image.options[Image.selectedIndex].innerHTML}`
+        }&&${Image.options[Image.selectedIndex].innerHTML}`,
+        true
       );
-      Update_thumb_list(Image);
     });
   document
     .getElementById("TH_upload_form")
@@ -140,13 +140,14 @@ function Assign_submit_actions() {
       let folder = event.target.children[3];
       let target = event.target.children[6];
       let New_name = event.target.children[8];
-      console.log(folder);
       Call_and_display(
         `${ADDRESS}rename-thumb/${
           folder.options[folder.selectedIndex].innerHTML
-        }&&${target.options[target.selectedIndex].innerHTML}&&${New_name.value}`
+        }&&${target.options[target.selectedIndex].innerHTML}&&${
+          New_name.value
+        }`,
+        true
       );
-      //Update_thumb_list(target);
       New_name.value = "";
     });
   document
@@ -165,7 +166,7 @@ function Assign_submit_actions() {
       } else {
         rmManual = false;
       }
-      Call_and_display(`${ADDRESS}clear-thumbs/${regen}&&${rmManual}`);
+      Call_and_display(`${ADDRESS}clear-thumbs/${regen}&&${rmManual}`, true);
     });
 
   document.getElementById("TH_del_form").addEventListener("submit", (event) => {
@@ -175,9 +176,9 @@ function Assign_submit_actions() {
     Call_and_display(
       `${ADDRESS}delete-thumb/${
         folder.options[folder.selectedIndex].innerHTML
-      }&&${target.options[target.selectedIndex].innerHTML}`
+      }&&${target.options[target.selectedIndex].innerHTML}`,
+      true
     );
-    Update_thumb_list(target);
     target.value = "";
   });
 
@@ -375,25 +376,6 @@ function Assign_submit_actions() {
   DISPLAY.addEventListener("click", (event) => {
     DISPLAY.style.display = "none";
   });
-}
-async function Update_thumb_list(select) {
-  try {
-    const req = await fetch(
-      `http://${document.cookie.split("=")[1]}:5000/thumb-map`
-    );
-    const data = await req.json();
-    if (typeof select.innerHTML !== "undefined") {
-      select.innerHTML = "<option>No selection</option>";
-      for (let thumb of data.Images) {
-        const option = document.createElement("option");
-        option.value = option.textContent = thumb.Name + thumb.ext;
-        select.appendChild(option);
-      }
-    }
-  } catch {
-    console.log(`Failed to call thumb list, will use placeholders if possible`);
-    return 500;
-  }
 }
 
 const ADDRESS = `http://${document.cookie.split("=")[1]}:5000/`;

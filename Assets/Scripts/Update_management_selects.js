@@ -53,24 +53,30 @@ async function Pop_management_selects(regen_books = true, regen_thumbs = true) {
       }
     }
   }
-  //Case by case handling for the misc selects              Note: this seems to work now, but need to clear the input<<<<<<<<<<<<<<<!!!!!!!!!!
+  //Case by case handling for the misc selects
   if (regen_thumbs) {
     for (let select of SELECT_LIST) {
       if (select.getAttribute("name").includes("TH_fold")) {
         select.innerHTML = "<option>No selection</option>";
+        for (const folder of BOOK_DATA.Thumbs.Folders) {
+          const option = document.createElement("option");
+          option.value = option.textContent = folder.Folder_name;
+          select.appendChild(option);
+        }
+
         select.removeEventListener("change", function () {});
         select.addEventListener("change", function () {
-          let targetThumbSelect = document.getElementsByName(
-            "TH_img_select_" + this.getAttribute("name").slice(-2)
-          )[0];
-          targetThumbSelect[0].innerHTML = "";
+          let targetThumbSelect = document.getElementById(
+            "TH_img_select_" + select.getAttribute("name").slice(-2)
+          );
+          targetThumbSelect.innerHTML = "<option>No selection</option>";
           for (const folder of BOOK_DATA.Thumbs.Folders) {
             if (this.options[this.selectedIndex].text == folder.Folder_name) {
               for (const img of folder.Images) {
                 if (img != "NA" && img != "" && !img.includes("http")) {
                   const option = document.createElement("option");
                   option.value = option.textContent = img.split(/[/]+/).pop();
-                  targetThumbSelect[0].appendChild(option);
+                  targetThumbSelect.appendChild(option);
                 }
               }
             }

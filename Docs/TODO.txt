@@ -27,7 +27,8 @@ Remaining:
 	add some proper testing
 	modify book data.json when a book/folder is uploaded or changed
 	investigate why the continue in gen_book_data is being ignored
-	simplify the book/folder management select update process
+	attempt to extract isbns from each of the file formats for use in the book data generator, should improve accuracy
+	add safeties to any form that deletes data
 
   Not confirmed/Under consideration:
 	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
@@ -86,6 +87,7 @@ Completed:
 	Have the thumbnail fetching service download the images and set the local path as the url
 	replace thumb_map with book_data updates/ thumb return
 	incorportate the book's extension into the book data
+	simplify the book/folder management select update process(now the submit handlers tell call_and_display to run update_management selects on all requests that need it)
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books
