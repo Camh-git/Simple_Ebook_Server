@@ -40,7 +40,9 @@ Remaining:
 	add an api util to load the book info and replace the current approach with repeated code (currently in thumb_management)
 	add a seperate thumnbnails object/ structure to book_data, so that unasigned thumbs can be added to management dropdowns, use this as the main
 		 mechanism for thumb changes and update books acordingly, use it for populating management thumb selects
-
+	add a system to dynamicaly create the library collums based on the number of books and center the last line
+	Maybe add the setIp form to library as well
+	consider removing the book title spaces warning.
 
   Notes:
 	Example thumbnail map obj: {"Folder":"","Name":"","Thumb":""}

@@ -1,4 +1,4 @@
-async function get_data(url) {
+async function get_map(url) {
   try {
     const req = await fetch(url);
     const data = await req.json();
@@ -9,46 +9,20 @@ async function get_data(url) {
   }
 }
 
-function fetch_placeholder_thumb(ext) {
-  try {
-    ext = ext.toUpperCase();
-  } catch {}
-
-  switch (ext) {
-    case ".PDF":
-      return "../Assets/Images/Icons/Icon_pdf_file.png";
-    case ".TXT":
-      return "../Assets/Images/Icons/Text-txt.png";
-    case ".EPUB":
-      return "../Assets/Images/Icons/Epub_logo.png";
-    case ".MOBI":
-      return "../Assets/Images/Icons/Icon_mobi_file.png";
-    case ".AZW3":
-      return "../Assets/Images/Icons/kindle_app_icon.png";
-    case ".HTML":
-      return "../Assets/Images/Icons/HTML5_logo_black.png";
-    default:
-      return "../Assets/Images/Icons/library_books_FILL0.svg";
-  }
-}
-
 async function Populate_library_entries() {
   //Get the thumnail and book lists
-  const LIB_DATA = await get_data(
-    `http://${document.cookie.split("=")[1]}:5000/get-book-and-thumb-data`
+  const BOOK_DATA = await get_map(
+    `http://${document.cookie.split("=")[1]}:5000/get-book-data`
   );
-
-  const FILE_SUPPORT_DATA = await fetch(
-    "../Assets/File_type_support.json"
-  ).then((res) => {
-    return res.json();
-  });
-
+  const THUMB_MAP = await get_map(
+    `http://${document.cookie.split("=")[1]}:5000/thumb-map`
+  );
+  const BOOK_MAP = await get_map(
+    `http://${document.cookie.split("=")[1]}:5000/list-books`
+  );
   //Check that the books where found, display count if so, or notice if not
   try {
-    console.log(
-      "Total number of folders found: " + LIB_DATA.Books.Folders.length
-    );
+    console.log("Total number of folders found: " + BOOK_MAP.Books.length);
   } catch {
     const notice = document.createElement("h2");
     notice.textContent = `Sorry, the book list could not be found. Please make sure the book API is active and that you can contact the server.`;
@@ -67,12 +41,12 @@ async function Populate_library_entries() {
   const col_4 = document.getElementById("Col_4");
   let col_num = 0;
 
-  for (book_folder of LIB_DATA.Books.Folders) {
+  for (list of BOOK_MAP.Books) {
     //Create the folder and it's toogle button
     const FOLDER_CONTAINER = document.createElement("ul");
     FOLDER_CONTAINER.classList.add("Lib_folder");
     const header = document.createElement("h2");
-    header.innerHTML = book_folder.Folder_name;
+    header.innerHTML = list.Folder;
     FOLDER_CONTAINER.appendChild(header);
 
     const toggle_img = document.createElement("img");
@@ -85,7 +59,7 @@ async function Populate_library_entries() {
     });
 
     //Add the books
-    for (let book of book_folder.Books) {
+    for (let book of list.Content) {
       const BOOK_CONTAINER = document.createElement("li");
       BOOK_CONTAINER.Name = "Book_entry";
       BOOK_CONTAINER.classList.add("Lib_entry");
@@ -94,21 +68,42 @@ async function Populate_library_entries() {
       const thumb_div = document.createElement("div");
       thumb_div.classList.add("Thumb");
       const thumb_image = document.createElement("img");
-      thumb_image.alt = `Thumbnail for: ${book_folder.Folder}/${book.Title}`;
+      thumb_image.alt = `Thumbnail for: ${list.Folder}/${book.Name}`;
 
       //Set the book's thumbnail, or select an appropriate the placeholder if not found
-      thumb_image.onerror = fetch_placeholder_thumb(book.Extension);
-
-      let thumb_url = "." + book.Thumbnail;
-      if (
-        thumb_url != "." &&
-        thumb_url != ".NA" &&
-        !thumb_url.toUpperCase().includes(".UNDEFINED") &&
-        !thumb_url.toUpperCase().includes("HTTP")
-      ) {
-        thumb_image.src = thumb_url;
-      } else {
-        thumb_image.src = fetch_placeholder_thumb(book.Extension);
+      let thumb_url = "";
+      for (let i of THUMB_MAP.Images) {
+        if (book.Name.toUpperCase() == i.Name.toUpperCase()) {
+          thumb_url = "../Assets/Images/Thumbnail_cache/" + i.Name + i.ext;
+        }
+        if (thumb_url != "") {
+          thumb_image.src = thumb_url;
+        } else {
+          switch (book.ext.toUpperCase()) {
+            case ".PDF":
+              thumb_image.src = "../Assets/Images/Icons/Icon_pdf_file.png";
+              break;
+            case ".TXT":
+              thumb_image.src = "../Assets/Images/Icons/Text-txt.png";
+              break;
+            case ".EPUB":
+              thumb_image.src = "../Assets/Images/Icons/Epub_logo.png";
+              break;
+            case ".MOBI":
+              thumb_image.src = "../Assets/Images/Icons/Icon_mobi_file.png";
+              break;
+            case ".AZW3":
+              thumb_image.src = "../Assets/Images/Icons/kindle_app_icon.png";
+              break;
+            case ".HTML":
+              thumb_image.src = "../Assets/Images/Icons/HTML5_logo_black.png";
+              break;
+            default:
+              thumb_image.src =
+                "../Assets/Images/Icons/library_books_FILL0.svg";
+              break;
+          }
+        }
       }
       thumb_div.appendChild(thumb_image);
       BOOK_CONTAINER.appendChild(thumb_div);
@@ -118,25 +113,33 @@ async function Populate_library_entries() {
       details_div.classList.add("Details");
 
       const book_title = document.createElement("h4");
-      book_title.innerHTML = book.Title;
+      book_title.innerHTML = book.Name;
       details_div.appendChild(book_title);
 
       //Add the file type display and colour it acording to support level
       const type_display = document.createElement("p");
-      type_display.innerHTML = book.Extension;
+      type_display.innerHTML = book.ext;
 
-      //Check the book's extension against the file support table
-      for (let format of FILE_SUPPORT_DATA.fileTypes) {
-        if (format.extension == book.Extension) {
-          //Add the appropriate colour based on the support level, not a switch because includes are needed
-          if (format.support.includes("Readable")) {
-            type_display.style.color = "green";
-          } else if (format.support.includes("Downloadable")) {
-            type_display.style.color = "yellow";
-          } else if (format.support.includes("Not supported")) {
-            type_display.style.color = "red";
-          } else {
-            type_display.style.color = "white";
+      //Fetch the file support table and check the book's extension against it
+      const table_data = await fetch("../Assets/File_type_support.json").then(
+        (res) => {
+          return res.json();
+        }
+      );
+      if (JSON.stringify(table_data).includes(book.ext) && book.ext != "") {
+        //^Is this check needed?
+        for (let format of table_data.fileTypes) {
+          if (format.extension == book.ext) {
+            //Add the appropriate colour based on the support level, not a switch because includes are needed
+            if (format.support.includes("Readable")) {
+              type_display.style.color = "green";
+            } else if (format.support.includes("Downloadable")) {
+              type_display.style.color = "yellow";
+            } else if (format.support.includes("Not supported")) {
+              type_display.style.color = "red";
+            } else {
+              type_display.style.color = "white";
+            }
           }
         }
       }
@@ -144,7 +147,7 @@ async function Populate_library_entries() {
 
       //Add the download button
       const download_button = document.createElement("a");
-      download_button.href = `../Books/${book_folder.Folder_name}/${book.Title}${book.Extension}`;
+      download_button.href = `../Books/${list.Folder}/${book.Name}${book.ext}`;
       download_button.textContent = "Download";
       details_div.appendChild(download_button);
 
