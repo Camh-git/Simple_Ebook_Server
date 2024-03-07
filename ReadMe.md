@@ -13,8 +13,8 @@ to download the files for reading, or view supported file types
 (Currently supports PDF, with EPUB on the To-do list)</p>
 
 <p>The project also includes a management page that lets the user interact with 
-a python flask management API to manipulate the library and associated software features,
-such as the thumbnail data.</p>
+a python flask API to manipulate the library and associated software features,
+such as the book data, folders and their contents, access options and thumbnails.</p>
 
 ### FUTURE DEVELOPMENT
 
@@ -22,7 +22,6 @@ such as the thumbnail data.</p>
 	<li>Expand support to more file types</li>
 	<li>Finish replacing old php scripts using python and js (will be stored in depreciated)</li>
 	<li>Overhaul CSS for better aesthetics and possible mobile use</li>
-	<li>Possible react port - better tech and probably much neater</li>
 </ul>
 
 ### Running the project

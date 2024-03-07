@@ -32,6 +32,20 @@ function fetch_placeholder_thumb(ext) {
   }
 }
 
+function check_and_format_data(data) {
+  if (
+    data == "" ||
+    data == "." ||
+    data == "/" ||
+    data.toUpperCase() == "NA" ||
+    data.toUpperCase() == "UNDEFINED"
+  ) {
+    return "????";
+  } else {
+    return data;
+  }
+}
+
 async function Populate_library_entries() {
   //Get the thumnail and book lists
   const LIB_DATA = await get_data(
@@ -113,13 +127,45 @@ async function Populate_library_entries() {
       thumb_div.appendChild(thumb_image);
       BOOK_CONTAINER.appendChild(thumb_div);
 
-      //Add details div and the name
+      //Add details div and it's content
       const details_div = document.createElement("div");
       details_div.classList.add("Details");
 
       const book_title = document.createElement("h4");
       book_title.innerHTML = book.Title;
       details_div.appendChild(book_title);
+
+      const date_author_and_pub_display = document.createElement("p");
+      date = check_and_format_data(book.Date.slice(0, 4));
+      publisher = check_and_format_data(book.Publisher);
+
+      authors = "";
+      try {
+        switch (book.Authors.length) {
+          case 0:
+            authors = "Unknown";
+            break;
+          case 1:
+            authors = book.Authors[0];
+            break;
+          case 2:
+            authors = `${book.Authors[0]}, ${book.Authors[1]}`;
+            break;
+          default:
+            authors = `${book.Authors[0]} et al.`;
+            break;
+        }
+      } catch {
+        authors = "Unknown";
+      }
+
+      if (publisher == authors) {
+        date_author_and_pub_display.innerHTML = `${date}, ${authors}<br>`;
+      } else {
+        date_author_and_pub_display.innerHTML = `${date}, ${authors}, ${publisher}<br>`;
+      }
+
+      details_div.appendChild(date_author_and_pub_display);
 
       //Add the file type display and colour it acording to support level
       const type_display = document.createElement("p");
@@ -141,6 +187,15 @@ async function Populate_library_entries() {
         }
       }
       details_div.appendChild(type_display);
+
+      //Add the isbn
+      const ISBN_display = document.createElement("p");
+      isbn = check_and_format_data(book.isbn13);
+      if (isbn == "????") {
+        isbn = check_and_format_data(book.isbn);
+      }
+      ISBN_display.innerHTML = book.isbn;
+      details_div.appendChild(ISBN_display);
 
       //Add the download button
       const download_button = document.createElement("a");
