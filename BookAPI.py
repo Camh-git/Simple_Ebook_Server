@@ -1,9 +1,10 @@
-from flask import Flask, abort, request
+from flask import Flask, abort, request, make_response, jsonify
 from flask_cors import CORS, cross_origin
 import json
+from datetime import datetime
 from Assets.Scripts.API_segments.Help_pages import help, file_support, show_site_map
 from Assets.Scripts.API_segments.Folder_methods import list_folders, list_folder_content, Delete_folder, Rename_folder
-from Assets.Scripts.API_segments.Book_methods import list_books, Remove_book, Rename_book
+from Assets.Scripts.API_segments.Book_methods import list_books, Remove_book, Rename_book, Upload_book
 from Assets.Scripts.API_segments.Lib_management import Create_folder, Move_book_to_folder
 from Assets.Scripts.API_segments.Management_control import Toggle_management
 from Assets.Scripts.API_segments.API_utils import read_json_no_code
@@ -11,10 +12,14 @@ from Assets.Scripts.API_segments.Misc_management import Show_settings, Toggle_dl
 from Assets.Scripts.API_segments.Thumb_management import List_Thumbs, show_thumb_map, generate_thumbs, Reasign_thumb, Clear_thumbs, rename_thumb, delete_thumb, populate_thumb_data
 from Assets.Scripts.API_segments.Book_data_methods import generate_book_data, edit_book_data
 
+
 app = Flask(__name__)
 mainDir = "./Books"
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['UPLOAD_FOLDER'] = "./Books/Uploads"
+
+print("started at: " + str(datetime.now()))
 
 
 @app.route("/")
@@ -60,6 +65,28 @@ def check_ACLS():
         if "/delete-book" in request.path or "/delete-folder" in request.path or "/clear-thumbs" in request.path:
             return "423"
 
+    if request.method == "OPTIONS":  # CORS preflight
+        return _build_cors_preflight_response()
+    elif request.method == "POST":  # The actual request following the preflight
+        response = ""
+        if "/post-book" in request.path:
+            response = Upload_book(request)
+        return _corsify_actual_response(jsonify(response))
+
+
+def _build_cors_preflight_response():
+    # from: https://stackoverflow.com/questions/25594893/how-to-enable-cors-in-flask
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
+
+
+def _corsify_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
 
 # Book methods
 
@@ -68,9 +95,10 @@ def list_books_endpoint():
     return list_books(mainDir)
 
 
-@app.route("/post-book/<book_name>", methods=["POST"])
-def Upload_book(book_name):
-    return 501
+# note: not technically needed since this passes through the cors stuff
+@app.route("/post-book/", methods=["GET", "POST"])
+def Upload_book_endpoint():
+    return Upload_book(request)
 
 
 @app.route("/delete-book/<book_name>&&<ext>&&<folder>", methods=["GET"])

@@ -2,11 +2,28 @@ export async function Call_and_display(
   requestString,
   update_lib_selects = false,
   show_ip_lists = false,
-  code = ""
+  code = "",
+  upload = false
 ) {
   const ADDRESS = `http://${document.cookie.split("=")[1]}:5000/`;
   const DISPLAY = document.getElementById("Req_status_modal");
-  const result = await fetch(requestString);
+
+  let result = "";
+  if (upload) {
+    //Get the appropriate input and send it's file
+    let upload_input = document.getElementsByName(
+      requestString.split("/")[requestString.split("/").length - 1]
+    );
+    //console.log(upload_input[0].files[0]);
+    //console.log(`${ADDRESS}${requestString.split("/")[3]}`);
+    result = await fetch(`${ADDRESS}${requestString.split("/")[3]}`, {
+      method: "POST",
+      body: upload_input[0].files[0],
+    });
+  } else {
+    //send a normal request
+    result = await fetch(requestString);
+  }
   const data = await result.json();
 
   DISPLAY.style.display = "block";

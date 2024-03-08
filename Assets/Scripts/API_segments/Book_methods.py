@@ -1,6 +1,7 @@
 import os
 from .Book_data_methods import edit_book_data, get_specific_book_data
 from .Book_data_endpoint_methods import BD_delete_book
+from werkzeug.utils import secure_filename
 
 
 def list_books(mainDir):
@@ -25,6 +26,13 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in {
             'pdf', 'txt', 'epub', 'mobi', 'azw3'}
+
+
+def Upload_book(data):
+    print("got to upload: " + str(data))
+    ALLOWED_EXTENSIONS = {".pdf", ".txt", ".epub", ".mobi", ".azw3", ".html"}
+
+    return "501"
 
 
 def Remove_book(book_name, ext, folder, mainDir):

@@ -22,6 +22,19 @@ function search_format(string) {
 function Assign_submit_actions() {
   //Get the submit btns/forms and assign their actions to the functions
   //Manage books
+  document
+    .getElementById("US_form_flask")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      Call_and_display(
+        `${ADDRESS}post-book/US_file_input`,
+        false,
+        false,
+        "",
+        true
+      ); //TODO: change the "update lib selects" option to true when finished
+    });
+
   document.getElementById("DS_form").addEventListener("submit", (event) => {
     event.preventDefault();
     let Folder = event.target.children[2];
