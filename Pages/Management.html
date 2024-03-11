@@ -25,39 +25,20 @@
             alt="Toggle book management"
           />
           <section class="Management-row">
-            <!--upload single, todo:Add a folder select-->
-            <form
-              method="POST"
-              enctype="multipart/form-data"
-              id="US_form"
-              action="../Assets/Scripts/Upload_single.php"
-            >
-              <h3>Upload book</h3>
-              <input
-                type="file"
-                name="US_file_inp"
-                accept=".epub,.pdf,.txt,.doc,.docx"
-              />
-              <br />
-              <input type="submit" value="upload" />
-              <p class="Warning">Max upload size: 30MB</p>
-            </form>
-
-            <!--flask upload-->
+            <!--Book upload-->
             <form
               method="POST"
               enctype="multipart/form-data"
               id="US_form_flask"
             >
-              <h3>Upload book using flask</h3>
+              <h3>Upload book</h3>
               <input
                 type="file"
                 name="US_file_input"
-                accept=".epub,.pdf,.txt,.doc,.docx"
+                accept=".epub,.pdf,.txt,.docx,.mobi,.azw3"
               />
               <br />
               <input type="submit" value="submit" />
-              <p class="Warning">Max upload size: 30MB</p>
             </form>
 
             <!--Delete single-->

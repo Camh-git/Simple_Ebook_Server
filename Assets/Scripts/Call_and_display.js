@@ -12,11 +12,12 @@ export async function Call_and_display(
   if (upload) {
     //Get the appropriate input and send it's file
     let upload_input = document.getElementsByName(
-      requestString.split("/")[requestString.split("/").length - 1]
+      requestString.split("/").pop()
     );
+    let book = upload_input[0].value.split("\\").pop();
     //console.log(upload_input[0].files[0]);
-    //console.log(`${ADDRESS}${requestString.split("/")[3]}`);
-    result = await fetch(`${ADDRESS}${requestString.split("/")[3]}`, {
+    //console.log(`${ADDRESS}${requestString.split("/")[3]}/${book}`);
+    result = await fetch(`${ADDRESS}${requestString.split("/")[3]}/${book}`, {
       method: "POST",
       body: upload_input[0].files[0],
     });
@@ -52,7 +53,7 @@ export async function Call_and_display(
       break;
     case 403:
       response +=
-        "Forbidden: Users are not allowed to rename or delete the Misc and Upload folders";
+        "Forbidden: Users are not allowed to rename or delete the Misc and Upload folders, or upload unsupported file types";
       break;
     case 404:
       response +=

@@ -41,7 +41,6 @@ def check_ACLS():
     elif settings["EnableBlackList"] == True:
         if request.remote_addr in settings["BlackList"]:
             return "401"
-    # print(request.remote_addr[:8])
 
     # Check that the requested endpoint is enabled
     if settings["EnableManagement"] != True:
@@ -96,7 +95,7 @@ def list_books_endpoint():
 
 
 # note: not technically needed since this passes through the cors stuff
-@app.route("/post-book/", methods=["GET", "POST"])
+@app.route("/post-book/<book>", methods=["GET", "POST"])
 def Upload_book_endpoint():
     return Upload_book(request)
 

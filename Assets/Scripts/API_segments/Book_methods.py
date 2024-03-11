@@ -2,6 +2,7 @@ import os
 from .Book_data_methods import edit_book_data, get_specific_book_data
 from .Book_data_endpoint_methods import BD_delete_book
 from werkzeug.utils import secure_filename
+from flask import (request)
 
 
 def list_books(mainDir):
@@ -28,11 +29,20 @@ def allowed_file(filename):
             'pdf', 'txt', 'epub', 'mobi', 'azw3'}
 
 
-def Upload_book(data):
-    print("got to upload: " + str(data))
+def Upload_book(req):
     ALLOWED_EXTENSIONS = {".pdf", ".txt", ".epub", ".mobi", ".azw3", ".html"}
+    book_data = req.data
+    book_title = request.path.split("/post-book/")[1]
+    if not os.path.splitext(book_title)[1] in ALLOWED_EXTENSIONS:
+        return "403"
 
-    return "501"
+    try:
+        with open("./Books/Uploads/" + book_title, "wb") as f:
+            f.write(book_data)
+    except:
+        return "500"
+
+    return "200"
 
 
 def Remove_book(book_name, ext, folder, mainDir):
