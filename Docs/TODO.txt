@@ -31,6 +31,7 @@ Remaining:
 	add safeties to any form that deletes data
 	create an inventory of python packages needed
 	go through set_management_listeners (and prob other js) and set consts where appropriate
+	Make delete_folder remove the associated thumbnail cache
 
   Not confirmed/Under consideration:
 	move book list updates to the same method as thumb updates, since updating the books when the list is changed seems more sensible (and reduces the total number of listeners)
