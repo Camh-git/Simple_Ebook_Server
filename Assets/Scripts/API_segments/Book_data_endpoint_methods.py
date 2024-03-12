@@ -1,9 +1,30 @@
 import json
-from .API_utils import read_json_no_code, write_json_no_code
+from .API_utils import read_json_no_code, write_json_no_code, search_google_books
 from .Book_data_methods import get_specific_book_data
 import os
 
 # Note: These dont have much in the way of validation, since this is handled in the endpoint functions that call these ones.
+
+
+def BD_upload_book(book):
+    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+    if stored_json == "":
+        return "404"
+
+    book_data = ""
+    book_path = os.path.splitext(book)
+    for json_folder in stored_json["Folders"]:
+        if json_folder["Folder_name"] == "Uploads":
+            # book_data = json.loads(search_google_books(book_path[0]))
+            book_data += '{{"title":"{0}","Authors":["NA"],"Date":"NA","Publisher":"NA","isbn":"NA","isbn13":"NA","Thumbnail":"NA","Extension":"{1}","Validated":"False"}}'.format(
+                book_path[0], book_path[1])
+            data = json.loads(book_data)
+            json_folder["Books"].append(data)
+
+    # print(json.dumps(stored_json["Folders"][3]["Books"]))
+    status = write_json_no_code(
+        "./Assets/Book_info.json", stored_json)
+    return status
 
 
 def BD_delete_book(folder, book, book_data=""):

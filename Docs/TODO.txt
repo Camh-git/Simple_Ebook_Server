@@ -32,7 +32,7 @@ Remaining:
 	create an inventory of python packages needed
 	go through set_management_listeners (and prob other js) and set consts where appropriate
 	Make delete_folder remove the associated thumbnail cache
-	convert the looping gen book data to use search_google_books
+	convert the looping gen book data and book upload to use search_google_books, once it is made functional
 
 
   Not confirmed/Under consideration:

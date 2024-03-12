@@ -67,14 +67,17 @@ def search_google_books(book):
     if book == "":
         return "404"
     book_data = ""
+    book_path = os.path.splitext(book)
+    book_address = book_path[0].replace(" ", "%20")
+    print("using Google books API to look up: " + book_address)
+
     try:
         with urlopen('https://www.googleapis.com/books/v1/volumes?q=title={0}'.format(
-                os.path.splitext(book)[0])) as r:
+                book_address)) as r:
             text = r.read()
             data = json.loads(text)
-            title = authors = date = publisher = isbn10 = isbn13 = thumbnail = authorlist = ""
-            title = os.path.splitext(book)[0]
-            extension = os.path.splitext(book)[1]
+            authors = date = publisher = isbn10 = isbn13 = thumbnail = authorlist = ""
+
             try:
                 authors = format_for_json(
                     data["items"][0]["volumeInfo"]["authors"])
@@ -111,11 +114,12 @@ def search_google_books(book):
                     format_for_json(author))
             authorlist = authorlist[:-1]
 
-            book_data = '{{"Title":"{0}","Authors":[{1}],"Date":"{2}","Publisher":"{3}","isbn":"{4}","isbn13":"{5}","Thumbnail":"{6}","Extension":"{7}","Validated":"False"}},'.format(
-                title, authorlist, date, publisher, isbn10, isbn13, thumbnail, extension)
-            folder_data += book_data
+            book_data = '{{"Title":"{0}","Authors":[{1}],"Date":"{2}","Publisher":"{3}","isbn":"{4}","isbn13":"{5}","Thumbnail":"{6}","Extension":"{7}","Validated":"False"}}'.format(
+                book_path[0], authorlist, date, publisher, isbn10, isbn13, thumbnail, book_path[1])
 
     except:
-        book_data = '{{"title":"{0}","Authors":["NA"],"Date":"NA","Publisher":"NA","isbn":"NA","isbn13":"NA","Thumbnail":"NA","Extension":"{1}","Validated":"False"}},'.format(
-                    book, extension)
+        print('Did not find book: {0}, using placeholder info'.format(
+            book_path[0]))
+        book_data = '{{"title":"{0}","Authors":["NA"],"Date":"NA","Publisher":"NA","isbn":"NA","isbn13":"NA","Thumbnail":"NA","Extension":"{1}","Validated":"False"}}'.format(
+            book_path[0], book_path[1])
     return book_data
