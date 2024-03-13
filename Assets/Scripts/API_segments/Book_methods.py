@@ -29,7 +29,7 @@ def allowed_file(filename):
             'pdf', 'txt', 'epub', 'mobi', 'azw3'}
 
 
-def Upload_book(req):
+def Upload_book(req, gen_thumb, pop_thumb_data):
     ALLOWED_EXTENSIONS = {".pdf", ".txt", ".epub", ".mobi", ".azw3", ".html"}
     book_data = req.data
     book_title = request.path.split("/post-book/")[1]
@@ -41,9 +41,8 @@ def Upload_book(req):
     try:
         with open("./Books/Uploads/" + book_title, "wb") as f:
             f.write(book_data)
-        status = BD_upload_book(book_title)
+        status = BD_upload_book(book_title, gen_thumb, pop_thumb_data)
         return status
-
     except:
         return "500"
 

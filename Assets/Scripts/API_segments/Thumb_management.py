@@ -27,6 +27,7 @@ def show_thumb_map():
 
 
 def generate_thumbs():
+    print("generating thumbs")
     book_data = json.loads(read_json_no_code("./Assets/Book_info.json"))
     book_data_changed = False
     error_list = "Complete with the following errors:\n"
@@ -238,6 +239,7 @@ def delete_thumb(folder, target):
 
 
 def populate_thumb_data():
+    print("populating thumb data")
     cache = "./Assets/Images/Thumbnail_cache"
     Thumb_data = '{{"Folders":['
     for folder in os.listdir(cache):

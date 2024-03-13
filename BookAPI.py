@@ -69,7 +69,8 @@ def check_ACLS():
     elif request.method == "POST":  # The actual request following the preflight
         response = ""
         if "/post-book" in request.path:
-            response = Upload_book(request)
+            response = Upload_book(
+                request, generate_thumbs, populate_thumb_data)
         return _corsify_actual_response(jsonify(response))
 
 
@@ -97,7 +98,7 @@ def list_books_endpoint():
 # note: not technically needed since this passes through the cors stuff
 @app.route("/post-book/<book>", methods=["GET", "POST"])
 def Upload_book_endpoint():
-    return Upload_book(request)
+    return Upload_book(request, generate_thumbs, populate_thumb_data)
 
 
 @app.route("/delete-book/<book_name>&&<ext>&&<folder>", methods=["GET"])
