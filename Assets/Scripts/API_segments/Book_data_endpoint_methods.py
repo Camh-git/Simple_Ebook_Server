@@ -5,7 +5,7 @@ import os
 # Note: These dont have much in the way of validation, since this is handled in the endpoint functions that call these ones.
 
 
-def BD_upload_book(book, gen_thumb, gen_data):
+def BD_upload_book(book):
     stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
     if stored_json == "":
         return "404"
@@ -15,10 +15,6 @@ def BD_upload_book(book, gen_thumb, gen_data):
         if json_folder["Folder_name"] == "Uploads":
             book_data = json.loads(search_google_books(book))
             json_folder["Books"].append(book_data)
-
-            # Add to thumbnails and cache the image, done this way to avoid a circular import
-            gen_thumb()
-            gen_data()
 
     status = write_json_no_code(
         "./Assets/Book_info.json", stored_json)
