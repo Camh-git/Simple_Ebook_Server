@@ -43,7 +43,7 @@ def Upload_book(req, gen_thumb, pop_thumb_data):
             f.write(book_data)
         status = BD_upload_book(book_title)
         if status == "200":
-            # Add to thumbnails and cache the image, done this way to avoid a circular import
+            # Add to thumbnail to the cache and thumb_data, done this way to avoid a circular import
             gen_thumb()
             pop_thumb_data()
         return status

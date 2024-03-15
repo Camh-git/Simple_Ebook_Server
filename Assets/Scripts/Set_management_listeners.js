@@ -144,8 +144,17 @@ function Assign_submit_actions() {
       );
     });
   document
-    .getElementById("TH_upload_form")
-    .addEventListener("submit", (event) => {});
+    .getElementById("TH_upload_form_flask")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      Call_and_display(
+        `${ADDRESS}upload-thumb/New_thumb_inp_flask`,
+        false,
+        false,
+        "",
+        true
+      );
+    });
   document
     .getElementById("TH_rename_form")
     .addEventListener("submit", (event) => {

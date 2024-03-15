@@ -140,6 +140,20 @@ def BD_move_book(old_folder, new_folder, book_name, provided_data="", tag="False
 
 
 # Thumb data
+def BD_upload_thumb(Thumb_title):
+    stored_json = json.loads(read_json_no_code("./Assets/Thumbnail_info.json"))
+    if stored_json == "":
+        return "404"
+
+    for json_folder in stored_json["Folders"]:
+        if json_folder["Folder_name"] == "Uploads":
+            json_folder["Images"].append(Thumb_title)
+
+    status = write_json_no_code(
+        "./Assets/Thumbnail_info.json", stored_json)
+    return status
+
+
 def BD_reassign_thumb(thumb_folder, thumb, book_folder, book):
     stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
     if stored_json == "":

@@ -9,7 +9,7 @@ from Assets.Scripts.API_segments.Lib_management import Create_folder, Move_book_
 from Assets.Scripts.API_segments.Management_control import Toggle_management
 from Assets.Scripts.API_segments.API_utils import read_json_no_code
 from Assets.Scripts.API_segments.Misc_management import Show_settings, Toggle_dls, Toggle_readers, Toggle_lists, Manage_acls
-from Assets.Scripts.API_segments.Thumb_management import List_Thumbs, show_thumb_map, generate_thumbs, Reasign_thumb, Clear_thumbs, rename_thumb, delete_thumb, populate_thumb_data
+from Assets.Scripts.API_segments.Thumb_management import List_Thumbs, show_thumb_map, upload_thumb, generate_thumbs, Reasign_thumb, Clear_thumbs, rename_thumb, delete_thumb, populate_thumb_data
 from Assets.Scripts.API_segments.Book_data_methods import generate_book_data, edit_book_data
 
 
@@ -71,6 +71,8 @@ def check_ACLS():
         if "/post-book" in request.path:
             response = Upload_book(
                 request, generate_thumbs, populate_thumb_data)
+        elif "/upload-thumb" in request.path:
+            response = upload_thumb(request)
         return _corsify_actual_response(jsonify(response))
 
 
@@ -179,6 +181,13 @@ def Reasign_thumb_endpoint(folder_name, book_name, thumb_folder, thumb):
 @app.route("/upload-thumb/<image>")
 def Upload_thumb(image):
     return 501
+
+# note: not technically needed since this passes through the cors stuff
+
+
+@app.route("/upload-thumb/<book>", methods=["GET", "POST"])
+def Upload_thumb_endpoint():
+    return upload_thumb(request)
 
 
 @app.route("/clear-thumbs/<regen>&&<rmManual>")

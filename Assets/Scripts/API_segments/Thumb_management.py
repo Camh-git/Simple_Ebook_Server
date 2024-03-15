@@ -3,7 +3,8 @@ import os
 import json
 import shutil
 import requests
-from .Book_data_endpoint_methods import BD_rename_thumb, BD_delete_thumb
+from flask import (request)
+from .Book_data_endpoint_methods import BD_rename_thumb, BD_delete_thumb, BD_upload_thumb
 
 
 def List_Thumbs():
@@ -142,27 +143,6 @@ def Reasign_thumb(book_folder, book_name, thumb_folder, thumb):
     else:
         return "404"
 
-    # Manipulate the map - TODO: delete this section when the thumb map is retired.
-    if os.path.exists("./Assets/Images/Thumbnail_map.json"):
-        json_map_data = read_json_no_code("./Assets/Images/Thumbnail_map.json")
-        map = json.loads(json_map_data)
-
-        bookFound = False
-        for book in map["Books"]:
-            if book["Folder"] == book_folder and book["Name"] == book_name:
-                bookFound = True
-                book.update({"Thumb": thumb.replace(" ", "")})
-        if not bookFound:
-            # Add the book to the map if it doesn't already have an entry
-            map["Books"].append(
-                {"Folder": book_folder, "Name": book_name, "Thumb": thumb.replace(" ", "")})
-
-        # return str(map["Books"][0]["Name"] in os.listdir("./Books/"+map["Books"][0]["Folder"]))
-        return write_json_no_code("./Assets/Images/Thumbnail_map.json", map)
-
-    else:
-        return "404"
-
 
 def Clear_thumbs(regen, rmManual):
     path = "./Assets/Images/Thumbnail_cache/"
@@ -186,6 +166,24 @@ def Clear_thumbs(regen, rmManual):
         return "200"
     else:
         return "404"
+
+
+def upload_thumb(req):
+    ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg",
+                          ".gif", ".bmp", ".psd", ".svg", ".tif"}
+    thumb_data = req.data
+    thumb_title = request.path.split("/upload-thumb/")[1]
+
+    if not os.path.splitext(thumb_title)[1] in ALLOWED_EXTENSIONS:
+        return "403"
+
+    try:
+        with open("./Assets/Images/Thumbnail_cache/Uploads/" + thumb_title, "wb") as f:
+            f.write(thumb_data)
+        status = BD_upload_thumb(thumb_title)
+        return status
+    except:
+        return "500"
 
 
 def rename_thumb(folder, target, new_name):
