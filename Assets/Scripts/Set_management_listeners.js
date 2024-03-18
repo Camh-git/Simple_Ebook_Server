@@ -65,6 +65,16 @@ function Assign_submit_actions() {
   });
 
   //Manage folders
+  document.getElementById("UF_flask").addEventListener("submit", (event) => {
+    event.preventDefault();
+    Call_and_display(
+      `${ADDRESS}upload-folder/UF_input`,
+      false,
+      false,
+      "",
+      true
+    );
+  });
   document.getElementById("DF_form").addEventListener("submit", (event) => {
     event.preventDefault();
     let Folder = event.target.children[1];

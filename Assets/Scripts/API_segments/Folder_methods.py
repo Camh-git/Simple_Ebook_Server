@@ -22,6 +22,10 @@ def list_folder_content(folder_name, mainDir):
     return response
 
 
+def Upload_folder(req):
+    return "501"
+
+
 def Delete_folder(folder_name, delete_content, mainDir):
     if (folder_name == "" or delete_content == ""):
         return "400"

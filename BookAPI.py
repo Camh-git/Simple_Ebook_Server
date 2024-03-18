@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 import json
 from datetime import datetime
 from Assets.Scripts.API_segments.Help_pages import help, file_support, show_site_map
-from Assets.Scripts.API_segments.Folder_methods import list_folders, list_folder_content, Delete_folder, Rename_folder
+from Assets.Scripts.API_segments.Folder_methods import list_folders, list_folder_content, Upload_folder, Delete_folder, Rename_folder
 from Assets.Scripts.API_segments.Book_methods import list_books, Remove_book, Rename_book, Upload_book
 from Assets.Scripts.API_segments.Lib_management import Create_folder, Move_book_to_folder
 from Assets.Scripts.API_segments.Management_control import Toggle_management
@@ -73,6 +73,8 @@ def check_ACLS():
                 request, generate_thumbs, populate_thumb_data)
         elif "/upload-thumb" in request.path:
             response = upload_thumb(request)
+        elif "/upload-folder" in request.path:
+            response = Upload_folder(request)
         return _corsify_actual_response(jsonify(response))
 
 
@@ -126,9 +128,12 @@ def list_folder_content_endpoint(folder_name):
     return list_folder_content(folder_name, mainDir)
 
 
-@app.route("/post-folder/<folder_name>&&<content>", methods=["POST"])
-def Upload_folder(folder_name, contents):
-    return 501
+# note: not technically needed since this passes through the cors stuff
+
+
+@app.route("/upload-folder/<title>", methods=["GET", "POST"])
+def Upload_folder_endpoint(title):
+    return Upload_folder(request)
 
 
 @app.route("/delete-folder/<folder_name>&&<delete_content>")
@@ -177,10 +182,6 @@ def generate_thumbs_endpoint():
 def Reasign_thumb_endpoint(folder_name, book_name, thumb_folder, thumb):
     return Reasign_thumb(folder_name, book_name, thumb_folder, thumb)
 
-
-@app.route("/upload-thumb/<image>")
-def Upload_thumb(image):
-    return 501
 
 # note: not technically needed since this passes through the cors stuff
 

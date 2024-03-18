@@ -14,16 +14,32 @@ export async function Call_and_display(
     let upload_input = document.getElementsByName(
       requestString.split("/").pop()
     );
-    let file_data = upload_input[0].value.split("\\").pop();
-    //console.log(upload_input[0].files[0]);
-    //console.log(`${ADDRESS}${requestString.split("/")[3]}/${book}`);
-    result = await fetch(
-      `${ADDRESS}${requestString.split("/")[3]}/${file_data}`,
-      {
+
+    let file_data = "";
+    if (upload_input[0].form.id == "UF_flask") {
+      //Handle the extra data for folder upload (name followed by files)
+      file_data = upload_input[0].value;
+      /*const files = upload_input[1].files;
+      for (let i = 0; i < files.length; i++) {
+        //Might need to be files[i].name TODO: check
+        file_data += files[i].name + "/";
+      }*/
+      result = await fetch(`${ADDRESS}upload-folder/${file_data}`, {
         method: "POST",
-        body: upload_input[0].files[0],
-      }
-    );
+        body: upload_input[0].files,
+      });
+    } else {
+      file_data = upload_input[0].value.split("\\").pop();
+      //console.log(upload_input[0].files[0]);
+      //console.log(`${ADDRESS}${requestString.split("/")[3]}/${book}`);
+      result = await fetch(
+        `${ADDRESS}${requestString.split("/")[3]}/${file_data}`,
+        {
+          method: "POST",
+          body: upload_input[0].files[0],
+        }
+      );
+    }
   } else {
     //send a normal request
     result = await fetch(requestString);
