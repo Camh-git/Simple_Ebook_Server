@@ -154,6 +154,19 @@ def BD_upload_thumb(Thumb_title):
     return status
 
 
+def BD_create_thumb_folder(folder_name):
+    stored_json = json.loads(read_json_no_code("./Assets/Thumbnail_info.json"))
+    if stored_json == "":
+        return "404"
+    new_folder = json.loads(
+        '{"Folder_name":"' + folder_name + '","Images":[]}')
+
+    stored_json["Folders"].append(new_folder)
+
+    status = write_json_no_code("./Assets/Thumbnail_info.json", stored_json)
+    return status
+
+
 def BD_reassign_thumb(thumb_folder, thumb, book_folder, book):
     stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
     if stored_json == "":

@@ -33,6 +33,8 @@ Remaining:
 	go through set_management_listeners (and prob other js) and set consts where appropriate
 	Make delete_folder remove the associated thumbnail cache
 	convert the looping gen book data and book upload to use search_google_books, once it is made functional
+	add a create thummb folder book data endpoint to create folder (and probably to upload folder too), delete folder also needs the inverse (might be best to double check all book data functions)
+	have an API util that lets the methods read the Source of truth for file types, should replace localy defined ALLOWED_FILES variables
 
 
   Not confirmed/Under consideration:
@@ -48,6 +50,7 @@ Remaining:
 	add a system to dynamicaly create the library collums based on the number of books and center the last line
 	Maybe add the setIp form to library as well
 	consider removing the book title spaces warning.
+	try to combine the event listeners
 	
   Notes:
 	Example thumbnail map obj: {"Folder":"","Name":"","Thumb":""}

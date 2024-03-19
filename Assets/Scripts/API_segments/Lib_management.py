@@ -1,5 +1,5 @@
 import os
-from .Book_data_endpoint_methods import BD_move_book, BD_create_folder
+from .Book_data_endpoint_methods import BD_move_book, BD_create_folder, BD_create_thumb_folder
 
 
 def Create_folder(folder_name, mainDir):
@@ -15,6 +15,7 @@ def Create_folder(folder_name, mainDir):
                 thumb_folder = "./Assets/Images/Thumbnail_cache/"+folder_name
                 if not os.path.isdir(thumb_folder):
                     os.makedirs(thumb_folder)
+                result = BD_create_thumb_folder(folder_name)
                 return result
             else:
                 raise Exception(result)
