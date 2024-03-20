@@ -19,14 +19,19 @@ export async function Call_and_display(
     if (upload_input[0].form.id == "UF_flask") {
       //Handle the extra data for folder upload (name followed by files)
       file_data = upload_input[0].value;
-      /*const files = upload_input[1].files;
+      const files = upload_input[1].files;
+      const file_list = new FormData();
+      for (const file of files) {
+        file_list.append("files[]", file);
+      }
+      /*
       for (let i = 0; i < files.length; i++) {
         //Might need to be files[i].name TODO: check
         file_data += files[i].name + "/";
       }*/
       result = await fetch(`${ADDRESS}upload-folder/${file_data}`, {
         method: "POST",
-        body: upload_input[0].files,
+        body: file_list,
       });
     } else {
       file_data = upload_input[0].value.split("\\").pop();

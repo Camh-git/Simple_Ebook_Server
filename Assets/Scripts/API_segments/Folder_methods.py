@@ -1,6 +1,6 @@
 import os
 import shutil
-from .Book_data_endpoint_methods import BD_rename_folder, BD_delete_folder
+from .Book_data_endpoint_methods import BD_rename_folder, BD_delete_folder, BD_create_thumb_folder, BD_upload_folder
 
 
 def list_folders(mainDir):
@@ -22,8 +22,46 @@ def list_folder_content(folder_name, mainDir):
     return response
 
 
-def Upload_folder(req):
-    return "501"
+def Upload_folder(request):
+
+    folder_name = request.path.split("/upload-folder/")[1]
+    files = request.files.getlist('files[]')
+
+    # Check that the folder does not exist
+    target = "./Books/" + folder_name
+    thumb_folder = "./Assets/Images/Thumbnail_cache/"+folder_name
+    if not os.path.exists(target) and not os.path.exists(thumb_folder):
+        # Add the new folder to book data.json, thumb_info.json and the file system
+        result = BD_create_thumb_folder(folder_name)
+        if result == "200":
+            os.makedirs(target)
+            os.makedirs(thumb_folder)
+
+            # Upload each book
+            book_list = []
+            for file in files:
+                filetype = file.content_type
+
+                if "text/plain" in filetype:
+                    with open("./Books/{0}/".format(folder_name) + file.filename, "w") as f:
+                        f.write(str(file.read()))
+                elif "/pdf" or "/epub" or "application/" in filetype:
+                    with open("./Books/{0}/".format(folder_name) + file.filename, "wb") as f:
+                        f.write(file.read())
+                else:
+                    os.rmdir(target)
+                    os.rmdir(thumb_folder)
+                    return "403"
+
+                book_list.append(file.filename)
+
+            # Create an entry for the new folder in book_info.json and populate it
+            status = BD_upload_folder(folder_name, book_list)
+            return status
+        else:
+            return status
+    else:
+        return "409"
 
 
 def Delete_folder(folder_name, delete_content, mainDir):

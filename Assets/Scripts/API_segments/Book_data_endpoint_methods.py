@@ -48,6 +48,24 @@ def BD_rename_book():
     # Implemented in edit_book_data, since it was simpler
     return "501"
 
+# Folder data
+
+
+def BD_upload_folder(folder_name, book_list):
+    # Create the folder, then copy in the book data
+    BD_create_folder(folder_name)
+    stored_json = json.loads(read_json_no_code("./Assets/Book_info.json"))
+    if stored_json == "":
+        return "404"
+    for json_folder in stored_json["Folders"]:
+        if json_folder["Folder_name"] == folder_name:
+            for book in book_list:
+                book_data = json.loads(search_google_books(book))
+                json_folder["Books"].append(book_data)
+
+    status = write_json_no_code("./Assets/Book_info.json", stored_json)
+    return status
+
 
 def BD_delete_folder(target_folder, delete_content="False", book_data="", changed_dirs=[]):
     # Load the book data, or accept the provided data
