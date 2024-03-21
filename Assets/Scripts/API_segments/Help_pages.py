@@ -12,6 +12,13 @@ def file_support():
     return content
 
 
+def file_support_json():
+    content = ''
+    with open("./Assets/File_type_support.json") as file:
+        content = file.read()
+    return content
+
+
 def show_site_map(format="XML"):
     content = ''
     if format.upper() == "XML":

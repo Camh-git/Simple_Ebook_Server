@@ -1,6 +1,8 @@
 import os
 import shutil
 from .Book_data_endpoint_methods import BD_rename_folder, BD_delete_folder, BD_create_thumb_folder, BD_upload_folder
+from .API_utils import save_book_by_ext
+from .Thumb_management import generate_thumbs
 
 
 def list_folders(mainDir):
@@ -40,23 +42,18 @@ def Upload_folder(request):
             # Upload each book
             book_list = []
             for file in files:
-                filetype = file.content_type
+                book_list.append(file.filename)
+                save_book = save_book_by_ext(file, folder_name)
 
-                if "text/plain" in filetype:
-                    with open("./Books/{0}/".format(folder_name) + file.filename, "w") as f:
-                        f.write(str(file.read()))
-                elif "/pdf" or "/epub" or "application/" in filetype:
-                    with open("./Books/{0}/".format(folder_name) + file.filename, "wb") as f:
-                        f.write(file.read())
-                else:
+                if save_book != "200":
                     os.rmdir(target)
                     os.rmdir(thumb_folder)
-                    return "403"
-
-                book_list.append(file.filename)
+                    return save_book
 
             # Create an entry for the new folder in book_info.json and populate it
             status = BD_upload_folder(folder_name, book_list)
+            if status == "200":
+                generate_thumbs()
             return status
         else:
             return status

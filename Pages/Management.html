@@ -89,31 +89,9 @@
             alt="Toggle book management"
           />
           <section class="Management-row">
-            <!--Upload folder -->
-            <form
-              method="POST"
-              enctype="multipart/form-data"
-              action="../Assets/Scripts/Upload_folder.php"
-            >
-              <h3>Upload folder</h3>
-              <input type="text" name="UF_name" placeholder="name" />
-              <p>
-                Please add each file you want to upload(if none please use
-                create folder)
-              </p>
-              <input
-                type="file"
-                name="UF_inp_Files[]"
-                multiple="multiple"
-                accept=".epub,.pdf,.txt,.doc,.docx"
-              />
-              <br />
-              <input type="submit" value="upload" />
-            </form>
-
             <!--Upload folder using flask -->
             <form method="POST" enctype="multipart/form-data" id="UF_flask">
-              <h3>Upload folder - Flask</h3>
+              <h3>Upload folder</h3>
               <input type="text" name="UF_input" placeholder="name" />
               <p>
                 Please add each file you want to upload(if none please use

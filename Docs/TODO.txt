@@ -34,9 +34,8 @@ Remaining:
 	Make delete_folder remove the associated thumbnail cache
 	convert the looping gen book data and book upload to use search_google_books, once it is made functional
 	add a create thummb folder book data endpoint to create folder (and probably to upload folder too), delete folder also needs the inverse (might be best to double check all book data functions)
-	have an API util that lets the methods read the Source of truth for file types, should replace localy defined ALLOWED_FILES variables (for the uploads this can be done with the selective upload util)
-	Fix file support endpoint
-	implement selective upload for upload book (in upload_folder, prob move the function to api utils)
+	Change files that want the json version of the file support table to call file-support-json and not file-support (there are a few such functions in the book data functions and their relatives)
+	change upload book to use save_book_by_ext (api_utils), will require changing the request style to match upload_book (save copy in depreciated) 
 	 
 
 
@@ -101,6 +100,7 @@ Completed:
 	replace thumb_map with book_data updates/ thumb return
 	incorportate the book's extension into the book data
 	simplify the book/folder management select update process(now the submit handlers tell call_and_display to run update_management selects on all requests that need it)
+	have an API util that lets the methods read the Source of truth for file types
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

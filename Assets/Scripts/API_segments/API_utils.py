@@ -63,6 +63,21 @@ def format_for_json(input):
     return input.replace("/", "").replace("\\", "").replace("'", "").replace(",", "").replace("\"", "").replace("'", "\"").replace("'", "\"")
 
 
+def save_book_by_ext(file, folder_name):
+    # Checks the book's file type and saves it using the correct method, returns "403" for invalid format
+    file_type = file.content_type
+    if "text/plain" in file_type:
+        with open("./Books/{0}/".format(folder_name) + file.filename, "w") as f:
+            f.write(str(file.read()))
+    elif "/pdf" or "/epub" or "application/" in file_type:
+        with open("./Books/{0}/".format(folder_name) + file.filename, "wb") as f:
+            f.write(file.read())
+    else:
+        return "403"
+
+    return "200"
+
+
 def search_google_books(book):
     if book == "":
         return "404"

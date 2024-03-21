@@ -2,7 +2,7 @@ from flask import Flask, abort, request, make_response, jsonify
 from flask_cors import CORS, cross_origin
 import json
 from datetime import datetime
-from Assets.Scripts.API_segments.Help_pages import help, file_support, show_site_map
+from Assets.Scripts.API_segments.Help_pages import help, file_support, show_site_map, file_support_json
 from Assets.Scripts.API_segments.Folder_methods import list_folders, list_folder_content, Upload_folder, Delete_folder, Rename_folder
 from Assets.Scripts.API_segments.Book_methods import list_books, Remove_book, Rename_book, Upload_book
 from Assets.Scripts.API_segments.Lib_management import Create_folder, Move_book_to_folder
@@ -251,6 +251,12 @@ def help_endpoint():
 @app.route("/file-support")
 def file_support_endpoint():
     return file_support()
+
+
+@app.route("/file_support_json")
+@app.route("/file-support-json")
+def file_support_json_endpoint():
+    return file_support_json()
 
 
 @app.route("/map")
