@@ -10,41 +10,28 @@ export async function Call_and_display(
 
   let result = "";
   if (upload) {
-    //Get the appropriate input and send it's file
-    let upload_input = document.getElementsByName(
+    //Get the input containing the folder name(and file in most cases)
+    let folder_input = document.getElementsByName(
       requestString.split("/").pop()
     );
 
-    let file_data = "";
-    if (upload_input[0].form.id == "UF_flask") {
-      //Handle the extra data for folder upload (name followed by files)
-      file_data = upload_input[0].value;
-      const files = upload_input[1].files;
-      const file_list = new FormData();
-      for (const file of files) {
-        file_list.append("files[]", file);
-      }
-      /*
-      for (let i = 0; i < files.length; i++) {
-        //Might need to be files[i].name TODO: check
-        file_data += files[i].name + "/";
-      }*/
-      result = await fetch(`${ADDRESS}upload-folder/${file_data}`, {
-        method: "POST",
-        body: file_list,
-      });
-    } else {
-      file_data = upload_input[0].value.split("\\").pop();
-      //console.log(upload_input[0].files[0]);
-      //console.log(`${ADDRESS}${requestString.split("/")[3]}/${book}`);
-      result = await fetch(
-        `${ADDRESS}${requestString.split("/")[3]}/${file_data}`,
-        {
-          method: "POST",
-          body: upload_input[0].files[0],
-        }
-      );
+    //Get the title and files from the request and add the books to form data
+    const title = folder_input[0].value.split("\\").pop();
+    let files = folder_input[0].files;
+    if (folder_input[0].form.id == "UF_flask") {
+      //Get the files from the other input, since upload folder has 2 inputs
+      files = document.getElementsByName("UF_file_input")[0].files;
     }
+    const file_list = new FormData();
+    for (const file of files) {
+      file_list.append("files[]", file);
+    }
+
+    //Send off the request
+    result = await fetch(`${ADDRESS}${requestString.split("/")[3]}/${title}`, {
+      method: "POST",
+      body: file_list,
+    });
   } else {
     //send a normal request
     result = await fetch(requestString);

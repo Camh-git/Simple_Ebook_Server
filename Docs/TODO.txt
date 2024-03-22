@@ -35,7 +35,6 @@ Remaining:
 	convert the looping gen book data and book upload to use search_google_books, once it is made functional
 	add a create thummb folder book data endpoint to create folder (and probably to upload folder too), delete folder also needs the inverse (might be best to double check all book data functions)
 	Change files that want the json version of the file support table to call file-support-json and not file-support (there are a few such functions in the book data functions and their relatives)
-	change upload book to use save_book_by_ext (api_utils), will require changing the request style to match upload_book (save copy in depreciated) 
 	 
 
 
@@ -101,6 +100,7 @@ Completed:
 	incorportate the book's extension into the book data
 	simplify the book/folder management select update process(now the submit handlers tell call_and_display to run update_management selects on all requests that need it)
 	have an API util that lets the methods read the Source of truth for file types
+	change upload book to use save_book_by_ext (api_utils), will require changing the request style to match upload_book
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books

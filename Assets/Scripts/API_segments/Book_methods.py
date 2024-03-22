@@ -1,6 +1,7 @@
 import os
 from .Book_data_methods import edit_book_data, get_specific_book_data
 from .Book_data_endpoint_methods import BD_delete_book, BD_upload_book
+from .API_utils import save_book_by_ext
 from werkzeug.utils import secure_filename
 from flask import (request)
 
@@ -30,25 +31,16 @@ def allowed_file(filename):
 
 
 def Upload_book(req, gen_thumb, pop_thumb_data):
-    ALLOWED_EXTENSIONS = {".pdf", ".txt", ".epub", ".mobi", ".azw3", ".html"}
-    book_data = req.data
+    files = request.files.getlist('files[]')
     book_title = request.path.split("/post-book/")[1]
 
-    # Check if the file type is valid
-    if not os.path.splitext(book_title)[1] in ALLOWED_EXTENSIONS:
-        return "403"
-
-    try:
-        with open("./Books/Uploads/" + book_title, "wb") as f:
-            f.write(book_data)
-        status = BD_upload_book(book_title)
-        if status == "200":
-            # Add to thumbnail to the cache and thumb_data, done this way to avoid a circular import
-            gen_thumb()
-            pop_thumb_data()
-        return status
-    except:
-        return "500"
+    save_book_by_ext(files[0], "Uploads")
+    status = BD_upload_book(book_title)
+    if status == "200":
+        # Add to thumbnail to the cache and thumb_data, done this way to avoid a circular import
+        gen_thumb()
+        pop_thumb_data()
+    return status
 
 
 def Remove_book(book_name, ext, folder, mainDir):

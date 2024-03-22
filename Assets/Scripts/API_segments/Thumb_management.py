@@ -171,15 +171,14 @@ def Clear_thumbs(regen, rmManual):
 def upload_thumb(req):
     ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg",
                           ".gif", ".bmp", ".psd", ".svg", ".tif"}
-    thumb_data = req.data
+    thumb_data = request.files.getlist('files[]')[0]
     thumb_title = request.path.split("/upload-thumb/")[1]
 
     if not os.path.splitext(thumb_title)[1] in ALLOWED_EXTENSIONS:
         return "403"
-
     try:
         with open("./Assets/Images/Thumbnail_cache/Uploads/" + thumb_title, "wb") as f:
-            f.write(thumb_data)
+            f.write(thumb_data.read())
         status = BD_upload_thumb(thumb_title)
         return status
     except:

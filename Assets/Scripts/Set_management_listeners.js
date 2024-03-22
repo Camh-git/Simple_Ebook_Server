@@ -32,7 +32,7 @@ function Assign_submit_actions() {
         false,
         "",
         true
-      ); //TODO: change the "update lib selects" option to true when finished
+      );
     });
 
   document.getElementById("DS_form").addEventListener("submit", (event) => {
@@ -68,7 +68,7 @@ function Assign_submit_actions() {
   document.getElementById("UF_flask").addEventListener("submit", (event) => {
     event.preventDefault();
     Call_and_display(
-      `${ADDRESS}upload-folder/UF_input`,
+      `${ADDRESS}upload-folder/UF_title_input`,
       false,
       false,
       "",

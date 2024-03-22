@@ -1,0 +1,59 @@
+// call and display section
+#if (upload) {
+    //Get the appropriate input and send it's file
+    let upload_input = document.getElementsByName(
+      requestString.split("/").pop()
+    );
+
+    let file_data = "";
+    if (upload_input[0].form.id == "UF_flask") {
+      //Handle the extra data for folder upload (name followed by files)
+      file_data = upload_input[0].value;
+      const files = upload_input[1].files;
+      const file_list = new FormData();
+      for (const file of files) {
+        file_list.append("files[]", file);
+      }
+      /*
+      for (let i = 0; i < files.length; i++) {
+        //Might need to be files[i].name TODO: check
+        file_data += files[i].name + "/";
+      }*/
+      result = await fetch(`${ADDRESS}upload-folder/${file_data}`, {
+        method: "POST",
+        body: file_list,
+      });
+    } else {
+      file_data = upload_input[0].value.split("\\").pop();
+      //console.log(upload_input[0].files[0]);
+      //console.log(`${ADDRESS}${requestString.split("/")[3]}/${book}`);
+      result = await fetch(
+        `${ADDRESS}${requestString.split("/")[3]}/${file_data}`,
+        {
+          method: "POST",
+          body: upload_input[0].files[0],
+        }
+      );
+    }
+
+//Book upload.py:
+def Upload_book(req, gen_thumb, pop_thumb_data):
+    ALLOWED_EXTENSIONS = {".pdf", ".txt", ".epub", ".mobi", ".azw3", ".html"}
+    book_data = req.data
+    book_title = request.path.split("/post-book/")[1]
+
+    # Check if the file type is valid
+    if not os.path.splitext(book_title)[1] in ALLOWED_EXTENSIONS:
+        return "403"
+
+    try:
+        with open("./Books/Uploads/" + book_title, "wb") as f:
+            f.write(book_data)
+        status = BD_upload_book(book_title)
+        if status == "200":
+            # Add to thumbnail to the cache and thumb_data, done this way to avoid a circular import
+            gen_thumb()
+            pop_thumb_data()
+        return status
+    except:
+        return "500"
