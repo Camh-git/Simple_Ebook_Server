@@ -11,10 +11,10 @@ Remaining:
 	Implement a reader for simple txt files
 	Implement Mobi reader
 	Implement HTML reader
+	Installer that installs LAMP(python), node.js and the required packages from python_modules.txt and js_modules.txt
+	Start/stop script that starts the appache and flask servers(dont forget export FLASK_APP="BookAPI.py" and flask run --host=0.0.0.0)   
 
   Feature changes:
-  	Add a script to populate the thumbnail cache (probably calling google books)
-	Change upload scripts from php to python
 	Make the reader and download button blocking work
 
   Minor/ technical:	
@@ -27,12 +27,10 @@ Remaining:
 	add some proper testing
 	modify book data.json when a book/folder is uploaded or changed
 	investigate why the continue in gen_book_data is being ignored
-	attempt to extract isbns from each of the file formats for use in the book data generator, should improve accuracy
 	add safeties to any form that deletes data
-	create an inventory of python packages needed
 	go through set_management_listeners (and prob other js) and set consts where appropriate
 	Make delete_folder remove the associated thumbnail cache
-	convert the looping gen book data and book upload to use search_google_books, once it is made functional
+	convert the looping book data generator to use search_google_books
 	add a create thummb folder book data endpoint to create folder (and probably to upload folder too), delete folder also needs the inverse (might be best to double check all book data functions)
 	Change files that want the json version of the file support table to call file-support-json and not file-support (there are a few such functions in the book data functions and their relatives)
 	 
@@ -49,6 +47,7 @@ Remaining:
 	add a seperate thumnbnails object/ structure to book_data, so that unasigned thumbs can be added to management dropdowns, use this as the main
 		 mechanism for thumb changes and update books acordingly, use it for populating management thumb selects
 	add a system to dynamicaly create the library collums based on the number of books and center the last line
+	attempt to extract isbns from each of the file formats for use in the book data generator, should improve accuracy
 	Maybe add the setIp form to library as well
 	consider removing the book title spaces warning.
 	try to combine the event listeners
@@ -94,13 +93,15 @@ Completed:
 	create a single general data call util, similar to call_and_display, but for endpoints returning json instead of http codes to interpret.
 	add a site map at /map
 	Add a system to modify the stored book data
-	Add a script to populate the thumbnail cache (probably calling google books)
+	Add a script to populate the thumbnail cache 
 	Have the thumbnail fetching service download the images and set the local path as the url
 	replace thumb_map with book_data updates/ thumb return
 	incorportate the book's extension into the book data
 	simplify the book/folder management select update process(now the submit handlers tell call_and_display to run update_management selects on all requests that need it)
 	have an API util that lets the methods read the Source of truth for file types
+	Change upload scripts from php to python
 	change upload book to use save_book_by_ext (api_utils), will require changing the request style to match upload_book
+	create an inventory of python packages needed
 
 The server is located at: http://192.168.0.110/Simple_Ebook_Server/index.html
 The books folder is located at: web root/Simple_Ebook_server/Books
