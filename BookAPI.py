@@ -11,6 +11,7 @@ from Assets.Scripts.API_segments.API_utils import read_json_no_code
 from Assets.Scripts.API_segments.Misc_management import Show_settings, Toggle_dls, Toggle_readers, Toggle_lists, Manage_acls
 from Assets.Scripts.API_segments.Thumb_management import List_Thumbs, show_thumb_map, upload_thumb, generate_thumbs, Reasign_thumb, Clear_thumbs, rename_thumb, delete_thumb, populate_thumb_data
 from Assets.Scripts.API_segments.Book_data_methods import generate_book_data, edit_book_data
+from Assets.Scripts.API_segments.Readers import run_epub_reader
 
 
 app = Flask(__name__)
@@ -302,6 +303,12 @@ def show_book_and_thumb_data():
 
     data = str(data.replace("{{", "{").replace("}}", "}"))
     return data
+
+
+# Readers
+@app.route("/epub-reader/<book>&&<folder>")
+def launch_epub_reader(book, folder):
+    return run_epub_reader(book, folder)
 
 
 @app.route('/', defaults={'path': ''})

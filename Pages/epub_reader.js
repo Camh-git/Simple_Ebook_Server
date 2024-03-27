@@ -7,9 +7,13 @@ let currentSectionIndex =
   params && params.get("loc") ? params.get("loc") : undefined;
 
 //Get the book and set up the render
-const book = ePub(
-  "../Books/Included Public domain/The tale of Peter Rabbit.epub"
-);
+const path = document.currentScript.getAttribute("path");
+console.log("Book path: " + path);
+book_path = "../Books/Included Public domain/The tale of Peter Rabbit.epub";
+if (path != "placeholder") {
+  book_path = path;
+}
+const book = ePub(book_path);
 const book_render = book.renderTo("reader-container", {
   flow: "paginated",
   width: "90%",
